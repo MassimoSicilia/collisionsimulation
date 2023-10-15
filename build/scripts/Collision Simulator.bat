@@ -71,7 +71,7 @@ set CLASSPATH=%APP_HOME%\lib\Collision Simulator.jar;%APP_HOME%\lib\javafx-fxml-
 
 
 @rem Execute Collision Simulator
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%" edu.vanier.template.MainApp %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%"  %*
 
 :end
 @rem End local scope for the variables with windows NT shell
