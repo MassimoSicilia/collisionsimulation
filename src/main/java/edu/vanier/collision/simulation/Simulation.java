@@ -4,130 +4,134 @@
  */
 package edu.vanier.collision.simulation;
 
-import com.opencsv.bean.StatefulBeanToCsv;
-import com.opencsv.bean.StatefulBeanToCsvBuilder;
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 /**
- * Simulation class holds all information specific to a single simulation, namely the list of projectiles and the elasticity.
+ *
  * @author andyhou
  */
 public class Simulation {
-
     private List<Projectile> projectiles;
+    private CollisionBox collisionBox; // Use the interface type
     private double elasticity;
 
-    /**
-     * Creates an empty simulation.
-     */
-    public Simulation() {
+    public Simulation(CollisionBox collisionBox) {
+        this.projectiles = new ArrayList<>();
+        this.collisionBox = collisionBox;
     }
 
-    /**
-     * Creates a simulation with specified list of projectiles and elasticity.
-     * @param projectiles
-     * @param elasticity
-     */
-    public Simulation(List<Projectile> projectiles, double elasticity) {
-        this.projectiles = projectiles;
-        this.elasticity = elasticity;
+    public void addProjectile() {
+        // Create a new Projectile with mass and radius
+        Projectile projectile = new Projectile(2.0, 20.0, 100, 100, 10, 10, 10); // Provide appropriate values
+
+        // Create a visual representation of the projectile (e.g., a circle)
+        Circle ball = new Circle(projectile.getRadius());
+        ball.setFill(javafx.scene.paint.Color.RED);
+
+        // Set the initial position
+        ball.setTranslateX(projectile.getX_position());
+        ball.setTranslateY(projectile.getY_position());
+
+        // Set the visual representation of the projectile
+        projectile.setVisualRepresentation(ball);
+
+        // Add the projectile to the list
+        projectiles.add(projectile);
+
+        // Add the circle to the collision box
+        collisionBox.addProjectile(ball);
+        
+        // Test Driver
+        System.out.println("Projectile added!");
     }
 
-    /**
-     * Adds projectile to the simulation.
-     * @param addedProjectile
-     */
-    public void addProjectile(Projectile addedProjectile) {
-        projectiles.add(addedProjectile);
+    public void removeProjectile() {
+        if (!projectiles.isEmpty()) {
+            Projectile lastProjectile = projectiles.get(projectiles.size() - 1);
+
+            // Retrieve the visual representation (Circle) of the lastProjectile
+            Circle lastProjectileVisual = lastProjectile.getVisualRepresentation();
+
+            // Remove the visual representation from the collisionBox
+            collisionBox.removeProjectile(lastProjectileVisual);
+
+            // Remove the Projectile from the list
+            projectiles.remove(lastProjectile);
+            
+            
+            // Test Driver
+            System.out.println("Projectile removed!");
+        }
+    }
+    
+
+    public void updateSimulation(double time) {
+        updatePositions(time); // Update positions directly in the simulation
+        handleCollisions();
     }
 
-    /**
-     * Removes projectile to the simulation.
-     * @param removedProjectile
-     */
-    public void removeProjectile(Projectile removedProjectile) {
-        projectiles.remove(removedProjectile);
+    private void updatePositions(double time) {
+        for (Projectile projectile : projectiles) {
+            // Update the position based on velocity
+            int newX = (int) (projectile.getX_position() + projectile.getX_velocity() * time);
+            int newY = (int) (projectile.getY_position() + projectile.getY_velocity() * time);
+
+            projectile.setX_position(newX);
+            projectile.setY_position(newY);
+        }
     }
 
-    /**
-     * Saves current simulation into a csv file, note that the last row will only contain the elasticity of the simulation and not a Projectile object.
-     * @throws IOException
-     * @throws CsvDataTypeMismatchException
-     * @throws CsvRequiredFieldEmptyException
-     * @see https://opencsv.sourceforge.net/#writing_from_a_list_of_beans
-     */
-    public void save() throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        Writer writer = new FileWriter("simulation.csv"); // we should update this so it asks the user what they want to name the file
-        StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
-        beanToCsv.write(projectiles);
-        // the last row will only hold the elasticity of the simulation in the angle column (first column), all other columns will be null
-        writer.write(Double.toString(elasticity));
-        writer.close();
+    private void handleCollisions() {
+        for (int i = 0; i < projectiles.size(); i++) {
+            for (int j = i + 1; j < projectiles.size(); j++) {
+                Projectile projectile1 = projectiles.get(i);
+                Projectile projectile2 = projectiles.get(j);
+
+                if (checkCollision(projectile1, projectile2)) {
+                    // Implement elastic collision logic here
+                    // Update velocities accordingly
+                    // The elasticity factor (this.elasticity) can be used to adjust the collision response
+                    // e.g., update velocities based on mass and angle of collision
+                }
+            }
+        }
     }
 
-    /**
-     * Removes all projectiles in the simulation.
-     */
+    public void save() {
+
+    }
+
     public void reset() {
-        projectiles.removeAll(projectiles);
+
     }
 
-    /**
-     * Checks if a collision has occurred between two projectiles.
-     * @param circle1
-     * @param circle2
-     * @return
-     */
-    public boolean checkCircleCollision(CircleProjectile circle1, CircleProjectile circle2) {
+    /*
+    public boolean checkCollision(Projectile projectile1, Projectile projectile2){
         // collision occurs when the distance between the positions of both projectiles is equal to both of their radii added
-        double collisionDistance = circle1.getRadius() + circle2.getRadius();
-
+        double collisionDistance = projectile1.getRadius() + projectile2.getRadius();
+        
         // use pythagoream theorem
-        double x_distance = circle1.getX_position() + circle2.getX_position();
-        double y_distance = circle1.getY_position() + circle2.getY_position();
+        double x_distance = projectile1.getX_position() + projectile2.getX_position();
+        double y_distance = projectile1.getY_position() + projectile2.getY_position();
         double distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance, 2));
-
+        
         return collisionDistance == distance;
 
     }
-
-    /**
-     *
-     * @return
      */
-    public List<Projectile> getProjectiles() {
-        return projectiles;
-    }
+    private boolean checkCollision(Projectile projectile1, Projectile projectile2) {
+        double collisionDistance = projectile1.getRadius() + projectile2.getRadius();
+        double x_distance = projectile1.getX_position() - projectile2.getX_position();
+        double y_distance = projectile1.getY_position() - projectile2.getY_position();
+        double distance = Math.sqrt(x_distance * x_distance + y_distance * y_distance);
 
-    /**
-     *
-     * @param projectiles
-     */
-    public void setProjectiles(List<Projectile> projectiles) {
-        this.projectiles = projectiles;
+        return collisionDistance >= distance;
     }
-
-    /**
-     *
-     * @return
-     */
-    public double getElasticity() {
-        return elasticity;
-    }
-
-    /**
-     *
-     * @param elasticity
-     */
-    public void setElasticity(double elasticity) {
-        this.elasticity = elasticity;
-    }
-
+    
+    
 }

@@ -4,39 +4,34 @@
  */
 package edu.vanier.collision.test;
 
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
+import edu.vanier.collision.simulation.CollisionBox;
+import edu.vanier.collision.simulation.PaneCollisionBox;
 import edu.vanier.collision.simulation.Simulation;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
  * @author andyhou
  */
 public class Driver {
-    public static void main(String[] args) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        Projectile p1 = new CircleProjectile();
-        Projectile p2 = new CircleProjectile();
-        Projectile p3 = new CircleProjectile();
-        Projectile p4 = new CircleProjectile();
-        
-        p1.setMass(1);
-        p2.setMass(2);
-        p3.setMass(3);
-        p4.setMass(4);
-        
-        Simulation sim = new Simulation();
-        List<Projectile> projs = new ArrayList<>();
-        projs.add(p1);
-        projs.add(p2);
-        projs.add(p3);
-        projs.add(p4);
-        sim.setProjectiles(projs);
-        sim.setElasticity(100);
-        sim.save();
+
+    public static void main(String[] args) {
+        Projectile proj = new Projectile(10, 9);
+        Projectile proj2 = new Projectile(20, 7);
+        //Simulation sim = new Simulation(0.9);
+        //System.out.println(sim.checkCollision(proj, proj2));
+
+        // Create a collision box
+        CollisionBox collisionBox = new PaneCollisionBox();
+        Simulation simulation = new Simulation(collisionBox);
+
+        System.out.println("Adding a projectile...");
+        simulation.addProjectile();
+
+        // Add more projectiles if needed
+        // System.out.println("Adding another projectile...");
+        // simulation.addProjectile();
+        System.out.println("Removing a projectile...");
+        simulation.removeProjectile();
     }
 }
