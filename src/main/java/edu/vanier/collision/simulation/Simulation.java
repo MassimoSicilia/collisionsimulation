@@ -12,36 +12,45 @@ import java.util.List;
  * @author andyhou
  */
 public class Simulation {
+
     private List<Projectile> projectiles;
     private double elasticity;
-    
-    public void addProjectile(Projectile addedProjectile){
+
+    public Simulation() {
+    }
+
+    public Simulation(List<Projectile> projectiles, double elasticity) {
+        this.projectiles = projectiles;
+        this.elasticity = elasticity;
+    }
+
+    public void addProjectile(Projectile addedProjectile) {
         projectiles.add(addedProjectile);
     }
-    
-    public void removeProjectile(Projectile removedProjectile){
+
+    public void removeProjectile(Projectile removedProjectile) {
         projectiles.remove(removedProjectile);
     }
-    
-    public void save(){
-        
+
+    public void save() {
+
     }
-    
-    public void reset(){
-        
+
+    public void reset() {
+        projectiles.removeAll(projectiles);
     }
-    
-    public boolean checkCollision(Projectile projectile1, Projectile projectile2){
+
+    public boolean checkCollision(Projectile projectile1, Projectile projectile2) {
         // collision occurs when the distance between the positions of both projectiles is equal to both of their radii added
         double collisionDistance = projectile1.getRadius() + projectile2.getRadius();
-        
+
         // use pythagoream theorem
         double x_distance = projectile1.getX_position() + projectile2.getX_position();
         double y_distance = projectile1.getY_position() + projectile2.getY_position();
         double distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance, 2));
-        
+
         return collisionDistance == distance;
 
     }
-    
+
 }
