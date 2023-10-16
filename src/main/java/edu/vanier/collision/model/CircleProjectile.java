@@ -5,7 +5,8 @@
 package edu.vanier.collision.model;
 
 /**
- *
+ * CircleProjectile is a Projectile of circular shape, used for ball collisions.
+ * @see Projectile
  * @author andyhou
  */
 public class CircleProjectile extends Projectile{

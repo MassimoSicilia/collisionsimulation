@@ -5,7 +5,7 @@
 package edu.vanier.collision.model;
 
 /**
- *
+ * RectangleProjectile is a Projectile of rectangular shape, used for car collisions.
  * @author andyhou
  */
 public class RectangleProjectile extends Projectile{

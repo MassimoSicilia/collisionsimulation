@@ -62,7 +62,7 @@ public class Simulation {
      * @throws IOException
      * @throws CsvDataTypeMismatchException
      * @throws CsvRequiredFieldEmptyException
-     * @see https://opencsv.sourceforge.net/#writing_from_a_list_of_beans
+     * @see <a href="https://opencsv.sourceforge.net/#writing_from_a_list_of_beans">OpenCSV Documentation</a>
      */
     public void save() throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         Writer writer = new FileWriter("simulation.csv"); // we should update this so it asks the user what they want to name the file
