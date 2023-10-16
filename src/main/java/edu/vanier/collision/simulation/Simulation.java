@@ -72,6 +72,10 @@ public class Simulation {
         writer.write(Boolean.toString(elasticity));
         writer.close();
     }
+    
+    public void load(){
+        // to implement
+    }
 
     /**
      * Removes all projectiles in the simulation.
@@ -86,7 +90,7 @@ public class Simulation {
      * @param circle2
      * @return
      */
-    public boolean checkCircleCollision(CircleProjectile circle1, CircleProjectile circle2) {
+    public boolean checkCircleCollision(CircleProjectile circle1, CircleProjectile circle2) { //useless
         // collision occurs when the distance between the positions of both projectiles is equal to both of their radii added
         double collisionDistance = circle1.getRadius() + circle2.getRadius();
 
@@ -99,11 +103,11 @@ public class Simulation {
 
     }
     
-    public boolean checkRectangleCollision (RectangleProjectile rectangle1, RectangleProjectile rectangle2){
-        
+    public boolean checkRectangleCollision (RectangleProjectile rectangle1, RectangleProjectile rectangle2){ //useless
+        return true;
     }
     
-    public void collisionUpdate(CircleProjectile circle1, CircleProjectile circle2, boolean elasticity){
+    public void collisionUpdate(CircleProjectile circle1, CircleProjectile circle2, boolean elasticity){ //useless
         
     }
 
