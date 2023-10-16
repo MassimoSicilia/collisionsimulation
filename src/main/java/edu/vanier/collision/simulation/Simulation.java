@@ -10,6 +10,7 @@ import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
+import edu.vanier.collision.model.RectangleProjectile;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
@@ -22,7 +23,7 @@ import java.util.List;
 public class Simulation {
 
     private List<Projectile> projectiles;
-    private double elasticity;
+    private boolean elasticity;
 
     /**
      * Creates an empty simulation.
@@ -35,7 +36,7 @@ public class Simulation {
      * @param projectiles
      * @param elasticity
      */
-    public Simulation(List<Projectile> projectiles, double elasticity) {
+    public Simulation(List<Projectile> projectiles, boolean elasticity) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
     }
@@ -68,7 +69,7 @@ public class Simulation {
         StatefulBeanToCsv beanToCsv = new StatefulBeanToCsvBuilder(writer).build();
         beanToCsv.write(projectiles);
         // the last row will only hold the elasticity of the simulation in the angle column (first column), all other columns will be null
-        writer.write(Double.toString(elasticity));
+        writer.write(Boolean.toString(elasticity));
         writer.close();
     }
 
@@ -97,6 +98,14 @@ public class Simulation {
         return collisionDistance == distance;
 
     }
+    
+    public boolean checkRectangleCollision (RectangleProjectile rectangle1, RectangleProjectile rectangle2){
+        
+    }
+    
+    public void collisionUpdate(CircleProjectile circle1, CircleProjectile circle2, boolean elasticity){
+        
+    }
 
     /**
      *
@@ -118,7 +127,7 @@ public class Simulation {
      *
      * @return
      */
-    public double getElasticity() {
+    public boolean getElasticity() {
         return elasticity;
     }
 
@@ -126,7 +135,7 @@ public class Simulation {
      *
      * @param elasticity
      */
-    public void setElasticity(double elasticity) {
+    public void setElasticity(boolean elasticity) {
         this.elasticity = elasticity;
     }
 
