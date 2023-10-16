@@ -6,6 +6,7 @@ package edu.vanier.collision.test;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.simulation.Simulation;
 import java.io.IOException;
@@ -18,10 +19,15 @@ import java.util.List;
  */
 public class Driver {
     public static void main(String[] args) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
-        Projectile p1 = new Projectile(10, 1);
-        Projectile p2 = new Projectile(20, 2);
-        Projectile p3 = new Projectile(30, 3);
-        Projectile p4 = new Projectile(40, 4);
+        Projectile p1 = new CircleProjectile();
+        Projectile p2 = new CircleProjectile();
+        Projectile p3 = new CircleProjectile();
+        Projectile p4 = new CircleProjectile();
+        
+        p1.setMass(1);
+        p2.setMass(2);
+        p3.setMass(3);
+        p4.setMass(4);
         
         Simulation sim = new Simulation();
         List<Projectile> projs = new ArrayList<>();

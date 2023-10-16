@@ -8,6 +8,7 @@ import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -80,17 +81,17 @@ public class Simulation {
 
     /**
      * Checks if a collision has occurred between two projectiles.
-     * @param projectile1
-     * @param projectile2
+     * @param circle1
+     * @param circle2
      * @return
      */
-    public boolean checkCollision(Projectile projectile1, Projectile projectile2) {
+    public boolean checkCircleCollision(CircleProjectile circle1, CircleProjectile circle2) {
         // collision occurs when the distance between the positions of both projectiles is equal to both of their radii added
-        double collisionDistance = projectile1.getRadius() + projectile2.getRadius();
+        double collisionDistance = circle1.getRadius() + circle2.getRadius();
 
         // use pythagoream theorem
-        double x_distance = projectile1.getX_position() + projectile2.getX_position();
-        double y_distance = projectile1.getY_position() + projectile2.getY_position();
+        double x_distance = circle1.getX_position() + circle2.getX_position();
+        double y_distance = circle1.getY_position() + circle2.getY_position();
         double distance = Math.sqrt(Math.pow(x_distance, 2) + Math.pow(y_distance, 2));
 
         return collisionDistance == distance;

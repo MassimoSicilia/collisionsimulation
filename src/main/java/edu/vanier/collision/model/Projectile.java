@@ -8,25 +8,21 @@ package edu.vanier.collision.model;
  *
  * @author andyhou
  */
-public class Projectile {
+public abstract class Projectile {
     private double mass;
     private double x_velocity;
     private double y_velocity;
     private double angle; // in degrees
     private int x_position;
-    private int y_position;
-    private double radius;
+    private int y_position;;
 
     /**
-     * Creates Projectile object with only mass and radius, no velocity or angle, initial position will be at 0,0.
-     * @param mass
-     * @param radius
+     * Creates default Projectile object, all default objects will have no velocity or angle.
      */
-    public Projectile(double mass, double radius) {
-        this.mass = mass;
-        this.radius = radius;
-        x_position = 0;
-        y_position = 0;
+    public Projectile() {
+        this.mass = 10;
+        this.x_position = 0;
+        this.y_position = 0;
     }
 
     /**
@@ -39,14 +35,13 @@ public class Projectile {
      * @param y_position
      * @param radius
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, double angle, int x_position, int y_position, double radius) {
+    public Projectile(double mass, double x_velocity, double y_velocity, double angle, int x_position, int y_position) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         this.angle = angle;
         this.x_position = x_position;
         this.y_position = y_position;
-        this.radius = radius;
     }
 
     public double getMass() {
@@ -96,14 +91,5 @@ public class Projectile {
     public void setY_position(int y_position) {
         this.y_position = y_position;
     }
-
-    public double getRadius() {
-        return radius;
-    }
-
-    public void setRadius(double radius) {
-        this.radius = radius;
-    }
-    
-    
+       
 }
