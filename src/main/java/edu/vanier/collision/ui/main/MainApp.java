@@ -1,6 +1,6 @@
-package edu.vanier.collision.main;
+package edu.vanier.collision.ui.main;
 
-import edu.vanier.collision.main.controller.MainAppController;
+import edu.vanier.collision.ui.controller.MainAppController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +22,7 @@ public class MainApp extends Application{
         Parent root = mainMenu.load();
         Scene scene = new Scene (root, 600, 600);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         
         primaryStage.show();
     }
