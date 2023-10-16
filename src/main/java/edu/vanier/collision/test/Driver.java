@@ -36,7 +36,6 @@ public class Driver {
         projs.add(p3);
         projs.add(p4);
         sim.setProjectiles(projs);
-        sim.setElasticity(100);
         sim.save();
     }
 }

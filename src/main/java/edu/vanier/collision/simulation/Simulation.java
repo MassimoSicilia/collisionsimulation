@@ -20,7 +20,7 @@ import java.util.List;
  * Simulation class holds all information specific to a single simulation, namely the list of projectiles and the elasticity.
  * @author andyhou
  */
-public class Simulation {
+public class Simulation { 
 
     private List<Projectile> projectiles;
     private boolean elasticity;
