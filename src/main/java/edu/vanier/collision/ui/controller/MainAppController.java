@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  *
@@ -25,17 +26,21 @@ public class MainAppController {
     @FXML
     void initialize() {
         btnChoose.setOnAction(event -> {
+            // gets the primary stage from the chooseScenery button
+            Stage primaryStage = (Stage) btnChoose.getScene().getWindow();
             FXMLLoader chooseScenery = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
-
             chooseScenery.setController(new ChooseSceneryController());
-            Parent root;
             try {
-                root = chooseScenery.load();
+                Scene chooseSceneryScene = new Scene(chooseScenery.load());
+                switchScenes(primaryStage, chooseSceneryScene);
             } catch (IOException ex) {
                 Logger.getLogger(MainAppController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            Scene scene = new Scene(root, 600, 600);
         });
+    }
+    
+    public void switchScenes(Stage stage, Scene scene){
+        stage.setScene(scene);
     }
 
 }

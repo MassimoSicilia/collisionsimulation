@@ -5,7 +5,7 @@
 package edu.vanier.collision.model;
 
 /**
- *
+ * Projectile class displays information that every projectile object should have, which affects collisions.
  * @author andyhou
  */
 public abstract class Projectile {

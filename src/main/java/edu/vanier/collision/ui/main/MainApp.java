@@ -19,10 +19,9 @@ public class MainApp extends Application{
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader mainMenu = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
         mainMenu.setController(new MainAppController());
-        Parent root = mainMenu.load();
-        Scene scene = new Scene (root, 600, 600);
+        Parent root = mainMenu.load(); 
+        Scene scene = new Scene (root);
         primaryStage.setScene(scene);
-        primaryStage.setResizable(false);
         
         primaryStage.show();
     }
