@@ -4,23 +4,32 @@
  */
 package edu.vanier.collision.simulation;
 
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
+import com.opencsv.exceptions.CsvValidationException;
 import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.RectangleProjectile;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Simulation class holds all information specific to a single simulation, namely the list of projectiles and the elasticity.
+ * Simulation class holds all information specific to a single simulation,
+ * namely the list of projectiles and the elasticity.
+ *
  * @author andyhou
  */
-public class Simulation { 
+public class Simulation {
 
     private List<Projectile> projectiles;
     private boolean elasticity;
@@ -33,6 +42,7 @@ public class Simulation {
 
     /**
      * Creates a simulation with specified list of projectiles and elasticity.
+     *
      * @param projectiles
      * @param elasticity
      */
@@ -43,6 +53,7 @@ public class Simulation {
 
     /**
      * Adds projectile to the simulation.
+     *
      * @param addedProjectile
      */
     public void addProjectile(Projectile addedProjectile) {
@@ -51,6 +62,7 @@ public class Simulation {
 
     /**
      * Removes projectile to the simulation.
+     *
      * @param removedProjectile
      */
     public void removeProjectile(Projectile removedProjectile) {
@@ -58,11 +70,16 @@ public class Simulation {
     }
 
     /**
-     * Saves current simulation into a csv file, note that the last row will only contain the elasticity of the simulation and not a Projectile object.
+     * Saves current simulation into a csv file, note that the last row will
+     * only contain the elasticity of the simulation and not a Projectile
+     * object.
+     *
      * @throws IOException
      * @throws CsvDataTypeMismatchException
      * @throws CsvRequiredFieldEmptyException
-     * @see <a href="https://opencsv.sourceforge.net/#writing_from_a_list_of_beans">OpenCSV Documentation</a>
+     * @see
+     * <a href="https://opencsv.sourceforge.net/#writing_from_a_list_of_beans">OpenCSV
+     * Documentation</a>
      */
     public void save() throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
         Writer writer = new FileWriter("simulation.csv"); // we should update this so it asks the user what they want to name the file
@@ -72,9 +89,35 @@ public class Simulation {
         writer.write(Boolean.toString(elasticity));
         writer.close();
     }
-    
-    public void load(){
-        // to implement
+
+    // https://opencsv.sourceforge.net/#reading_into_an_array_of_strings
+    public static Simulation load(File file) throws FileNotFoundException, IOException, CsvValidationException {
+        Simulation loadedSimulation = new Simulation();
+        List<Projectile> loadedProjectiles = new ArrayList<>();
+        CSVReader reader = new CSVReaderBuilder(new FileReader(file.getName())).build();
+        String[] nextLine = reader.readNext(); // first row will only contain the titles of each column
+        if (nextLine.length == 7) {
+            while ((nextLine = reader.readNext()) != null) {
+                // formatted as [angle][mass][radius][x_position][x_velocity][y_position][y_velocity] for circleProjectile
+                if (nextLine.length == 1) { // last row is always the elasticity
+                    loadedSimulation.setElasticity(Boolean.getBoolean(nextLine[0]));
+                    break;
+                }
+                loadedProjectiles.add(new CircleProjectile(Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[6]), Double.parseDouble(nextLine[0]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[5])));
+                loadedSimulation.setProjectiles(loadedProjectiles);
+            }
+        } else if (nextLine.length == 8) {
+            while ((nextLine = reader.readNext()) != null) {
+                // formatted as [angle][height][mass][width][x_position][x_velocity][y_position][y_velocity] for rectangleProjectile
+                if (nextLine.length == 1) { // last row is always the elasticity
+                    loadedSimulation.setElasticity(Boolean.getBoolean(nextLine[0]));
+                    break;
+                }
+                loadedProjectiles.add(new RectangleProjectile(Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[5]), Double.parseDouble(nextLine[7]), Double.parseDouble(nextLine[0]), Integer.parseInt(nextLine[4]), Integer.parseInt(nextLine[6])));
+                loadedSimulation.setProjectiles(loadedProjectiles);
+            }
+        }
+        return loadedSimulation;
     }
 
     /**
@@ -86,6 +129,7 @@ public class Simulation {
 
     /**
      * Checks if a collision has occurred between two projectiles.
+     *
      * @param circle1
      * @param circle2
      * @return
@@ -102,13 +146,13 @@ public class Simulation {
         return collisionDistance == distance;
 
     }
-    
-    public boolean checkRectangleCollision (RectangleProjectile rectangle1, RectangleProjectile rectangle2){ //useless
+
+    public boolean checkRectangleCollision(RectangleProjectile rectangle1, RectangleProjectile rectangle2) { //useless
         return true;
     }
-    
-    public void collisionUpdate(CircleProjectile circle1, CircleProjectile circle2, boolean elasticity){ //useless
-        
+
+    public void collisionUpdate(CircleProjectile circle1, CircleProjectile circle2, boolean elasticity) { //useless
+
     }
 
     /**
