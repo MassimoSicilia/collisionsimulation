@@ -28,6 +28,8 @@ dependencies {
     // https://mvnrepository.com/artifact/com.opencsv/opencsv
     implementation group: 'com.opencsv', name: 'opencsv', version: '5.8'
 
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-math3
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
 
 }
 //-- Loads the JavaFX modules of the selected JavaFX version.
@@ -39,7 +41,8 @@ application {
    // Define the main class for the application.
    // TODO: specify the fully qualified name of the class 
    //       that contains the main method your would like to run.
-    mainClass = 'edu.vanier.collision.ui.main.MainApp'
+   // mainClass = 'edu.vanier.collision.ui.main.MainApp'
+      mainClass = 'edu.vanier.collision.animation.MyFirstGame'
    // mainClass = 'edu.vanier.collision.test.Driver'
 }
 
