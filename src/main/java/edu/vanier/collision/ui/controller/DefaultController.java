@@ -4,7 +4,12 @@
  */
 package edu.vanier.collision.ui.controller;
 
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -28,6 +33,8 @@ public class DefaultController {
     Button btnMute;
     @FXML
     Button btnHide;
+    @FXML
+    Button btnReturn;
     
     //layouts
     @FXML
@@ -40,7 +47,16 @@ public class DefaultController {
     
     @FXML
     public void initialize(){
-        
+        btnReturn.setOnAction((event) -> {
+            try {
+                FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
+                returnLoader.setController(new ChooseSceneryController());
+                Parent root = returnLoader.load();
+                btnReturn.getScene().setRoot(root);
+            } catch (IOException ex) {
+                Logger.getLogger(DefaultController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
     }
     
 }

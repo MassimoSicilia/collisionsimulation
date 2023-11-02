@@ -9,7 +9,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import edu.vanier.collision.model.CircleProjectile;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.RectangleProjectile;
-import edu.vanier.collision.simulation.Simulation;
+import edu.vanier.collision.model.Simulation;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +20,7 @@ import java.util.List;
  */
 public class Driver {
     public static void main(String[] args) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+        /*
         Projectile p1 = new RectangleProjectile(1, 10, 101, 1001, 10001, 100001, 1000001, 11);
         Projectile p2 = new RectangleProjectile(2, 20, 201, 2001, 20001, 200001, 2000001, 22);
         Projectile p3 = new RectangleProjectile(3,30, 301, 3001, 30001, 300001, 3000001, 33);
@@ -33,5 +34,6 @@ public class Driver {
         projs.add(p4);
         sim.setProjectiles(projs);
         sim.save();
+*/
     }
 }

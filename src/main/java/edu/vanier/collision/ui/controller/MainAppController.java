@@ -5,7 +5,7 @@
 package edu.vanier.collision.ui.controller;
 
 import com.opencsv.exceptions.CsvValidationException;
-import edu.vanier.collision.simulation.Simulation;
+import edu.vanier.collision.model.Simulation;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;

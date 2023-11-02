@@ -12,7 +12,6 @@ public abstract class Projectile {
     private double mass;
     private double x_velocity;
     private double y_velocity;
-    private double angle; // in degrees
     private int x_position;
     private int y_position;;
 
@@ -35,11 +34,10 @@ public abstract class Projectile {
      * @param y_position
      * @param radius
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, double angle, int x_position, int y_position) {
+    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
-        this.angle = angle;
         this.x_position = x_position;
         this.y_position = y_position;
     }
@@ -66,14 +64,6 @@ public abstract class Projectile {
 
     public void setY_velocity(double y_velocity) {
         this.y_velocity = y_velocity;
-    }
-
-    public double getAngle() {
-        return angle;
-    }
-
-    public void setAngle(double angle) {
-        this.angle = angle;
     }
 
     public int getX_position() {

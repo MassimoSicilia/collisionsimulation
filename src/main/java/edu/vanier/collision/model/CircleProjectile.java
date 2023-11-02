@@ -16,8 +16,8 @@ public class CircleProjectile extends Projectile{
         super();
     }
 
-    public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, double angle, int x_position, int y_position) {
-        super(mass, x_velocity, y_velocity, angle, x_position, y_position);
+    public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
+        super(mass, x_velocity, y_velocity, x_position, y_position);
         this.radius = radius;
     }
 
