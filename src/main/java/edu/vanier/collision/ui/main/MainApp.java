@@ -22,6 +22,7 @@ public class MainApp extends Application{
         Parent root = mainMenu.load(); 
         Scene scene = new Scene (root);
         primaryStage.setScene(scene);
+        primaryStage.setResizable(false);
         
         primaryStage.show();
     }

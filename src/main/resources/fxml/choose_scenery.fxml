@@ -6,32 +6,32 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="126.0" layoutY="33.0" prefHeight="534.0" prefWidth="349.0" spacing="70.0">
+      <VBox alignment="TOP_CENTER" layoutX="326.0" layoutY="80.0" prefHeight="571.0" prefWidth="349.0" spacing="70.0">
          <children>
             <Label fx:id="lblTitle" text="Choose Scenery">
                <font>
                   <Font name="Dubai Light" size="29.0" />
                </font>
             </Label>
-            <Button fx:id="btnDefault" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Default">
+            <Button fx:id="btnDefault" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Default">
                <font>
                   <Font name="Dubai Light" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnCars" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Cars">
+            <Button fx:id="btnCars" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Cars">
                <font>
                   <Font name="Dubai Light" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnAsteroids" mnemonicParsing="false" prefHeight="30.0" prefWidth="100.0" text="Asteroids">
+            <Button fx:id="btnAsteroids" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Asteroids">
                <font>
                   <Font name="Dubai Light" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnPool" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Pool Balls" />
-            <Button fx:id="btnBacl" mnemonicParsing="false" prefHeight="25.0" prefWidth="100.0" text="Go Back" />
+            <Button fx:id="btnPool" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Pool Balls" />
+            <Button fx:id="btnBacl" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Go Back" />
          </children>
       </VBox>
    </children>

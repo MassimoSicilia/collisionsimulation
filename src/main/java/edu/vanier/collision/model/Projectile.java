@@ -7,7 +7,7 @@ package edu.vanier.collision.model;
 import javafx.scene.shape.Shape;
 
 /**
- * Projectile class displays information that every projectile object should have, which affects collisions.
+ * Projectile class displays information that every shape object should have, which affects collisions.
  * @author andyhou
  */
 public abstract class Projectile extends Shape{
@@ -15,7 +15,8 @@ public abstract class Projectile extends Shape{
     private double x_velocity;
     private double y_velocity;
     private int x_position;
-    private int y_position;;
+    private int y_position;
+    private Shape shape;
 
     /**
      * Creates default Projectile object, all default objects will have no velocity or angle.
@@ -48,6 +49,14 @@ public abstract class Projectile extends Shape{
 
     public void setMass(double mass) {
         this.mass = mass;
+    }
+
+    public Shape getShape() {
+        return shape;
+    }
+
+    public void setShape(Shape shape) {
+        this.shape = shape;
     }
 
     public double getX_velocity() {
