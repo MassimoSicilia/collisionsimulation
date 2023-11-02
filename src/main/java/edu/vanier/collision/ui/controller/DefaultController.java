@@ -4,8 +4,11 @@
  */
 package edu.vanier.collision.ui.controller;
 
+import edu.vanier.collision.animation.defaultAnimation;
 import edu.vanier.collision.model.CircleProjectile;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -14,12 +17,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.shape.Circle;
 
 /**
  *
  * @author Hassimo
  */
 public class DefaultController {
+    List<CircleProjectile> circles = new ArrayList<>();
     @FXML
     Button btnAdd;
     @FXML
@@ -49,7 +54,8 @@ public class DefaultController {
     @FXML
     public void initialize(){
         btnAdd.setOnAction((event) -> {
-            CircleProjectile addedCircle = new CircleProjectile(10, 1, 0, 0, 20, 20);
+            CircleProjectile addedCircle = new CircleProjectile(10, 1, 5, 2, 0, 0);
+            circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getCircleProjectile());
         });
         btnReturn.setOnAction((event) -> {
@@ -61,6 +67,10 @@ public class DefaultController {
             } catch (IOException ex) {
                 Logger.getLogger(DefaultController.class.getName()).log(Level.SEVERE, null, ex);
             }
+        });
+        btnPlay.setOnAction((event) -> {
+            defaultAnimation.play(circles, animationPane);
+            System.out.println("playing");
         });
     }
     
