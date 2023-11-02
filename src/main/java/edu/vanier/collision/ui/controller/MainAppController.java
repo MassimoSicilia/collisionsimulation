@@ -31,7 +31,7 @@ public class MainAppController {
     Button btnLoad;
 
     @FXML
-    void initialize() {
+    public void initialize() {
         
         
         btnChoose.setOnAction(event -> {

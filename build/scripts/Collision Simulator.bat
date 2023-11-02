@@ -67,11 +67,11 @@ goto fail
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\Collision Simulator.jar;%APP_HOME%\lib\opencsv-5.8.jar;%APP_HOME%\lib\javafx-fxml-20.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-20.0.2-mac.jar;%APP_HOME%\lib\javafx-controls-20.0.2.jar;%APP_HOME%\lib\javafx-media-20.0.2-mac.jar;%APP_HOME%\lib\javafx-graphics-20.0.2-mac.jar;%APP_HOME%\lib\javafx-graphics-20.0.2.jar;%APP_HOME%\lib\javafx-base-20.0.2-mac.jar;%APP_HOME%\lib\javafx-base-20.0.2.jar;%APP_HOME%\lib\commons-text-1.10.0.jar;%APP_HOME%\lib\commons-lang3-3.12.0.jar;%APP_HOME%\lib\commons-beanutils-1.9.4.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-collections-3.2.2.jar
+set CLASSPATH=%APP_HOME%\lib\Collision Simulator.jar;%APP_HOME%\lib\opencsv-5.8.jar;%APP_HOME%\lib\commons-math3-3.6.1.jar;%APP_HOME%\lib\javafx-fxml-20.0.2-win.jar;%APP_HOME%\lib\javafx-controls-20.0.2-win.jar;%APP_HOME%\lib\javafx-controls-20.0.2.jar;%APP_HOME%\lib\javafx-media-20.0.2-win.jar;%APP_HOME%\lib\javafx-graphics-20.0.2-win.jar;%APP_HOME%\lib\javafx-graphics-20.0.2.jar;%APP_HOME%\lib\javafx-base-20.0.2-win.jar;%APP_HOME%\lib\javafx-base-20.0.2.jar;%APP_HOME%\lib\commons-text-1.10.0.jar;%APP_HOME%\lib\commons-lang3-3.12.0.jar;%APP_HOME%\lib\commons-beanutils-1.9.4.jar;%APP_HOME%\lib\commons-collections4-4.4.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\commons-collections-3.2.2.jar
 
 
 @rem Execute Collision Simulator
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%" edu.vanier.collision.animation.TestAnimation %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%" edu.vanier.collision.animation.MyFirstGame %*
 
 :end
 @rem End local scope for the variables with windows NT shell
