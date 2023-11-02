@@ -4,6 +4,7 @@
  */
 package edu.vanier.collision.ui.controller;
 
+import edu.vanier.collision.model.CircleProjectile;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -47,6 +48,10 @@ public class DefaultController {
     
     @FXML
     public void initialize(){
+        btnAdd.setOnAction((event) -> {
+            CircleProjectile addedCircle = new CircleProjectile(10, 1, 0, 0, 20, 20);
+            animationPane.getChildren().add(addedCircle.getCircleProjectile());
+        });
         btnReturn.setOnAction((event) -> {
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));

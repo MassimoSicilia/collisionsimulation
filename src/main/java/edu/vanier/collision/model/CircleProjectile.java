@@ -4,6 +4,8 @@
  */
 package edu.vanier.collision.model;
 
+import javafx.scene.shape.Circle;
+
 /**
  * CircleProjectile is a Projectile of circular shape, used for ball collisions.
  * @see Projectile
@@ -11,6 +13,7 @@ package edu.vanier.collision.model;
  */
 public class CircleProjectile extends Projectile{
     private double radius;
+    private Circle circleProjectile;
 
     public CircleProjectile() {
         super();
@@ -18,11 +21,16 @@ public class CircleProjectile extends Projectile{
 
     public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
         super(mass, x_velocity, y_velocity, x_position, y_position);
+        circleProjectile = new Circle(x_position, y_position, radius);
         this.radius = radius;
     }
 
     public double getRadius() {
         return radius;
+    }
+
+    public Circle getCircleProjectile() {
+        return circleProjectile;
     }
 
     public void setRadius(double radius) {
