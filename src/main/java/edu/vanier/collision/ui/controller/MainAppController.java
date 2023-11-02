@@ -32,8 +32,6 @@ public class MainAppController {
 
     @FXML
     public void initialize() {
-        
-        
         btnChoose.setOnAction(event -> {
             // gets the primary stage from the chooseScenery button
             Stage primaryStage = (Stage) btnChoose.getScene().getWindow();

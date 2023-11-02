@@ -17,13 +17,13 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
-import javafx.scene.shape.Circle;
 
 /**
  *
  * @author Hassimo
  */
 public class DefaultController {
+
     List<CircleProjectile> circles = new ArrayList<>();
     @FXML
     Button btnAdd;
@@ -31,7 +31,7 @@ public class DefaultController {
     Button btnRemove;
     @FXML
     Button btnPlay;
-    @FXML 
+    @FXML
     Button btnPause;
     @FXML
     Button btnReset;
@@ -41,22 +41,21 @@ public class DefaultController {
     Button btnHide;
     @FXML
     Button btnReturn;
-    
+
     //layouts
     @FXML
     Pane animationPane;
     @FXML
     Pane bottomPane;
     @FXML
-    HBox HBoxTop; 
-    
-    
+    HBox HBoxTop;
+
     @FXML
-    public void initialize(){
+    public void initialize() {
         btnAdd.setOnAction((event) -> {
-            CircleProjectile addedCircle = new CircleProjectile(10, 1, 5, 2, 0, 0);
+            CircleProjectile addedCircle = new CircleProjectile(10, 1, Math.random() * 10, Math.random() * 10, 20, 40);
             circles.add(addedCircle);
-            animationPane.getChildren().add(addedCircle.getCircleProjectile());
+            animationPane.getChildren().add(addedCircle.getShape());
         });
         btnReturn.setOnAction((event) -> {
             try {
@@ -69,9 +68,9 @@ public class DefaultController {
             }
         });
         btnPlay.setOnAction((event) -> {
-            defaultAnimation.play(circles, animationPane);
-            System.out.println("playing");
+            defaultAnimation.setComponents(circles, animationPane);
+            defaultAnimation.play();
         });
     }
-    
+
 }

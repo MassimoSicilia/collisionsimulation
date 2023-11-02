@@ -13,7 +13,7 @@ import javafx.scene.shape.Circle;
  */
 public class CircleProjectile extends Projectile{
     private double radius;
-    private Circle circleProjectile;
+    
 
     public CircleProjectile() {
         super();
@@ -21,7 +21,7 @@ public class CircleProjectile extends Projectile{
 
     public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
         super(mass, x_velocity, y_velocity, x_position, y_position);
-        circleProjectile = new Circle(x_position, y_position, radius);
+        setShape(new Circle(x_position, y_position, radius));
         this.radius = radius;
     }
 
@@ -29,12 +29,9 @@ public class CircleProjectile extends Projectile{
         return radius;
     }
 
-    public Circle getCircleProjectile() {
-        return circleProjectile;
-    }
-
     public void setRadius(double radius) {
         this.radius = radius;
     }
+    
     
 }
