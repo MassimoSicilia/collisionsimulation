@@ -60,10 +60,6 @@ public class defaultAnimation {
         animation.stop();
     }
     
-    public static void resetAnimation(){
-        
-    }
-
     public static void resolveBallWallCollision(CircleProjectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
         //If the ball reaches the left or right border make the step negative
         if ((ball.getCenterX() <= ball.getRadius() && xVelocity < 0)

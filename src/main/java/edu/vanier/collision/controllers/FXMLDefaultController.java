@@ -86,11 +86,9 @@ public class FXMLDefaultController {
             btnRemove.setDisable(false);
             if (animationPane.getChildren().size() == 1) {
                 System.out.println("nothing in simulation");
-            }
-            if (circles.isEmpty()) {
-                System.out.println("no balls");
                 btnRemove.setDisable(true);
-            } else {
+            }
+            else {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
             }
