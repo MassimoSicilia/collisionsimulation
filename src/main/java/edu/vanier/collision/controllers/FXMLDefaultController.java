@@ -52,6 +52,7 @@ public class FXMLDefaultController {
 
     @FXML
     public void initialize() {
+        enablePlayBtn();
         btnAdd.setOnAction((event) -> {
             CircleProjectile addedCircle = new CircleProjectile(10, 1, Math.random() * 10, Math.random() * 10, 20, 40);
             circles.add(addedCircle);
@@ -68,9 +69,30 @@ public class FXMLDefaultController {
             }
         });
         btnPlay.setOnAction((event) -> {
+            disablePlayBtn();
             defaultAnimation.setComponents(circles, animationPane);
             defaultAnimation.play();
         });
+        btnPause.setOnAction((event) -> {
+            defaultAnimation.pauseAnimation();
+            enablePlayBtn();
+        });
+        btnReset.setOnAction((event) -> {
+            
+        });
     }
+
+    public void disablePlayBtn() {
+        btnPlay.setDisable(true);
+        btnPause.setDisable(false);
+        btnReset.setDisable(false);
+    }
+
+    public void enablePlayBtn() {
+        btnPlay.setDisable(false);
+        btnPause.setDisable(true);
+        btnReset.setDisable(true);
+    }
+
 
 }

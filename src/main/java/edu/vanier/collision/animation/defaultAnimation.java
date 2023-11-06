@@ -4,10 +4,12 @@
  */
 package edu.vanier.collision.animation;
 
+import edu.vanier.collision.controllers.FXMLDefaultController;
 import edu.vanier.collision.model.CircleProjectile;
 import java.util.List;
 import java.util.ListIterator;
 import javafx.animation.AnimationTimer;
+import javafx.scene.Node;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
@@ -52,6 +54,14 @@ public class defaultAnimation {
             }
         };
         animation.start();
+    }
+    
+    public static void pauseAnimation(){
+        animation.stop();
+    }
+    
+    public static void resetAnimation(){
+        
     }
 
     public static void resolveBallWallCollision(CircleProjectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
