@@ -71,7 +71,7 @@ set CLASSPATH=%APP_HOME%\lib\Collision Simulator.jar;%APP_HOME%\lib\opencsv-5.8.
 
 
 @rem Execute Collision Simulator
-"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%" edu.vanier.collision.animation.MyFirstGame %*
+"%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %COLLISION_SIMULATOR_OPTS%  -classpath "%CLASSPATH%" edu.vanier.collision.ui.main.MainApp %*
 
 :end
 @rem End local scope for the variables with windows NT shell

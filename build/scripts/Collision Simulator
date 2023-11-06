@@ -201,7 +201,7 @@ fi
 
 set -- \
         -classpath "$CLASSPATH" \
-        edu.vanier.collision.animation.MyFirstGame \
+        edu.vanier.collision.ui.main.MainApp \
         "$@"
 
 # Stop when "xargs" is not available.
