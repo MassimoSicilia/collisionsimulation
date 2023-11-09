@@ -12,7 +12,7 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Pane layoutX="6.0" layoutY="640.0" prefHeight="155.0" prefWidth="994.0">
+      <Pane fx:id="PaneContainer" layoutX="6.0" layoutY="640.0" prefHeight="155.0" prefWidth="994.0">
          <children>
             <Button fx:id="btnRemove" layoutX="108.0" layoutY="98.0" mnemonicParsing="false" text="Remove" />
             <TextField fx:id="txtObjectCount" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="76.0" promptText="counter" />
