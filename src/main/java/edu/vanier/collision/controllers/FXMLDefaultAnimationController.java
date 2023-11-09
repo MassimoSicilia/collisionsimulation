@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
@@ -53,6 +54,10 @@ public class FXMLDefaultAnimationController {
     HBox HBoxTop;
     
     @FXML
+    TextField txtObjectCount;
+    int circleCounter = 0;
+    
+    @FXML
     public void initialize() {
         enablePlayBtn();
         btnAdd.setOnAction((event) -> {
@@ -62,6 +67,7 @@ public class FXMLDefaultAnimationController {
             CircleProjectile addedCircle = new CircleProjectile(10, 1, Math.random() * 10, Math.random() * 10, 20, 40);
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getShape());
+            addCounter();
         });
         btnReturn.setOnAction((event) -> {
             try {
@@ -90,8 +96,8 @@ public class FXMLDefaultAnimationController {
             if (btnPlay.disabledProperty().getValue() == true) {
                 defaultAnimation.pauseAnimation();
                 enablePlayBtn();
-            } else {
-                btnReset.setDisable(true);
+                circleCounter = 0;
+                txtObjectCount.setText("Circles: " + circleCounter);
             }
         });
         
@@ -103,11 +109,19 @@ public class FXMLDefaultAnimationController {
             } else {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
+                substractCounter();
+//                if(circleCounter == 0){
+//                    btnRemove.setDisable(true);
+//                }else{
+//                    
+//                }
             }
             
         });
+        
+        
     }
-    
+
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
         btnPause.setDisable(false);
@@ -124,4 +138,12 @@ public class FXMLDefaultAnimationController {
         }
     }
     
+    private void addCounter() {
+        circleCounter++;
+        txtObjectCount.setText("Circles: " + circleCounter);
+    }
+    private void substractCounter() {
+        circleCounter--;
+        txtObjectCount.setText("Circles: " + circleCounter);
+    }
 }
