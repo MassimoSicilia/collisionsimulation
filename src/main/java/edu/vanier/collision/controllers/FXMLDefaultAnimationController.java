@@ -27,7 +27,7 @@ import javafx.scene.paint.Color;
  * @author Hassimo
  */
 public class FXMLDefaultAnimationController {
-    
+
     List<CircleProjectile> circles = new ArrayList<>();
     @FXML
     Button btnAdd;
@@ -45,6 +45,8 @@ public class FXMLDefaultAnimationController {
     Button btnHide;
     @FXML
     Button btnReturn;
+    @FXML
+    Pane PaneContainer;
 
     //layouts
     @FXML
@@ -53,11 +55,11 @@ public class FXMLDefaultAnimationController {
     Pane bottomPane;
     @FXML
     HBox HBoxTop;
-    
+
     @FXML
     TextField txtObjectCount;
     int circleCounter = 0;
-    
+
     @FXML
     public void initialize() {
         enablePlayBtn();
@@ -92,7 +94,7 @@ public class FXMLDefaultAnimationController {
         btnReset.setOnAction((event) -> {
             animationPane.getChildren().remove(1, circles.size() + 1); // the first element is the rectangle border
             circles.removeAll(circles);
-            
+
             // if the animation is playing, pause it
             if (btnPlay.disabledProperty().getValue() == true) {
                 defaultAnimation.pauseAnimation();
@@ -101,9 +103,28 @@ public class FXMLDefaultAnimationController {
                 txtObjectCount.setText("Circles: " + circleCounter);
             }
         });
-        
+
+        btnHide.setOnAction((event) -> {
+            if (btnHide.getText().equals("Hide")) {
+                btnHide.setText("Show");
+                for (Node node : PaneContainer.getChildren()) {
+                    if (node != btnHide) {
+                        node.setVisible(false);
+                    }
+                }
+
+            } else {
+                btnHide.setText("Hide");
+                for (Node node : PaneContainer.getChildren()) {
+                    if (node != btnHide) {
+                        node.setVisible(true);
+                    }
+                }
+            }
+        });
+
         btnRemove.setOnAction((event) -> {
-            
+
             btnRemove.setDisable(false);
             if (animationPane.getChildren().size() == 1) {
                 btnRemove.setDisable(true);
@@ -117,10 +138,9 @@ public class FXMLDefaultAnimationController {
 //                    
 //                }
             }
-            
+
         });
-        
-        
+
     }
 
     public void disablePlayBtn() {
@@ -128,7 +148,7 @@ public class FXMLDefaultAnimationController {
         btnPause.setDisable(false);
         btnReset.setDisable(false);
     }
-    
+
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
         btnPause.setDisable(true);
@@ -138,11 +158,12 @@ public class FXMLDefaultAnimationController {
             btnReset.setDisable(false);
         }
     }
-    
+
     private void addCounter() {
         circleCounter++;
         txtObjectCount.setText("Circles: " + circleCounter);
     }
+
     private void substractCounter() {
         circleCounter--;
         txtObjectCount.setText("Circles: " + circleCounter);
