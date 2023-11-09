@@ -30,7 +30,7 @@ public class FXMLChooseSceneryController {
             try {
                 Stage primaryStage = (Stage)btnDefault.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                loader.setController(new FXMLDefaultController());
+                loader.setController(new FXMLDefaultAnimationController());
                 Pane root = loader.load();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);

@@ -1,6 +1,6 @@
 package edu.vanier.collision.main;
 
-import edu.vanier.collision.controllers.FXMLMainAppController;
+import edu.vanier.collision.controllers.FXMLMainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -18,7 +18,7 @@ public class MainApp extends Application{
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader mainMenu = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
-        mainMenu.setController(new FXMLMainAppController());
+        mainMenu.setController(new FXMLMainMenuController());
         Parent root = mainMenu.load(); 
         Scene scene = new Scene (root);
         primaryStage.setScene(scene);

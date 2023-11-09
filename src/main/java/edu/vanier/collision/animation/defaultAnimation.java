@@ -4,7 +4,7 @@
  */
 package edu.vanier.collision.animation;
 
-import edu.vanier.collision.controllers.FXMLDefaultController;
+import edu.vanier.collision.controllers.FXMLDefaultAnimationController;
 import edu.vanier.collision.model.CircleProjectile;
 import java.util.List;
 import java.util.ListIterator;
@@ -19,7 +19,7 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  * @author Hassimo
  */
 public class defaultAnimation {
-
+    
     static AnimationTimer animation;
     static List<CircleProjectile> circles;
     static Pane animationPane;
