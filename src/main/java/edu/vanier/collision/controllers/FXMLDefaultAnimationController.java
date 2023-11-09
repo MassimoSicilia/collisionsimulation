@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 /**
  *
@@ -65,7 +66,7 @@ public class FXMLDefaultAnimationController {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            CircleProjectile addedCircle = new CircleProjectile(10, 1, Math.random() * 10, Math.random() * 10, 20, 40);
+            CircleProjectile addedCircle = new CircleProjectile(10, 1, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()));
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getShape());
         });

@@ -103,7 +103,7 @@ public class Simulation {
                     loadedSimulation.setElasticity(Boolean.getBoolean(nextLine[0]));
                     break;
                 }
-                loadedProjectiles.add(new CircleProjectile(Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[0]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[5]), Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[4])));
+                //loadedProjectiles.add(new CircleProjectile(Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[0]), Double.parseDouble(nextLine[3]), Double.parseDouble(nextLine[5]), Integer.parseInt(nextLine[2]), Integer.parseInt(nextLine[4])));
                 loadedSimulation.setProjectiles(loadedProjectiles);
             }
         } else if (nextLine.length == 8) {
@@ -113,7 +113,7 @@ public class Simulation {
                     loadedSimulation.setElasticity(Boolean.getBoolean(nextLine[0]));
                     break;
                 }
-                loadedProjectiles.add(new RectangleProjectile(Double.parseDouble(nextLine[0]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[6]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[5])));
+                //loadedProjectiles.add(new RectangleProjectile(Double.parseDouble(nextLine[0]), Double.parseDouble(nextLine[2]), Double.parseDouble(nextLine[1]), Double.parseDouble(nextLine[4]), Double.parseDouble(nextLine[6]), Integer.parseInt(nextLine[3]), Integer.parseInt(nextLine[5])));
                 loadedSimulation.setProjectiles(loadedProjectiles);
             }
         }

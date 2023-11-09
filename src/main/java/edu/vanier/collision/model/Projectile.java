@@ -4,6 +4,7 @@
  */
 package edu.vanier.collision.model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 /**
@@ -17,6 +18,7 @@ public abstract class Projectile extends Shape{
     private int x_position;
     private int y_position;
     private Shape shape;
+    private Color color;
 
     /**
      * Creates default Projectile object, all default objects will have no velocity or angle.
@@ -35,12 +37,13 @@ public abstract class Projectile extends Shape{
      * @param x_position
      * @param y_position
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
+    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, Color color) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         this.x_position = x_position;
         this.y_position = y_position;
+        this.color = color;
     }
 
     public double getMass() {

@@ -4,6 +4,7 @@
  */
 package edu.vanier.collision.model;
 
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 
 /**
@@ -19,9 +20,9 @@ public class CircleProjectile extends Projectile{
         super();
     }
 
-    public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, int x_position, int y_position) {
-        super(mass, x_velocity, y_velocity, x_position, y_position);
-        setShape(new Circle(x_position, y_position, radius));
+    public CircleProjectile(double radius, double mass, double x_velocity, double y_velocity, int x_position, int y_position, Color color) {
+        super(mass, x_velocity, y_velocity, x_position, y_position, color);
+        setShape(new Circle(x_position, y_position, radius, color));
         this.radius = radius;
     }
 
