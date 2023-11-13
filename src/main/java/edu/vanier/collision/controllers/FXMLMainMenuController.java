@@ -5,8 +5,10 @@
 package edu.vanier.collision.controllers;
 
 import com.opencsv.exceptions.CsvValidationException;
+import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,19 +48,24 @@ public class FXMLMainMenuController {
         });
         
         btnLoad.setOnAction(event ->{
+            Stage primaryStage = (Stage) btnLoad.getScene().getWindow();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Saved Scenery");
             // will only accept csv files
-            fileChooser.getExtensionFilters().addAll(new ExtensionFilter("csv File", "*.csv"));
+            fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON File", "*.json"));
             File sceneryToLoad = fileChooser.showOpenDialog((Stage) btnLoad.getScene().getWindow());
             try {
-                Simulation simulationToload = Simulation.load(sceneryToLoad);
+                Simulation simulationToLoad = SimulationController.load(sceneryToLoad);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
+                FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
+                controller.circles = simulationToLoad.getProjectiles();
+                loader.setController(controller);
+                switchScenes(primaryStage,new Scene(loader.load()));
+                
                 // to finish implementation after designing all scenes
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (CsvValidationException ex) {
-                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            } 
         });
     }
     

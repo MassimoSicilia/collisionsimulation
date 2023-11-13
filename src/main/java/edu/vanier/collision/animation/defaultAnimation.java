@@ -5,7 +5,7 @@
 package edu.vanier.collision.animation;
 
 import edu.vanier.collision.controllers.FXMLDefaultAnimationController;
-import edu.vanier.collision.model.CircleProjectile;
+import edu.vanier.collision.model.Projectile;
 import java.util.List;
 import java.util.ListIterator;
 import javafx.animation.AnimationTimer;
@@ -21,10 +21,10 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 public class defaultAnimation {
     
     static AnimationTimer animation;
-    static List<CircleProjectile> circles;
+    static List<Projectile> circles;
     static Pane animationPane;
 
-    public static void setComponents(List<CircleProjectile> circles, Pane animationPane) {
+    public static void setComponents(List<Projectile> circles, Pane animationPane) {
         defaultAnimation.circles = circles;
         defaultAnimation.animationPane = animationPane;
     }
@@ -34,9 +34,9 @@ public class defaultAnimation {
             @Override
             public void handle(long now) {
                 // every frame, will see update positions and check for collisions
-                for (ListIterator<CircleProjectile> firstIterator = circles.listIterator(); firstIterator.hasNext();) {
-                    CircleProjectile projectile1 = firstIterator.next();
-                    Circle ball = (Circle) projectile1.getShape();
+                for (ListIterator<Projectile> firstIterator = circles.listIterator(); firstIterator.hasNext();) {
+                    Projectile projectile1 = firstIterator.next();
+                    Circle ball = projectile1.getCircle();
                     double xVelocity = projectile1.getX_velocity();
                     double yVelocity = projectile1.getY_velocity();
 
@@ -46,8 +46,8 @@ public class defaultAnimation {
 
                     resolveBallWallCollision(projectile1, ball, xVelocity, yVelocity, animationPane);
 
-                    for (ListIterator<CircleProjectile> secondIterator = circles.listIterator(firstIterator.nextIndex()); secondIterator.hasNext();) {
-                        CircleProjectile projectile2 = secondIterator.next();
+                    for (ListIterator<Projectile> secondIterator = circles.listIterator(firstIterator.nextIndex()); secondIterator.hasNext();) {
+                        Projectile projectile2 = secondIterator.next();
                         resolveBallCollision(projectile1, projectile2);
                     }
                 }
@@ -60,7 +60,7 @@ public class defaultAnimation {
         animation.stop();
     }
     
-    public static void resolveBallWallCollision(CircleProjectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
+    public static void resolveBallWallCollision(Projectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
         //If the ball reaches the left or right border make the step negative
         if ((ball.getCenterX() <= ball.getRadius() && xVelocity < 0)
                 || (ball.getCenterX()>= animationPane.getWidth() - ball.getRadius() && xVelocity > 0)) {
@@ -74,15 +74,15 @@ public class defaultAnimation {
         }
     }
 
-    public static void resolveBallCollision(CircleProjectile projectile1, CircleProjectile projectile2) {
+    public static void resolveBallCollision(Projectile projectile1, Projectile projectile2) {
         double xVelocity = projectile1.getX_velocity();
         double yVelocity = projectile1.getY_velocity();
         double xVelocity2 = projectile2.getX_velocity();
         double yVelocity2 = projectile2.getY_velocity();
         double mass1 = projectile1.getMass();
         double mass2 = projectile2.getMass();
-        Circle ball1 = (Circle) projectile1.getShape();
-        Circle ball2 = (Circle) projectile2.getShape();
+        Circle ball1 = projectile1.getCircle();
+        Circle ball2 = projectile2.getCircle();
         double deltaX = (ball2.getCenterX() + ball2.getRadius()) - (ball1.getCenterX() + ball1.getRadius());
         double deltaY = (ball2.getCenterY() + ball2.getRadius()) - (ball1.getCenterY() + ball1.getRadius());
 

@@ -4,46 +4,45 @@
  */
 package edu.vanier.collision.model;
 
+import java.io.Serializable;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
 /**
- * Projectile class displays information that every shape object should have, which affects collisions.
+ * Projectile class displays information that every shape object should have,
+ * which affects collisions.
+ *
  * @author andyhou
  */
-public abstract class Projectile extends Shape{
+public class Projectile {
+
     private double mass;
     private double x_velocity;
     private double y_velocity;
-    private int x_position;
-    private int y_position;
-    private Shape shape;
-    private Color color;
+    private Circle circle;
 
     /**
-     * Creates default Projectile object, all default objects will have no velocity or angle.
+     * Creates default Projectile object, all default objects will have no
+     * velocity or angle.
      */
     public Projectile() {
-        this.mass = 10;
-        this.x_position = 0;
-        this.y_position = 0;
     }
 
     /**
      * Creates Projectile object with all specified variables.
+     *
      * @param mass
      * @param x_velocity
      * @param y_velocity
      * @param x_position
      * @param y_position
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, Color color) {
+    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, Color color, double radius) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
-        this.x_position = x_position;
-        this.y_position = y_position;
-        this.color = color;
+        circle = new Circle(x_position, y_position, radius, color);
     }
 
     public double getMass() {
@@ -52,14 +51,6 @@ public abstract class Projectile extends Shape{
 
     public void setMass(double mass) {
         this.mass = mass;
-    }
-
-    public Shape getShape() {
-        return shape;
-    }
-
-    public void setShape(Shape shape) {
-        this.shape = shape;
     }
 
     public double getX_velocity() {
@@ -78,20 +69,8 @@ public abstract class Projectile extends Shape{
         this.y_velocity = y_velocity;
     }
 
-    public int getX_position() {
-        return x_position;
+    public Circle getCircle(){
+        return circle;
     }
 
-    public void setX_position(int x_position) {
-        this.x_position = x_position;
-    }
-
-    public int getY_position() {
-        return y_position;
-    }
-
-    public void setY_position(int y_position) {
-        this.y_position = y_position;
-    }
-       
 }

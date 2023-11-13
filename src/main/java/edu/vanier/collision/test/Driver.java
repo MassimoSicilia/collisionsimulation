@@ -6,13 +6,7 @@ package edu.vanier.collision.test;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import edu.vanier.collision.model.CircleProjectile;
-import edu.vanier.collision.model.Projectile;
-import edu.vanier.collision.model.RectangleProjectile;
-import edu.vanier.collision.model.Simulation;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *
