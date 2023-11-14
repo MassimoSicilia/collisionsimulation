@@ -11,6 +11,7 @@ import java.util.ListIterator;
 import javafx.animation.AnimationTimer;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.shape.Circle;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
@@ -23,6 +24,7 @@ public class defaultAnimation {
     static AnimationTimer animation;
     static List<Projectile> circles;
     static Pane animationPane;
+    static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
         defaultAnimation.circles = circles;
@@ -44,6 +46,7 @@ public class defaultAnimation {
                     ball.setCenterX(ball.getCenterX() + xVelocity);
                     ball.setCenterY(ball.getCenterY() + yVelocity);
 
+                    //check for collisions
                     resolveBallWallCollision(projectile1, ball, xVelocity, yVelocity, animationPane);
 
                     for (ListIterator<Projectile> secondIterator = circles.listIterator(firstIterator.nextIndex()); secondIterator.hasNext();) {
@@ -65,12 +68,14 @@ public class defaultAnimation {
         if ((ball.getCenterX() <= ball.getRadius() && xVelocity < 0)
                 || (ball.getCenterX()>= animationPane.getWidth() - ball.getRadius() && xVelocity > 0)) {
             projectile.setX_velocity(-xVelocity);
+            bouncingAudio.play();
         }
 
         //If the ball reaches the bottom or top border make the step negative
         if ((ball.getCenterY() <= ball.getRadius() && yVelocity < 0)
                 || (ball.getCenterY() >= animationPane.getHeight() - ball.getRadius() && yVelocity > 0)) {
             projectile.setY_velocity(-yVelocity);
+            bouncingAudio.play();
         }
     }
 
@@ -89,6 +94,8 @@ public class defaultAnimation {
         //https://www.vobarian.com/collisions/2dcollisions2.pdf
         if (ball1.getBoundsInParent().intersects(ball2.getBoundsInParent())
                 && deltaX * (xVelocity2 - xVelocity) + deltaY * (yVelocity2 - yVelocity) < 0) {
+            
+            bouncingAudio.play();
 
             Vector2D normal = new Vector2D(Math.abs(ball1.getCenterX() - ball2.getCenterX()), Math.abs(ball1.getCenterY() - ball2.getCenterY()));
             normal = normal.normalize();
