@@ -22,6 +22,8 @@ import javafx.stage.Stage;
 public class FXMLChooseSceneryController {
     @FXML
     Button btnDefault;
+    @FXML
+    Button btnAsteroids;
     
 
     @FXML
@@ -36,6 +38,18 @@ public class FXMLChooseSceneryController {
                 primaryStage.setScene(scene);
             } catch (IOException ex) {
                 Logger.getLogger(FXMLChooseSceneryController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        btnAsteroids.setOnAction((event) -> {
+            try{
+            Stage primaryStage = (Stage)btnAsteroids.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsLayout.fxml"));
+            loader.setController(new FXMLAsteroidsLayoutController());
+            Pane root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+            }catch(IOException e){
+                Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE,null,e);
             }
         });
     }
