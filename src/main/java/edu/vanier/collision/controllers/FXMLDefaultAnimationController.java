@@ -81,6 +81,7 @@ public class FXMLDefaultAnimationController extends Simulation {
     @FXML
     public void initialize() {
         enablePlayBtn();
+         //-- Create n number of circles and add them to the scene.  
 
         lblObjectCount.setText(Integer.toString(circles.size()));
 
@@ -89,6 +90,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         }
 
         btnAdd.setOnAction((event) -> {
+            //-- TODO: Create a separate method for adding/removing circles.
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
