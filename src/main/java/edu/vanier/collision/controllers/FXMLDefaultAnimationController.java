@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -69,14 +70,16 @@ public class FXMLDefaultAnimationController extends Simulation{
     Pane PaneContainer;
 
     @FXML
-    TextField txtObjectCount;
-    int circleCounter = 0;
+    Label lblObjectCount;
     
     private boolean elasticity = true;
 
     @FXML
     public void initialize() {
         enablePlayBtn();
+        
+        lblObjectCount.setText(Integer.toString(circles.size()));
+        
         for(int i = 0;i < circles.size();i++){
             animationPane.getChildren().add(circles.get(i).getCircle());
         }
@@ -88,7 +91,7 @@ public class FXMLDefaultAnimationController extends Simulation{
             Projectile addedCircle = new Projectile(10, Math.random()* 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), 10);
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getCircle());
-            addCounter();
+            lblObjectCount.setText(Integer.toString(circles.size()));
         });
         
         btnReturn.setOnAction((event) -> {
@@ -121,9 +124,8 @@ public class FXMLDefaultAnimationController extends Simulation{
             if (btnPlay.disabledProperty().getValue() == true) {
                 defaultAnimation.pauseAnimation();
                 enablePlayBtn();
-                circleCounter = 0;
-                txtObjectCount.setText("Circles: " + circleCounter);
             }
+            lblObjectCount.setText(Integer.toString(circles.size()));
         });
 
         btnHide.setOnAction((event) -> {
@@ -152,12 +154,7 @@ public class FXMLDefaultAnimationController extends Simulation{
             } else {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
-                substractCounter();
-//                if(circleCounter == 0){
-//                    btnRemove.setDisable(true);
-//                }else{
-//                    
-//                }
+                lblObjectCount.setText(Integer.toString(circles.size()));
             }
 
         });
@@ -195,15 +192,5 @@ public class FXMLDefaultAnimationController extends Simulation{
         } else {
             btnReset.setDisable(false);
         }
-    }
-
-    private void addCounter() {
-        circleCounter++;
-        txtObjectCount.setText("Circles: " + circleCounter);
-    }
-
-    private void substractCounter() {
-        circleCounter--;
-        txtObjectCount.setText("Circles: " + circleCounter);
     }
 }

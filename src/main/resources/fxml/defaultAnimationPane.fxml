@@ -8,16 +8,17 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Pane fx:id="PaneContainer" layoutX="6.0" layoutY="640.0" prefHeight="155.0" prefWidth="994.0">
          <children>
             <Button fx:id="btnRemove" layoutX="108.0" layoutY="98.0" mnemonicParsing="false" text="Remove" />
-            <TextField fx:id="txtObjectCount" layoutX="14.0" layoutY="38.0" prefHeight="25.0" prefWidth="76.0" promptText="counter" />
             <Button fx:id="btnAdd" layoutX="109.0" layoutY="38.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Add" />
-            <Label fx:id="lblCounter" layoutX="14.0" layoutY="13.0" prefHeight="26.0" prefWidth="63.0" text="#Objects" />
+            <Label fx:id="lblCounter" layoutX="21.0" layoutY="10.0" prefHeight="26.0" prefWidth="63.0" text="#Objects" />
             <Button fx:id="btnHide" layoutX="738.0" layoutY="60.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Hide" />
             <Label fx:id="lblVelocity" layoutX="11.0" layoutY="77.0" text="Velocity(m/s)" />
             <TextField fx:id="txtVelocity" layoutX="14.0" layoutY="98.0" prefHeight="25.0" prefWidth="76.0" promptText="m/s" />
@@ -29,6 +30,16 @@
             <Slider fx:id="volumeSlider" layoutX="852.0" layoutY="90.0" prefHeight="14.0" prefWidth="107.0" />
             <Label fx:id="lblElasticity" layoutX="879.0" layoutY="6.0" prefHeight="17.0" prefWidth="52.0" text="Elasticity" />
             <ComboBox layoutX="850.0" layoutY="26.0" prefHeight="25.0" prefWidth="107.0" promptText="Elasticity" />
+            <StackPane layoutX="24.0" layoutY="35.0" prefHeight="34.0" prefWidth="43.0">
+               <children>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="30.0" stroke="BLACK" strokeType="INSIDE" width="41.0" />
+                  <Label fx:id="lblObjectCount" alignment="TOP_CENTER" prefHeight="28.0" prefWidth="43.0">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+               </children>
+            </StackPane>
          </children>
       </Pane>
       <HBox fx:id="HBoxTop" layoutX="34.0" layoutY="16.0" prefHeight="34.0" prefWidth="938.0">
