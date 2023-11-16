@@ -77,8 +77,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     @FXML
     Label lblObjectCount;
-    
-    
+
     @FXML
     Slider volumeSlider;
 
@@ -89,20 +88,26 @@ public class FXMLDefaultAnimationController extends Simulation {
     public void initialize() {
         enablePlayBtn();
 
+        // Initialize counter.
         lblObjectCount.setText(Integer.toString(circles.size()));
         
-        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
-        comboBoxElasticity.getSelectionModel().select("Non-Elastic");
-        if (comboBoxElasticity.getValue() == "Elastic") {
-            defaultAnimation.setElasticity(true); 
-        } else {
-            defaultAnimation.setElasticity(false); 
-        }
-
+        // Add all projectiles to the pane.
         for (int i = 0; i < circles.size(); i++) {
             animationPane.getChildren().add(circles.get(i).getCircle());
         }
 
+        // Elasticity of the simulation.
+        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
+        comboBoxElasticity.getSelectionModel().select("Non-Elastic");
+        comboBoxElasticity.setOnAction((event) -> {
+            if (comboBoxElasticity.getValue() == "Elastic") {
+                defaultAnimation.setElasticity(true);
+            } else {
+                defaultAnimation.setElasticity(false);
+            }
+        });
+
+        // Add Projectiles.
         btnAdd.setOnAction((event) -> {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
@@ -113,6 +118,7 @@ public class FXMLDefaultAnimationController extends Simulation {
             lblObjectCount.setText(Integer.toString(circles.size()));
         });
 
+        // Go back.
         btnReturn.setOnAction((event) -> {
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
@@ -124,21 +130,23 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
         });
 
+        // Start the simulation.
         btnPlay.setOnAction((event) -> {
             disablePlayBtn();
             defaultAnimation.setComponents(circles, animationPane);
             defaultAnimation.play();
         });
 
+        // Pause the simulation.
         btnPause.setOnAction((event) -> {
             defaultAnimation.pauseAnimation();
             enablePlayBtn();
         });
 
+        // Reset the simulation.
         btnReset.setOnAction((event) -> {
             animationPane.getChildren().remove(1, circles.size() + 1); // the first element is the rectangle border
             circles.removeAll(circles);
-
             // if the animation is playing, pause it
             if (btnPlay.disabledProperty().getValue() == true) {
                 defaultAnimation.pauseAnimation();
@@ -147,6 +155,7 @@ public class FXMLDefaultAnimationController extends Simulation {
             lblObjectCount.setText(Integer.toString(circles.size()));
         });
 
+        // Hide the controls.
         btnHide.setOnAction((event) -> {
             if (btnHide.getText().equals("Hide")) {
                 btnHide.setText("Show");
@@ -155,7 +164,6 @@ public class FXMLDefaultAnimationController extends Simulation {
                         node.setVisible(false);
                     }
                 }
-
             } else {
                 btnHide.setText("Hide");
                 for (Node node : PaneContainer.getChildren()) {
@@ -166,6 +174,7 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
         });
 
+        // Remove Projectile from simulation.
         btnRemove.setOnAction((event) -> {
             btnRemove.setDisable(false);
             if (animationPane.getChildren().size() == 1) {
@@ -175,9 +184,9 @@ public class FXMLDefaultAnimationController extends Simulation {
                 circles.remove(circles.size() - 1);
                 lblObjectCount.setText(Integer.toString(circles.size()));
             }
-
         });
 
+        // Save the projectile to JSON file.
         btnSave.setOnAction((event) -> {
             Simulation simulation = new Simulation(circles, defaultAnimation.isElasticity());
             FileChooser fileSaver = new FileChooser();
@@ -192,33 +201,28 @@ public class FXMLDefaultAnimationController extends Simulation {
                     Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-
         });
+        
+        // Mute the simulation.
         btnMute.setOnAction((event) -> {
             if (btnMute.getText().equals("Mute")) {
                 btnMute.setText("Unmute");
                 volumeSlider.setDisable(true);
                 bouncingAudio.setVolume(0.0);
-
             } else {
                 btnMute.setText("Mute");
                 bouncingAudio.setVolume(volumeSlider.getValue());
                 volumeSlider.setDisable(false);
-                
             }
         });
 
+        // Set volume using the slider.
         volumeSlider.setMin(0.0);
         volumeSlider.setMax(1.0);
         volumeSlider.setValue(1);
         volumeSlider.valueProperty().addListener((observable) -> {
             bouncingAudio.setVolume(volumeSlider.getValue());
         });
-        
-        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
-        comboBoxElasticity.getSelectionModel().select("Non-Elastic");
-        
-
     }
 
     public void disablePlayBtn() {
@@ -237,9 +241,4 @@ public class FXMLDefaultAnimationController extends Simulation {
         }
     }
 
-    /*
-    public static boolean isElasticity() {
-        return elasticity;
-    }
-    */
 }
