@@ -24,6 +24,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
@@ -36,9 +37,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
  *
  * @author Hassimo
  */
-public class FXMLDefaultAnimationController extends Simulation{
+public class FXMLDefaultAnimationController extends Simulation {
+
     List<Projectile> circles = new ArrayList<>();
-    
+
     // buttons
     @FXML
     Button btnAdd;
@@ -58,6 +60,8 @@ public class FXMLDefaultAnimationController extends Simulation{
     Button btnReturn;
     @FXML
     Button btnSave;
+    @FXML
+    ComboBox comboBoxElasticity;
 
     //layouts
     @FXML
@@ -71,29 +75,29 @@ public class FXMLDefaultAnimationController extends Simulation{
 
     @FXML
     Label lblObjectCount;
-    
+
     private boolean elasticity = true;
 
     @FXML
     public void initialize() {
         enablePlayBtn();
-        
+
         lblObjectCount.setText(Integer.toString(circles.size()));
-        
-        for(int i = 0;i < circles.size();i++){
+
+        for (int i = 0; i < circles.size(); i++) {
             animationPane.getChildren().add(circles.get(i).getCircle());
         }
-        
+
         btnAdd.setOnAction((event) -> {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            Projectile addedCircle = new Projectile(10, Math.random()* 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), 10);
+            Projectile addedCircle = new Projectile(10, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), 10);
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getCircle());
             lblObjectCount.setText(Integer.toString(circles.size()));
         });
-        
+
         btnReturn.setOnAction((event) -> {
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
@@ -104,18 +108,18 @@ public class FXMLDefaultAnimationController extends Simulation{
                 Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
+
         btnPlay.setOnAction((event) -> {
             disablePlayBtn();
             defaultAnimation.setComponents(circles, animationPane);
             defaultAnimation.play();
         });
-        
+
         btnPause.setOnAction((event) -> {
             defaultAnimation.pauseAnimation();
             enablePlayBtn();
         });
-        
+
         btnReset.setOnAction((event) -> {
             animationPane.getChildren().remove(1, circles.size() + 1); // the first element is the rectangle border
             circles.removeAll(circles);
@@ -158,7 +162,7 @@ public class FXMLDefaultAnimationController extends Simulation{
             }
 
         });
-        
+
         btnSave.setOnAction((event) -> {
             Simulation simulation = new Simulation(circles, elasticity);
             FileChooser fileSaver = new FileChooser();
@@ -166,15 +170,19 @@ public class FXMLDefaultAnimationController extends Simulation{
             fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
             fileSaver.setInitialFileName("simulation");
             File file = fileSaver.showSaveDialog(btnSave.getScene().getWindow());
-            if(file != null){
+            if (file != null) {
                 try {
                     SimulationController.save(simulation, file);
                 } catch (IOException ex) {
                     Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
-            
+
         });
+        
+        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
+        comboBoxElasticity.getSelectionModel().select("Elastic");
+        
 
     }
 
