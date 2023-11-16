@@ -20,11 +20,12 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  * @author Hassimo
  */
 public class defaultAnimation {
-    
+
     static AnimationTimer animation;
     static List<Projectile> circles;
     static Pane animationPane;
     static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+    static boolean elasticity;
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
         defaultAnimation.circles = circles;
@@ -35,6 +36,12 @@ public class defaultAnimation {
         animation = new AnimationTimer() {
             @Override
             public void handle(long now) {
+                double elasticityValue;
+                if (elasticity == true) {
+                    elasticityValue = 1;
+                } else {
+                    elasticityValue = 0.995;
+                }
                 // every frame, will see update positions and check for collisions
                 for (ListIterator<Projectile> firstIterator = circles.listIterator(); firstIterator.hasNext();) {
                     Projectile projectile1 = firstIterator.next();
@@ -45,6 +52,9 @@ public class defaultAnimation {
                     //move the ball
                     ball.setCenterX(ball.getCenterX() + xVelocity);
                     ball.setCenterY(ball.getCenterY() + yVelocity);
+
+                    projectile1.setX_velocity(projectile1.getX_velocity() * elasticityValue);
+                    projectile1.setY_velocity(projectile1.getY_velocity() * elasticityValue);
 
                     //check for collisions
                     resolveBallWallCollision(projectile1, ball, xVelocity, yVelocity, animationPane);
@@ -58,15 +68,15 @@ public class defaultAnimation {
         };
         animation.start();
     }
-    
-    public static void pauseAnimation(){
+
+    public static void pauseAnimation() {
         animation.stop();
     }
-    
+
     public static void resolveBallWallCollision(Projectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
         //If the ball reaches the left or right border make the step negative
         if ((ball.getCenterX() <= ball.getRadius() && xVelocity < 0)
-                || (ball.getCenterX()>= animationPane.getWidth() - ball.getRadius() && xVelocity > 0)) {
+                || (ball.getCenterX() >= animationPane.getWidth() - ball.getRadius() && xVelocity > 0)) {
             projectile.setX_velocity(-xVelocity);
             bouncingAudio.play();
         }
@@ -94,7 +104,7 @@ public class defaultAnimation {
         //https://www.vobarian.com/collisions/2dcollisions2.pdf
         if (ball1.getBoundsInParent().intersects(ball2.getBoundsInParent())
                 && deltaX * (xVelocity2 - xVelocity) + deltaY * (yVelocity2 - yVelocity) < 0) {
-            
+
             bouncingAudio.play();
 
             Vector2D normal = new Vector2D(Math.abs(ball1.getCenterX() - ball2.getCenterX()), Math.abs(ball1.getCenterY() - ball2.getCenterY()));
@@ -121,5 +131,14 @@ public class defaultAnimation {
             projectile2.setY_velocity(velocity2_final.getY());
 
         }
+
+    }
+
+    public static boolean isElasticity() {
+        return elasticity;
+    }
+
+    public static void setElasticity(boolean elasticity) {
+        defaultAnimation.elasticity = elasticity;
     }
 }

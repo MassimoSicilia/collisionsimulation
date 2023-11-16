@@ -75,14 +75,22 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     @FXML
     Label lblObjectCount;
-
-    private boolean elasticity = true;
-
+    
+    //static boolean elasticity = defaultAnimation.isElasticity();
+    
     @FXML
     public void initialize() {
         enablePlayBtn();
 
         lblObjectCount.setText(Integer.toString(circles.size()));
+        
+        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
+        comboBoxElasticity.getSelectionModel().select("Non-Elastic");
+        if (comboBoxElasticity.getValue() == "Elastic") {
+            defaultAnimation.setElasticity(true); 
+        } else {
+            defaultAnimation.setElasticity(false); 
+        }
 
         for (int i = 0; i < circles.size(); i++) {
             animationPane.getChildren().add(circles.get(i).getCircle());
@@ -164,7 +172,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         });
 
         btnSave.setOnAction((event) -> {
-            Simulation simulation = new Simulation(circles, elasticity);
+            Simulation simulation = new Simulation(circles, defaultAnimation.isElasticity());
             FileChooser fileSaver = new FileChooser();
             fileSaver.setTitle("Save Simulation");
             fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
@@ -179,10 +187,6 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
 
         });
-        
-        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
-        comboBoxElasticity.getSelectionModel().select("Elastic");
-        
 
     }
 
@@ -201,4 +205,10 @@ public class FXMLDefaultAnimationController extends Simulation {
             btnReset.setDisable(false);
         }
     }
+
+    /*
+    public static boolean isElasticity() {
+        return elasticity;
+    }
+    */
 }
