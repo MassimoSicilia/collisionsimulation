@@ -152,10 +152,11 @@ public class FXMLDefaultAnimationController extends Simulation {
         });
 
         btnRemove.setOnAction((event) -> {
-            btnRemove.setDisable(false);
             if (animationPane.getChildren().size() == 1) {
                 btnRemove.setDisable(true);
-            } else {
+            } else if (animationPane.getChildren().size() == 2){
+                btnRemove.setDisable(false);
+            }else {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
                 lblObjectCount.setText(Integer.toString(circles.size()));
