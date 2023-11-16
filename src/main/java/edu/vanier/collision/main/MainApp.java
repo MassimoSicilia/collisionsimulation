@@ -23,6 +23,7 @@ public class MainApp extends Application{
         Scene scene = new Scene (root);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
+        primaryStage.setAlwaysOnTop(true);
         
         primaryStage.show();
     }

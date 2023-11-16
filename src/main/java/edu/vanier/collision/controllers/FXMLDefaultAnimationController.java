@@ -26,9 +26,11 @@ import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -75,8 +77,12 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     @FXML
     Label lblObjectCount;
+    
+    @FXML
+    Slider volumeSlider;
 
     private boolean elasticity = true;
+    static AudioClip bouncingAudio = defaultAnimation.bouncingAudio;
 
     @FXML
     public void initialize() {
@@ -178,6 +184,26 @@ public class FXMLDefaultAnimationController extends Simulation {
                 }
             }
 
+        });
+        btnMute.setOnAction((event) -> {
+            if (btnMute.getText().equals("Mute")) {
+                btnMute.setText("Unmute");
+                volumeSlider.setDisable(true);
+                bouncingAudio.setVolume(0.0);
+
+            } else {
+                btnMute.setText("Mute");
+                bouncingAudio.setVolume(volumeSlider.getValue());
+                volumeSlider.setDisable(false);
+                
+            }
+        });
+
+        volumeSlider.setMin(0.0);
+        volumeSlider.setMax(1.0);
+        volumeSlider.setValue(1);
+        volumeSlider.valueProperty().addListener((observable) -> {
+            bouncingAudio.setVolume(volumeSlider.getValue());
         });
         
         comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
