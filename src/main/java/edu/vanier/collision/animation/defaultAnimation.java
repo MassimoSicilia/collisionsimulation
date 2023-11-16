@@ -24,7 +24,7 @@ public class defaultAnimation {
     static AnimationTimer animation;
     static List<Projectile> circles;
     static Pane animationPane;
-    static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+    public static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     static boolean elasticity;
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
