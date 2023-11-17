@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -28,6 +30,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
+import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -45,7 +48,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     List<Projectile> circles = new ArrayList<>();
 
-    // buttons
+    // UI Controls
     @FXML
     Button btnAdd;
     @FXML
@@ -66,6 +69,8 @@ public class FXMLDefaultAnimationController extends Simulation {
     Button btnSave;
     @FXML
     ComboBox comboBoxElasticity;
+    @FXML
+    Button btnShow;
 
     //layouts
     @FXML
@@ -76,17 +81,39 @@ public class FXMLDefaultAnimationController extends Simulation {
     Label lblObjectCount;
     @FXML
     Slider volumeSlider;
+    @FXML
+    SplitPane root;
+    @FXML
+    AnchorPane controlsPane;
 
     private boolean elasticity = true;
     static AudioClip bouncingAudio = defaultAnimation.bouncingAudio;
 
     @FXML
     public void initialize() {
+        Divider divider = root.getDividers().get(0);
+        double originalDividerPosition = divider.getPosition();
+        
+        // Listeners to make it so that the user cannot move the divider.
+        ChangeListener originalDividerListener = (observable, oldValue, newValue) -> {
+            divider.setPosition(originalDividerPosition);
+            if (divider.getPosition() != originalDividerPosition) {
+                divider.setPosition(originalDividerPosition);
+            }
+        };
+        
+        ChangeListener hiddenDividerListener = (observable, oldValue, newValue) -> {
+            if (divider.getPosition() != root.getWidth()) {
+                divider.setPosition(root.getWidth());
+            }
+        };
+
+        setDividerOriginal(divider, originalDividerPosition, originalDividerListener, hiddenDividerListener);
         enablePlayBtn();
 
         // Initialize counter.
         lblObjectCount.setText(Integer.toString(circles.size()));
-        
+
         // Add all projectiles to the pane.
         for (int i = 0; i < circles.size(); i++) {
             animationPane.getChildren().add(circles.get(i).getCircle());
@@ -118,7 +145,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Go back.
         btnReturn.setOnAction((event) -> {
-            if(defaultAnimation.isAnimationPlaying()){
+            if (defaultAnimation.isAnimationPlaying()) {
                 defaultAnimation.stop();
             }
             try {
@@ -158,21 +185,14 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Hide the controls.
         btnHide.setOnAction((event) -> {
-            if (btnHide.getText().equals("Hide")) {
-                btnHide.setText("Show");
-                for (Node node : PaneContainer.getChildren()) {
-                    if (node != btnHide) {
-                        node.setVisible(false);
-                    }
-                }
-            } else {
-                btnHide.setText("Hide");
-                for (Node node : PaneContainer.getChildren()) {
-                    if (node != btnHide) {
-                        node.setVisible(true);
-                    }
-                }
-            }
+            setDividerHidden(divider, root.getWidth(), originalDividerListener, hiddenDividerListener);
+            btnShow.setVisible(true);
+        });
+        
+        // Show the controls.
+        btnShow.setOnAction((event) -> {
+            setDividerOriginal(divider, originalDividerPosition, originalDividerListener, hiddenDividerListener);
+            btnShow.setVisible(false);
         });
 
         // Remove Projectile from simulation.
@@ -204,7 +224,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                 }
             }
         });
-        
+
         // Mute the simulation.
         btnMute.setOnAction((event) -> {
             if (btnMute.getText().equals("Mute")) {
@@ -241,6 +261,19 @@ public class FXMLDefaultAnimationController extends Simulation {
         } else {
             btnReset.setDisable(false);
         }
+    }
+
+    public void setDividerOriginal(Divider divider, double originalPosition,
+            ChangeListener originalDividerListener, ChangeListener hiddenDividerListener) {
+        divider.positionProperty().removeListener(hiddenDividerListener);
+        divider.setPosition(originalPosition);
+        divider.positionProperty().addListener(originalDividerListener);
+    }
+    public void setDividerHidden(Divider divider, double hiddenPosition,
+            ChangeListener originalDividerListener, ChangeListener hiddenDividerListener) {
+        divider.positionProperty().removeListener(originalDividerListener);
+        divider.setPosition(hiddenPosition);
+        divider.positionProperty().addListener(hiddenDividerListener);
     }
 
 }
