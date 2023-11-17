@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.SplitPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -33,7 +34,7 @@ public class FXMLChooseSceneryController {
                 Stage primaryStage = (Stage)btnDefault.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
                 loader.setController(new FXMLDefaultAnimationController());
-                Pane root = loader.load();
+                SplitPane root = loader.load();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
             } catch (IOException ex) {

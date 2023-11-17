@@ -27,7 +27,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
@@ -67,17 +69,11 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     //layouts
     @FXML
-    Pane animationPane;
-    @FXML
-    Pane bottomPane;
-    @FXML
-    HBox HBoxTop;
+    AnchorPane animationPane;
     @FXML
     Pane PaneContainer;
-
     @FXML
     Label lblObjectCount;
-
     @FXML
     Slider volumeSlider;
 
@@ -113,7 +109,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                 btnReset.setDisable(false);
             }
             // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
-            double random_Mass_Radius = (0.75 + Math.random()) * 10; // To avoid big size differences.
+            double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
             Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getCircle());
@@ -122,12 +118,14 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Go back.
         btnReturn.setOnAction((event) -> {
+            if(defaultAnimation.isAnimationPlaying()){
+                defaultAnimation.stop();
+            }
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
                 returnLoader.setController(new FXMLChooseSceneryController());
                 Parent root = returnLoader.load();
                 btnReturn.getScene().setRoot(root);
-                defaultAnimation.stop(); // will throw exception if there is no animation playing.
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -142,7 +140,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Pause the simulation.
         btnPause.setOnAction((event) -> {
-            defaultAnimation.pauseAnimation();
+            defaultAnimation.stop();
             enablePlayBtn();
         });
 
@@ -150,9 +148,9 @@ public class FXMLDefaultAnimationController extends Simulation {
         btnReset.setOnAction((event) -> {
             animationPane.getChildren().remove(1, circles.size() + 1); // the first element is the rectangle border
             circles.removeAll(circles);
-            // if the animation is playing, pause it
+            // if the animation is playing, stop it
             if (btnPlay.disabledProperty().getValue() == true) {
-                defaultAnimation.pauseAnimation();
+                defaultAnimation.stop();
                 enablePlayBtn();
             }
             lblObjectCount.setText(Integer.toString(circles.size()));

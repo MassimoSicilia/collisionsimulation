@@ -26,6 +26,7 @@ public class defaultAnimation {
     static Pane animationPane;
     public static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     static boolean elasticity = true;
+    static boolean animationPlaying;
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
         defaultAnimation.circles = circles;
@@ -67,14 +68,12 @@ public class defaultAnimation {
             }
         };
         animation.start();
-    }
-
-    public static void pauseAnimation() {
-        animation.stop();
+        animationPlaying = true;
     }
     
     public static void stop(){
         animation.stop();
+        animationPlaying = false;
     }
 
     public static void resolveBallWallCollision(Projectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
@@ -144,5 +143,9 @@ public class defaultAnimation {
 
     public static void setElasticity(boolean elasticity) {
         defaultAnimation.elasticity = elasticity;
+    }
+
+    public static boolean isAnimationPlaying() {
+        return animationPlaying;
     }
 }
