@@ -25,7 +25,7 @@ public class defaultAnimation {
     static List<Projectile> circles;
     static Pane animationPane;
     public static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
-    static boolean elasticity;
+    static boolean elasticity = true;
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
         defaultAnimation.circles = circles;
@@ -70,6 +70,10 @@ public class defaultAnimation {
     }
 
     public static void pauseAnimation() {
+        animation.stop();
+    }
+    
+    public static void stop(){
         animation.stop();
     }
 

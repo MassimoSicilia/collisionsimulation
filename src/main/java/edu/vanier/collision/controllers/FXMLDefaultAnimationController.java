@@ -98,7 +98,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Elasticity of the simulation.
         comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
-        comboBoxElasticity.getSelectionModel().select("Non-Elastic");
+        comboBoxElasticity.getSelectionModel().select("Elastic");
         comboBoxElasticity.setOnAction((event) -> {
             if (comboBoxElasticity.getValue() == "Elastic") {
                 defaultAnimation.setElasticity(true);
@@ -112,7 +112,9 @@ public class FXMLDefaultAnimationController extends Simulation {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            Projectile addedCircle = new Projectile(10, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), 10);
+            // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
+            double random_Mass_Radius = (0.75 + Math.random()) * 10; // To avoid big size differences.
+            Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
             circles.add(addedCircle);
             animationPane.getChildren().add(addedCircle.getCircle());
             lblObjectCount.setText(Integer.toString(circles.size()));
@@ -125,6 +127,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                 returnLoader.setController(new FXMLChooseSceneryController());
                 Parent root = returnLoader.load();
                 btnReturn.getScene().setRoot(root);
+                defaultAnimation.stop(); // will throw exception if there is no animation playing.
             } catch (IOException ex) {
                 Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -184,6 +187,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                 circles.remove(circles.size() - 1);
                 lblObjectCount.setText(Integer.toString(circles.size()));
             }
+            defaultAnimation.setComponents(circles, animationPane);
         });
 
         // Save the projectile to JSON file.
