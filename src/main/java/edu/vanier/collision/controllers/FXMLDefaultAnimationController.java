@@ -29,6 +29,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
+import javafx.scene.control.Spinner;
+import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
 import javafx.scene.control.TextField;
@@ -50,8 +52,6 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     // UI Controls
     @FXML
-    Button btnAdd;
-    @FXML
     Button btnRemove;
     @FXML
     Button btnPlay;
@@ -71,14 +71,15 @@ public class FXMLDefaultAnimationController extends Simulation {
     ComboBox comboBoxElasticity;
     @FXML
     Button btnShow;
+    @FXML
+    Spinner spObjectCount;
 
     //layouts
     @FXML
     AnchorPane animationPane;
     @FXML
     Pane PaneContainer;
-    @FXML
-    Label lblObjectCount;
+
     @FXML
     Slider volumeSlider;
     @FXML
@@ -88,12 +89,15 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     private boolean elasticity = true;
     static AudioClip bouncingAudio = defaultAnimation.bouncingAudio;
+    
 
     @FXML
     public void initialize() {
         Divider divider = root.getDividers().get(0);
         double originalDividerPosition = divider.getPosition();
+        btnRemove.setDisable(true);
         
+        spObjectCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100));
         // Listeners to make it so that the user cannot move the divider.
         ChangeListener originalDividerListener = (observable, oldValue, newValue) -> {
             divider.setPosition(originalDividerPosition);
@@ -111,8 +115,6 @@ public class FXMLDefaultAnimationController extends Simulation {
         setDividerOriginal(divider, originalDividerPosition, originalDividerListener, hiddenDividerListener);
         enablePlayBtn();
 
-        // Initialize counter.
-        lblObjectCount.setText(Integer.toString(circles.size()));
 
         // Add all projectiles to the pane.
         for (int i = 0; i < circles.size(); i++) {
@@ -130,18 +132,6 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
         });
 
-        // Add Projectiles.
-        btnAdd.setOnAction((event) -> {
-            if (circles.isEmpty()) {
-                btnReset.setDisable(false);
-            }
-            // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
-            double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
-            Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
-            circles.add(addedCircle);
-            animationPane.getChildren().add(addedCircle.getCircle());
-            lblObjectCount.setText(Integer.toString(circles.size()));
-        });
 
         // Go back.
         btnReturn.setOnAction((event) -> {
@@ -160,6 +150,19 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Start the simulation.
         btnPlay.setOnAction((event) -> {
+            btnRemove.setDisable(false);
+            if (circles.isEmpty()) {
+                btnReset.setDisable(false);
+            }
+            for(int i = 0; i < (int) spObjectCount.getValue(); i++){
+            // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
+            double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
+            Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
+            circles.add(addedCircle);
+            animationPane.getChildren().add(addedCircle.getCircle());
+//            lblObjectCount.setText(Integer.toString(circles.size()));
+            }
+            
             disablePlayBtn();
             defaultAnimation.setComponents(circles, animationPane);
             defaultAnimation.play();
@@ -180,7 +183,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                 defaultAnimation.stop();
                 enablePlayBtn();
             }
-            lblObjectCount.setText(Integer.toString(circles.size()));
+            
         });
 
         // Hide the controls.
@@ -203,7 +206,6 @@ public class FXMLDefaultAnimationController extends Simulation {
             } else {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
-                lblObjectCount.setText(Integer.toString(circles.size()));
             }
             defaultAnimation.setComponents(circles, animationPane);
         });
@@ -245,6 +247,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         volumeSlider.valueProperty().addListener((observable) -> {
             bouncingAudio.setVolume(volumeSlider.getValue());
         });
+        
     }
 
     public void disablePlayBtn() {
@@ -275,5 +278,6 @@ public class FXMLDefaultAnimationController extends Simulation {
         divider.setPosition(hiddenPosition);
         divider.positionProperty().addListener(hiddenDividerListener);
     }
+    
 
 }
