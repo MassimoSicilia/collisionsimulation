@@ -57,12 +57,14 @@ public class FXMLChooseSceneryController {
         });
         btnBacl.setOnAction((event) -> {
             try {
-                FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
-                returnLoader.setController(new FXMLMainMenuController());
-                Parent root = returnLoader.load();
-                btnBacl.getScene().setRoot(root);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
+                Stage primaryStage = (Stage) btnBack.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
+                loader.setController(new FXMLMainMenuController());
+                Pane root = loader.load();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+            } catch (IOException e) {
+                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
         
