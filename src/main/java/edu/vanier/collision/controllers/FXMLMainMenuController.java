@@ -67,8 +67,7 @@ public class FXMLMainMenuController {
         });
         
         btnExit.setOnAction(event ->{
-            Stage primaryStage = (Stage) btnExit.getScene().getWindow();
-            primaryStage.close();
+            javafx.application.Platform.exit();
         });
     }
     
