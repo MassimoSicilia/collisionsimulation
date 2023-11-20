@@ -27,6 +27,8 @@ public class FXMLMainMenuController {
     Button btnChoose;
     @FXML
     Button btnLoad;
+    @FXML
+    Button btnExit;
 
     @FXML
     public void initialize() {
@@ -62,6 +64,11 @@ public class FXMLMainMenuController {
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
             } 
+        });
+        
+        btnExit.setOnAction(event ->{
+            Stage primaryStage = (Stage) btnExit.getScene().getWindow();
+            primaryStage.close();
         });
     }
     
