@@ -52,6 +52,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class FXMLDefaultAnimationController extends Simulation {
 
     List<Projectile> circles = new ArrayList<>();
+    boolean playing;
 
     // UI Controls
     @FXML
@@ -143,6 +144,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Start the simulation.
         btnPlay.setOnAction((event) -> {
+            playing = true;
             btnRemove.setDisable(false);
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
@@ -166,19 +168,29 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Pause the simulation.
         btnPause.setOnAction((event) -> {
-            DefaultAnimation.stop();
-            enablePlayBtn();
+            if (playing) {
+                DefaultAnimation.stop();
+                btnPause.setText("Resume");
+                playing = false;
+            } else {
+                DefaultAnimation.play();
+                btnPause.setText("Pause");
+                playing = true;
+            }
         });
 
         // Reset the simulation.
         btnReset.setOnAction((event) -> {
-            animationPane.getChildren().remove(0, circles.size()); // the first element is the rectangle border
+            animationPane.getChildren().remove(0, circles.size()); 
             circles.removeAll(circles);
             // if the animation is playing, stop it
-            if (btnPlay.disabledProperty().getValue() == true) {
+            if (playing) {
                 DefaultAnimation.stop();
-                enablePlayBtn();
-            }
+                playing = false;
+            }else
+                btnPause.setText("Pause");
+            enablePlayBtn();
+            
 
         });
 
@@ -244,11 +256,13 @@ public class FXMLDefaultAnimationController extends Simulation {
         btnPlay.setDisable(true);
         btnPause.setDisable(false);
         btnReset.setDisable(false);
+        spObjectCount.setDisable(true);
     }
 
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
         btnPause.setDisable(true);
+        spObjectCount.setDisable(false);
         if (circles.isEmpty()) {
             btnReset.setDisable(true);
         } else {
