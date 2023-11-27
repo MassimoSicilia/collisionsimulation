@@ -150,7 +150,11 @@ public class FXMLDefaultAnimationController extends Simulation {
             for (int i = 0; i < (int) spObjectCount.getValue(); i++) {
                 // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
                 double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
-                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
+                double minWidth = 17.5;
+                double maxWidth = animationPane.getWidth() - 2 * minWidth;
+                double minHeight = minWidth;
+                double maxHeight = animationPane.getHeight() - 2 * minHeight;
+                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
                 circles.add(addedCircle);
                 animationPane.getChildren().add(addedCircle.getCircle());
             }

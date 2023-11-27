@@ -39,13 +39,13 @@ public class Projectile {
      * @param x_position
      * @param y_position
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, Color color, double radius) {
+    public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, Color color, double radius) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         circle = new Circle(x_position, y_position, radius, color);
     }
-    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, ImagePattern asteroidImage, double radius) {
+    public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, ImagePattern asteroidImage, double radius) {
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
