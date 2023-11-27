@@ -74,8 +74,6 @@ public class FXMLDefaultAnimationController extends Simulation {
     Button btnSave;
     @FXML
     ComboBox comboBoxElasticity;
-    @FXML
-    Spinner spObjectCount;
 
     //layouts
     @FXML
@@ -89,6 +87,10 @@ public class FXMLDefaultAnimationController extends Simulation {
     SplitPane root;
     @FXML
     AnchorPane controlsPane;
+    @FXML
+    Slider sldBallsCount;
+    @FXML
+    Label lblBallsCount;
 
     private boolean elasticity = true;
     static AudioClip bouncingAudio = DefaultAnimation.bouncingAudio;
@@ -107,9 +109,6 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
         });
         btnRemove.setDisable(true);
-
-        spObjectCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100));
-
         enablePlayBtn();
 
         // Add all projectiles to the pane.
@@ -150,7 +149,7 @@ public class FXMLDefaultAnimationController extends Simulation {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            for (int i = 0; i < (int) spObjectCount.getValue(); i++) {
+            for (int i = 0; i < (int) sldBallsCount.getValue(); i++) {
                 // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
                 double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
                 double minWidth = 17.5;
@@ -250,6 +249,10 @@ public class FXMLDefaultAnimationController extends Simulation {
         volumeSlider.valueProperty().addListener((observable) -> {
             bouncingAudio.setVolume(volumeSlider.getValue());
         });
+        
+        sldBallsCount.valueProperty().addListener((observable, oldValue, newValue) -> {
+            lblBallsCount.setText(newValue.intValue() + " Balls");
+        });
 
     }
 
@@ -257,13 +260,13 @@ public class FXMLDefaultAnimationController extends Simulation {
         btnPlay.setDisable(true);
         btnPause.setDisable(false);
         btnReset.setDisable(false);
-        spObjectCount.setDisable(true);
+        sldBallsCount.setDisable(true);
     }
 
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
         btnPause.setDisable(true);
-        spObjectCount.setDisable(false);
+        sldBallsCount.setDisable(false);
         if (circles.isEmpty()) {
             btnReset.setDisable(true);
         } else {
