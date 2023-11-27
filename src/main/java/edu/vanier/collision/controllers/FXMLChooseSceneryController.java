@@ -21,19 +21,19 @@ import javafx.stage.Stage;
  * @author 2276884
  */
 public class FXMLChooseSceneryController {
+
     @FXML
     Button btnDefault;
     @FXML
     Button btnAsteroids;
     @FXML
     Button btnBack;
-    
 
     @FXML
     void initialize() {
         btnDefault.setOnAction((event) -> {
             try {
-                Stage primaryStage = (Stage)btnDefault.getScene().getWindow();
+                Stage primaryStage = (Stage) btnDefault.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
                 loader.setController(new FXMLDefaultAnimationController());
                 SplitPane root = loader.load();
@@ -44,15 +44,15 @@ public class FXMLChooseSceneryController {
             }
         });
         btnAsteroids.setOnAction((event) -> {
-            try{
-            Stage primaryStage = (Stage)btnAsteroids.getScene().getWindow();
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsLayout.fxml"));
-            loader.setController(new FXMLAsteroidsLayoutController());
-            Pane root = loader.load();
-            Scene scene = new Scene(root);
-            primaryStage.setScene(scene);
-            }catch(IOException e){
-                Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE,null,e);
+            try {
+                Stage primaryStage = (Stage) btnAsteroids.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsLayout.fxml"));
+                loader.setController(new FXMLAsteroidsLayoutController());
+                Pane root = loader.load();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+            } catch (IOException e) {
+                Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
         btnBack.setOnAction((event) -> {
@@ -67,7 +67,6 @@ public class FXMLChooseSceneryController {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
-        
-        
+
     }
 }

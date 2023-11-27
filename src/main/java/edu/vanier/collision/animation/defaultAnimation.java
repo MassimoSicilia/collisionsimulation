@@ -19,18 +19,18 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  *
  * @author Hassimo
  */
-public class defaultAnimation {
+public class DefaultAnimation {
 
     static AnimationTimer animation;
     static List<Projectile> circles;
     static Pane animationPane;
-    public static AudioClip bouncingAudio = new AudioClip(defaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+    public static AudioClip bouncingAudio = new AudioClip(DefaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     static boolean elasticity = true;
     static boolean animationPlaying;
 
     public static void setComponents(List<Projectile> circles, Pane animationPane) {
-        defaultAnimation.circles = circles;
-        defaultAnimation.animationPane = animationPane;
+        DefaultAnimation.circles = circles;
+        DefaultAnimation.animationPane = animationPane;
     }
 
     public static void play() {
@@ -142,7 +142,7 @@ public class defaultAnimation {
     }
 
     public static void setElasticity(boolean elasticity) {
-        defaultAnimation.elasticity = elasticity;
+        DefaultAnimation.elasticity = elasticity;
     }
 
     public static boolean isAnimationPlaying() {

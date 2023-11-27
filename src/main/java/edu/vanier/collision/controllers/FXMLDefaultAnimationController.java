@@ -6,7 +6,7 @@ package edu.vanier.collision.controllers;
 
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
-import edu.vanier.collision.animation.defaultAnimation;
+import edu.vanier.collision.animation.DefaultAnimation;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
@@ -39,6 +39,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -70,7 +71,7 @@ public class FXMLDefaultAnimationController extends Simulation {
     @FXML
     ComboBox comboBoxElasticity;
     @FXML
-    Button btnShow;
+    Button btnShow; //to remove
     @FXML
     Spinner spObjectCount;
 
@@ -88,33 +89,26 @@ public class FXMLDefaultAnimationController extends Simulation {
     AnchorPane controlsPane;
 
     private boolean elasticity = true;
-    static AudioClip bouncingAudio = defaultAnimation.bouncingAudio;
-    
+    static AudioClip bouncingAudio = DefaultAnimation.bouncingAudio;
 
     @FXML
     public void initialize() {
         Divider divider = root.getDividers().get(0);
-        double originalDividerPosition = divider.getPosition();
+        animationPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.doubleValue() < oldValue.doubleValue()) {
+                for (Projectile currentProjectile : circles) {
+                    Circle currentCircle = currentProjectile.getCircle();
+                    if (currentCircle.getCenterX() > newValue.doubleValue() - currentCircle.getRadius()) {
+                        currentCircle.setCenterX(newValue.doubleValue() - currentCircle.getRadius());
+                    }
+                }
+            }
+        });
         btnRemove.setDisable(true);
-        
+
         spObjectCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(10, 100));
-        // Listeners to make it so that the user cannot move the divider.
-        ChangeListener originalDividerListener = (observable, oldValue, newValue) -> {
-            divider.setPosition(originalDividerPosition);
-            if (divider.getPosition() != originalDividerPosition) {
-                divider.setPosition(originalDividerPosition);
-            }
-        };
-        
-        ChangeListener hiddenDividerListener = (observable, oldValue, newValue) -> {
-            if (divider.getPosition() != root.getWidth()) {
-                divider.setPosition(root.getWidth());
-            }
-        };
 
-        setDividerOriginal(divider, originalDividerPosition, originalDividerListener, hiddenDividerListener);
         enablePlayBtn();
-
 
         // Add all projectiles to the pane.
         for (int i = 0; i < circles.size(); i++) {
@@ -126,17 +120,16 @@ public class FXMLDefaultAnimationController extends Simulation {
         comboBoxElasticity.getSelectionModel().select("Elastic");
         comboBoxElasticity.setOnAction((event) -> {
             if (comboBoxElasticity.getValue() == "Elastic") {
-                defaultAnimation.setElasticity(true);
+                DefaultAnimation.setElasticity(true);
             } else {
-                defaultAnimation.setElasticity(false);
+                DefaultAnimation.setElasticity(false);
             }
         });
 
-
         // Go back.
         btnReturn.setOnAction((event) -> {
-            if (defaultAnimation.isAnimationPlaying()) {
-                defaultAnimation.stop();
+            if (DefaultAnimation.isAnimationPlaying()) {
+                DefaultAnimation.stop();
             }
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
@@ -154,23 +147,23 @@ public class FXMLDefaultAnimationController extends Simulation {
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            for(int i = 0; i < (int) spObjectCount.getValue(); i++){
-            // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
-            double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
-            Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
-            circles.add(addedCircle);
-            animationPane.getChildren().add(addedCircle.getCircle());
+            for (int i = 0; i < (int) spObjectCount.getValue(); i++) {
+                // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
+                double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
+                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
+                circles.add(addedCircle);
+                animationPane.getChildren().add(addedCircle.getCircle());
 //            lblObjectCount.setText(Integer.toString(circles.size()));
             }
-            
+
             disablePlayBtn();
-            defaultAnimation.setComponents(circles, animationPane);
-            defaultAnimation.play();
+            DefaultAnimation.setComponents(circles, animationPane);
+            DefaultAnimation.play();
         });
 
         // Pause the simulation.
         btnPause.setOnAction((event) -> {
-            defaultAnimation.stop();
+            DefaultAnimation.stop();
             enablePlayBtn();
         });
 
@@ -180,22 +173,15 @@ public class FXMLDefaultAnimationController extends Simulation {
             circles.removeAll(circles);
             // if the animation is playing, stop it
             if (btnPlay.disabledProperty().getValue() == true) {
-                defaultAnimation.stop();
+                DefaultAnimation.stop();
                 enablePlayBtn();
             }
-            
+
         });
 
         // Hide the controls.
         btnHide.setOnAction((event) -> {
-            setDividerHidden(divider, root.getWidth(), originalDividerListener, hiddenDividerListener);
-            btnShow.setVisible(true);
-        });
-        
-        // Show the controls.
-        btnShow.setOnAction((event) -> {
-            setDividerOriginal(divider, originalDividerPosition, originalDividerListener, hiddenDividerListener);
-            btnShow.setVisible(false);
+            setDividerHidden(divider, root.getWidth());
         });
 
         // Remove Projectile from simulation.
@@ -207,12 +193,12 @@ public class FXMLDefaultAnimationController extends Simulation {
                 animationPane.getChildren().remove(circles.size());
                 circles.remove(circles.size() - 1);
             }
-            defaultAnimation.setComponents(circles, animationPane);
+            DefaultAnimation.setComponents(circles, animationPane);
         });
 
         // Save the projectile to JSON file.
         btnSave.setOnAction((event) -> {
-            Simulation simulation = new Simulation(circles, defaultAnimation.isElasticity());
+            Simulation simulation = new Simulation(circles, DefaultAnimation.isElasticity());
             FileChooser fileSaver = new FileChooser();
             fileSaver.setTitle("Save Simulation");
             fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
@@ -247,7 +233,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         volumeSlider.valueProperty().addListener((observable) -> {
             bouncingAudio.setVolume(volumeSlider.getValue());
         });
-        
+
     }
 
     public void disablePlayBtn() {
@@ -266,18 +252,13 @@ public class FXMLDefaultAnimationController extends Simulation {
         }
     }
 
-    public void setDividerOriginal(Divider divider, double originalPosition,
-            ChangeListener originalDividerListener, ChangeListener hiddenDividerListener) {
+    public void setDividerOriginal(Divider divider, double originalPosition, ChangeListener hiddenDividerListener) {
         divider.positionProperty().removeListener(hiddenDividerListener);
         divider.setPosition(originalPosition);
-        divider.positionProperty().addListener(originalDividerListener);
     }
-    public void setDividerHidden(Divider divider, double hiddenPosition,
-            ChangeListener originalDividerListener, ChangeListener hiddenDividerListener) {
-        divider.positionProperty().removeListener(originalDividerListener);
+
+    public void setDividerHidden(Divider divider, double hiddenPosition) {
         divider.setPosition(hiddenPosition);
-        divider.positionProperty().addListener(hiddenDividerListener);
     }
-    
 
 }

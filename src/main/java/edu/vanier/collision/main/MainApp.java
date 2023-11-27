@@ -1,6 +1,6 @@
 package edu.vanier.collision.main;
 
-import edu.vanier.collision.animation.defaultAnimation;
+import edu.vanier.collision.animation.DefaultAnimation;
 import edu.vanier.collision.controllers.FXMLMainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,7 +30,7 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        if(defaultAnimation.isAnimationPlaying())
-            defaultAnimation.stop();
+        if(DefaultAnimation.isAnimationPlaying())
+            DefaultAnimation.stop();
     }
 }
