@@ -27,6 +27,8 @@ public class FXMLChooseSceneryController {
     @FXML
     Button btnAsteroids;
     @FXML
+    Button btnPictures;
+    @FXML
     Button btnBack;
 
     @FXML
@@ -55,6 +57,18 @@ public class FXMLChooseSceneryController {
                 Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
+        btnPictures.setOnAction((event) -> {
+            try {
+                Stage primaryStage = (Stage) btnPictures.getScene().getWindow();
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
+                loader.setController(new FXMLPicturesAnimationController());
+                Parent root = loader.load();
+                Scene scene = new Scene(root);
+                primaryStage.setScene(scene);
+            } catch (IOException e) {
+                Logger.getLogger(FXMLPicturesAnimationController.class.getName()).log(Level.SEVERE, null, e);
+            }
+        });
         btnBack.setOnAction((event) -> {
             try {
                 Stage primaryStage = (Stage) btnBack.getScene().getWindow();
@@ -67,6 +81,7 @@ public class FXMLChooseSceneryController {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
+        
 
     }
 }

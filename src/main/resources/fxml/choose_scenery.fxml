@@ -25,7 +25,7 @@
                   <Font name="Dubai Light" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnPool" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Pool Balls" />
+            <Button fx:id="btnPictures" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Pictures" />
             <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Go Back" />
          </children>
       </VBox>
