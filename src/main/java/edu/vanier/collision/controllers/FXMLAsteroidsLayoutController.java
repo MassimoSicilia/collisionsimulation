@@ -32,8 +32,8 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
     @FXML
     public void initialize() {
         super.initialize();
-        animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
-          BackgroundSize.DEFAULT)));
+        animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"), 
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
         btnPlay.setOnAction((event) -> {
             btnRemove.setDisable(false);
             if (circles.isEmpty()) {
