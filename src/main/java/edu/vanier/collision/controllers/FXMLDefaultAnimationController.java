@@ -172,7 +172,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Reset the simulation.
         btnReset.setOnAction((event) -> {
-            animationPane.getChildren().remove(1, circles.size() + 1); // the first element is the rectangle border
+            animationPane.getChildren().remove(0, circles.size()); // the first element is the rectangle border
             circles.removeAll(circles);
             // if the animation is playing, stop it
             if (btnPlay.disabledProperty().getValue() == true) {
