@@ -6,6 +6,7 @@ package edu.vanier.collision.model;
 
 import java.io.Serializable;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Shape;
 
@@ -43,6 +44,13 @@ public class Projectile {
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         circle = new Circle(x_position, y_position, radius, color);
+    }
+    public Projectile(double mass, double x_velocity, double y_velocity, int x_position, int y_position, ImagePattern asteroidImage, double radius) {
+        this.mass = mass;
+        this.x_velocity = x_velocity;
+        this.y_velocity = y_velocity;
+        circle = new Circle(x_position, y_position, radius);
+        circle.setFill(asteroidImage);
     }
 
     public double getMass() {

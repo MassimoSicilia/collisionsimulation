@@ -46,9 +46,9 @@ public class FXMLChooseSceneryController {
         btnAsteroids.setOnAction((event) -> {
             try {
                 Stage primaryStage = (Stage) btnAsteroids.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsLayout.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
                 loader.setController(new FXMLAsteroidsLayoutController());
-                Pane root = loader.load();
+                Parent root = loader.load();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
             } catch (IOException e) {

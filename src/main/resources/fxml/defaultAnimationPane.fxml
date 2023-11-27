@@ -9,12 +9,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<SplitPane fx:id="root" dividerPositions="0.8119" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane fx:id="root" dividerPositions="0.8119" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <items>
-    <AnchorPane fx:id="animationPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: grey;">
-         <children>
-            <Button fx:id="btnShow" layoutX="1135.0" layoutY="810.0" mnemonicParsing="false" text="Show" visible="false" />
-         </children></AnchorPane>
+    <AnchorPane fx:id="animationPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: grey;" />
     <AnchorPane fx:id="controlsPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
             <Pane fx:id="PaneContainer" layoutX="11.0" prefHeight="850.0" prefWidth="204.0">

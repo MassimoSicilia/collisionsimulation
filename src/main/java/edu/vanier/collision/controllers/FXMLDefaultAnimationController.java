@@ -21,6 +21,8 @@ import java.util.logging.Logger;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -70,8 +72,6 @@ public class FXMLDefaultAnimationController extends Simulation {
     Button btnSave;
     @FXML
     ComboBox comboBoxElasticity;
-    @FXML
-    Button btnShow; //to remove
     @FXML
     Spinner spObjectCount;
 
@@ -126,7 +126,7 @@ public class FXMLDefaultAnimationController extends Simulation {
             }
         });
 
-        // Go back.
+        // Go returnEvent.
         btnReturn.setOnAction((event) -> {
             if (DefaultAnimation.isAnimationPlaying()) {
                 DefaultAnimation.stop();
@@ -153,7 +153,6 @@ public class FXMLDefaultAnimationController extends Simulation {
                 Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, 20, 40, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
                 circles.add(addedCircle);
                 animationPane.getChildren().add(addedCircle.getCircle());
-//            lblObjectCount.setText(Integer.toString(circles.size()));
             }
 
             disablePlayBtn();
@@ -260,5 +259,4 @@ public class FXMLDefaultAnimationController extends Simulation {
     public void setDividerHidden(Divider divider, double hiddenPosition) {
         divider.setPosition(hiddenPosition);
     }
-
 }
