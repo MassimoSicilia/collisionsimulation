@@ -26,7 +26,7 @@ public class FXMLChooseSceneryController {
     @FXML
     Button btnAsteroids;
     @FXML
-    Button btnBacl;
+    Button btnBack;
     
 
     @FXML
@@ -55,7 +55,7 @@ public class FXMLChooseSceneryController {
                 Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE,null,e);
             }
         });
-        btnBacl.setOnAction((event) -> {
+        btnBack.setOnAction((event) -> {
             try {
                 Stage primaryStage = (Stage) btnBack.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
