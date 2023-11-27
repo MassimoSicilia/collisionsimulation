@@ -190,13 +190,14 @@ public class FXMLDefaultAnimationController extends Simulation {
         // Remove Projectile from simulation.
         btnRemove.setOnAction((event) -> {
             btnRemove.setDisable(false);
-            if (animationPane.getChildren().size() == 1) {
-                btnRemove.setDisable(true);
-            } else {
-                animationPane.getChildren().remove(circles.size());
-                circles.remove(circles.size() - 1);
-            }
+
+            animationPane.getChildren().remove(circles.size() - 1);
+            circles.remove(circles.size() - 1);
+
             DefaultAnimation.setComponents(circles, animationPane);
+            if (animationPane.getChildren().isEmpty()) {
+                btnRemove.setDisable(true);
+            }
         });
 
         // Save the projectile to JSON file.
