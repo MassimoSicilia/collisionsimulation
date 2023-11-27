@@ -44,34 +44,39 @@ public class FXMLMainMenuController {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
-        
-        btnLoad.setOnAction(event ->{
+
+        btnLoad.setOnAction(event -> {
             Stage primaryStage = (Stage) btnLoad.getScene().getWindow();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Saved Scenery");
-            // will only accept csv files
+            // will only accept json files
             fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON File", "*.json"));
             File sceneryToLoad = fileChooser.showOpenDialog((Stage) btnLoad.getScene().getWindow());
             try {
                 Simulation simulationToLoad = SimulationController.load(sceneryToLoad);
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
-                controller.circles = simulationToLoad.getProjectiles();
-                loader.setController(controller);
-                switchScenes(primaryStage,new Scene(loader.load()));
-                
+                FXMLLoader loader = new FXMLLoader();
+                if (simulationToLoad.isDefault()) {
+                    loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
+                    FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
+                    controller.circles = simulationToLoad.getProjectiles();
+                    loader.setController(controller);
+                    switchScenes(primaryStage, new Scene(loader.load()));
+                }else{
+                    
+                }
+
                 // to finish implementation after designing all scenes
             } catch (IOException ex) {
                 Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            } 
+            }
         });
-        
-        btnExit.setOnAction(event ->{
+
+        btnExit.setOnAction(event -> {
             javafx.application.Platform.exit();
         });
     }
-    
-    public void switchScenes(Stage stage, Scene scene){
+
+    public void switchScenes(Stage stage, Scene scene) {
         stage.setScene(scene);
     }
 

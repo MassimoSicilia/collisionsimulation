@@ -44,6 +44,7 @@ public class Projectile {
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         circle = new Circle(x_position, y_position, radius, color);
+        circle.setStroke(Color.BLACK);
     }
     public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, ImagePattern asteroidImage, double radius) {
         this.mass = mass;

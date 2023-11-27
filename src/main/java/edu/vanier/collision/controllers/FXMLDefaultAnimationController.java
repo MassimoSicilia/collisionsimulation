@@ -53,6 +53,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     List<Projectile> circles = new ArrayList<>();
     boolean playing;
+    static boolean isDefault = true;
 
     // UI Controls
     @FXML
@@ -214,7 +215,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Save the projectile to JSON file.
         btnSave.setOnAction((event) -> {
-            Simulation simulation = new Simulation(circles, DefaultAnimation.isElasticity());
+            Simulation simulation = new Simulation(circles, DefaultAnimation.isElasticity(), isDefault);
             FileChooser fileSaver = new FileChooser();
             fileSaver.setTitle("Save Simulation");
             fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));

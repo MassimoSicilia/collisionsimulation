@@ -6,6 +6,7 @@ package edu.vanier.collision.model;
 
 import java.io.Serializable;
 import java.util.List;
+import javafx.scene.image.Image;
 
 /**
  * Simulation class holds all information specific to a single simulation,
@@ -17,6 +18,9 @@ public class Simulation{
 
     private List<Projectile> projectiles;
     private boolean elasticity;
+    private boolean isDefault;
+    private Image background;
+    private Image ballImage;
 
     /**
      * Creates an empty simulation.
@@ -30,9 +34,17 @@ public class Simulation{
      * @param projectiles
      * @param elasticity
      */
-    public Simulation(List<Projectile> projectiles, boolean elasticity) {
+    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
+        this.isDefault = isDefault;
+    }
+    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault, Image background, Image ballImage) {
+        this.projectiles = projectiles;
+        this.elasticity = elasticity;
+        this.isDefault = isDefault;
+        this.background = background;
+        this.ballImage = ballImage;
     }
 
     public List<Projectile> getProjectiles() {
@@ -62,6 +74,11 @@ public class Simulation{
     public void setElasticity(boolean elasticity) {
         this.elasticity = elasticity;
     }
+
+    public boolean isDefault() {
+        return isDefault;
+    }
+    
     
 
 }

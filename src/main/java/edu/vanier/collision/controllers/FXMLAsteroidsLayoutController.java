@@ -23,14 +23,12 @@ import javafx.scene.paint.ImagePattern;
  */
 public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationController {
 
+    //make this custom and make constructor
     static ImagePattern asteroidImage = new ImagePattern(new Image("/images/Asteroid.png"));
-    public Button getBtnPlay() {
-        return btnPlay;
-    }
     
-
     @FXML
     public void initialize() {
+        isDefault = false;
         super.initialize();
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"), 
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
