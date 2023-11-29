@@ -60,12 +60,15 @@ public class FXMLMainMenuController {
                     FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
                     controller.circles = simulationToLoad.getProjectiles();
                     loader.setController(controller);
-                    switchScenes(primaryStage, new Scene(loader.load()));
                 } else if (simulationToLoad.isAsteroid()) {
-
+                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
+                    FXMLDefaultAnimationController controller = new FXMLAsteroidsLayoutController();
+                    controller.circles = simulationToLoad.getProjectiles();
+                    loader.setController(controller);
                 } else {
 
                 }
+                switchScenes(primaryStage, new Scene(loader.load()));
 
                 // to finish implementation after designing all scenes
             } catch (IOException ex) {

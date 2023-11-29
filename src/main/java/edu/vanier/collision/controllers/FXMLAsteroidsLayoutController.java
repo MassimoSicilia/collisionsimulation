@@ -6,6 +6,11 @@ package edu.vanier.collision.controllers;
 
 import edu.vanier.collision.animation.DefaultAnimation;
 import edu.vanier.collision.model.Projectile;
+import edu.vanier.collision.model.Simulation;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -16,6 +21,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.stage.FileChooser;
 
 /**
  *
@@ -31,7 +37,9 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
         super.initialize();
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"), 
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));
+        
         btnPlay.setOnAction((event) -> {
+            playing = true;
             btnRemove.setDisable(false);
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
@@ -39,7 +47,11 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
             for (int i = 0; i < (int) sldBallsCount.getValue(); i++) {
                 // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
                 double random_Mass_Radius = (2 + Math.random()) * 10; // All projectiles will have size between 20 and 30 pixels.
-                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 5, Math.random() * 5, 50, 50, asteroidImage, random_Mass_Radius);
+                double minWidth = 30;
+                double maxWidth = animationPane.getWidth() - 2 * minWidth;
+                double minHeight = minWidth;
+                double maxHeight = animationPane.getHeight() - 2 * minHeight;
+                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, asteroidImage, random_Mass_Radius);
                 circles.add(addedCircle);
                 animationPane.getChildren().add(addedCircle.getCircle());
             }
@@ -50,6 +62,22 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
         });
         sldBallsCount.valueProperty().addListener((observable, oldValue, newValue) -> {
             lblBallsCount.setText(newValue.intValue() + " Asteroids");
+        });
+        
+        btnSave.setOnAction((event) -> {
+            Simulation simulation = new Simulation(circles, true, false, true);
+            FileChooser fileSaver = new FileChooser();
+            fileSaver.setTitle("Save Simulation");
+            fileSaver.getExtensionFilters().add(new FileChooser.ExtensionFilter("JSON File", "*.json"));
+            fileSaver.setInitialFileName("asteroid");
+            File file = fileSaver.showSaveDialog(btnSave.getScene().getWindow());
+            if (file != null) {
+                try {
+                    SimulationController.save(simulation, file);
+                } catch (IOException ex) {
+                    Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
         });
     }
 }

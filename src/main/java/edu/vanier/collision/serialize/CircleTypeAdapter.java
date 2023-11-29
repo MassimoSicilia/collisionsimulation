@@ -12,7 +12,9 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 
 /**
@@ -27,10 +29,14 @@ public class CircleTypeAdapter implements JsonSerializer<Circle>, JsonDeserializ
         circle.addProperty("radius", t.getRadius());
         circle.addProperty("centerX", t.getCenterX());
         circle.addProperty("centerY", t.getCenterY());
-        circle.addProperty("red", ((Color) t.getFill()).getRed());
-        circle.addProperty("blue", ((Color) t.getFill()).getBlue());
-        circle.addProperty("green", ((Color) t.getFill()).getGreen());
-        circle.addProperty("opacity", ((Color) t.getFill()).getOpacity());
+        try {
+            circle.addProperty("red", ((Color) t.getFill()).getRed());
+            circle.addProperty("blue", ((Color) t.getFill()).getBlue());
+            circle.addProperty("green", ((Color) t.getFill()).getGreen());
+            circle.addProperty("opacity", ((Color) t.getFill()).getOpacity());
+        } catch (Exception e) {
+            circle.addProperty("imageURL", ((ImagePattern) t.getFill()).getImage().getUrl());
+        }
         return jsc.serialize(circle);
     }
 
@@ -40,13 +46,16 @@ public class CircleTypeAdapter implements JsonSerializer<Circle>, JsonDeserializ
         Circle circle = new Circle(
                 deserializedCircle.get("centerX").getAsDouble(),
                 deserializedCircle.get("centerY").getAsDouble(),
-                deserializedCircle.get("radius").getAsDouble(),
-                new Color(deserializedCircle.get("red").getAsDouble(),
-                        deserializedCircle.get("green").getAsDouble(),
-                        deserializedCircle.get("blue").getAsDouble(),
-                        deserializedCircle.get("opacity").getAsDouble()
-                ));
-        circle.setStroke(Color.BLACK);
+                deserializedCircle.get("radius").getAsDouble());
+        try {
+            circle.setFill(new Color(deserializedCircle.get("red").getAsDouble(),
+                    deserializedCircle.get("green").getAsDouble(),
+                    deserializedCircle.get("blue").getAsDouble(),
+                    deserializedCircle.get("opacity").getAsDouble()));
+            circle.setStroke(Color.BLACK);
+        } catch (Exception e) {
+            circle.setFill(new ImagePattern(new Image(deserializedCircle.get("imageURL").getAsString())));
+        }
         return circle;
     }
 
