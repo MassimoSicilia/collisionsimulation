@@ -28,7 +28,6 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
     
     @FXML
     public void initialize() {
-        isDefault = false;
         super.initialize();
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"), 
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,BackgroundSize.DEFAULT)));

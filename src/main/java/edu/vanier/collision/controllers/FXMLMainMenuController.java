@@ -61,8 +61,10 @@ public class FXMLMainMenuController {
                     controller.circles = simulationToLoad.getProjectiles();
                     loader.setController(controller);
                     switchScenes(primaryStage, new Scene(loader.load()));
-                }else{
-                    
+                } else if (simulationToLoad.isAsteroid()) {
+
+                } else {
+
                 }
 
                 // to finish implementation after designing all scenes

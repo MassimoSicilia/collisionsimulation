@@ -46,6 +46,7 @@ public class CircleTypeAdapter implements JsonSerializer<Circle>, JsonDeserializ
                         deserializedCircle.get("blue").getAsDouble(),
                         deserializedCircle.get("opacity").getAsDouble()
                 ));
+        circle.setStroke(Color.BLACK);
         return circle;
     }
 

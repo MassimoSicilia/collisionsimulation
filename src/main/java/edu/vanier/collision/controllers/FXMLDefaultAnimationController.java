@@ -4,40 +4,26 @@
  */
 package edu.vanier.collision.controllers;
 
-import com.opencsv.exceptions.CsvDataTypeMismatchException;
-import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 import edu.vanier.collision.animation.DefaultAnimation;
-import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.DoubleProperty;
 import javafx.beans.value.ChangeListener;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Spinner;
-import javafx.scene.control.SpinnerValueFactory;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.SplitPane.Divider;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -53,7 +39,6 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     List<Projectile> circles = new ArrayList<>();
     boolean playing;
-    static boolean isDefault = true;
 
     // UI Controls
     @FXML
@@ -214,7 +199,7 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Save the projectile to JSON file.
         btnSave.setOnAction((event) -> {
-            Simulation simulation = new Simulation(circles, DefaultAnimation.isElasticity(), isDefault);
+            Simulation simulation = new Simulation(circles, DefaultAnimation.isElasticity(), true, false);
             FileChooser fileSaver = new FileChooser();
             fileSaver.setTitle("Save Simulation");
             fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
