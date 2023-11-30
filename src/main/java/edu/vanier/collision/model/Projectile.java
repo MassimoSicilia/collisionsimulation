@@ -24,7 +24,7 @@ public class Projectile {
     private double y_velocity;
     private Circle circle;
 
-    private Line directionArrow;
+    private transient Line directionArrow;
 
     /**
      * Creates default Projectile object, all default objects will have no

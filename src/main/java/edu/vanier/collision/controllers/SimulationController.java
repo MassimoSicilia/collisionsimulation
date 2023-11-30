@@ -25,7 +25,8 @@ public class SimulationController extends Simulation{
         Writer writer = new FileWriter(file);
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Circle.class, new CircleTypeAdapter())
-                .setPrettyPrinting().create();
+                .setPrettyPrinting()
+                .create();
         writer.write(gson.toJson(simulation));
         writer.close();
     }
