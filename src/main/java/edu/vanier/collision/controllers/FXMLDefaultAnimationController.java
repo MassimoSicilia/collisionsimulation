@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Stream;
 import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -92,10 +94,9 @@ public class FXMLDefaultAnimationController extends Simulation {
     private boolean elasticity = true;
     static AudioClip bouncingAudio = DefaultAnimation.bouncingAudio;
 
-    @FXML
-    public void initialize() {
-        Divider divider = root.getDividers().get(0);
-        animationPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+    ChangeListener<? super Number> paneResizeListener = new ChangeListener<>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             if (newValue.doubleValue() < oldValue.doubleValue()) {
                 for (Projectile currentProjectile : circles) {
                     Circle currentCircle = currentProjectile.getCircle();
@@ -104,24 +105,25 @@ public class FXMLDefaultAnimationController extends Simulation {
                     }
                 }
             }
-        });
+        }
+    };
+    
+    EventHandler<ActionEvent> checkArrowEvent = new EventHandler<>() {
+        @Override
+        public void handle(ActionEvent event) {
+            updateArrowVisibility(checkArrow.isSelected());
+        }
+    };    
 
-        btnRemove.setDisable(true);
+    @FXML
+    public void initialize() {
         enablePlayBtn();
-
-        checkArrow.setSelected(true); // Set the checkbox initially checked
-
-        checkArrow.setOnAction(event -> {
-            boolean showArrows = checkArrow.isSelected();
-            updateArrowVisibility(showArrows);
-        });
+        Divider divider = root.getDividers().get(0);
+        animationPane.widthProperty().addListener(paneResizeListener);
+        checkArrow.setOnAction(checkArrowEvent);
 
         // Add all projectiles to the pane.
-        for (Projectile projectile : circles) {
-            animationPane.getChildren().addAll(projectile.getCircle(), projectile.getDirectionArrow());
-            // Handle color picking for each ball
-            addMouseClickHandler(projectile);
-        }
+        addAllProjectiles();
 
         // Elasticity of the simulation.
         comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
@@ -307,8 +309,10 @@ public class FXMLDefaultAnimationController extends Simulation {
         sldBallsCount.setDisable(false);
         if (circles.isEmpty()) {
             btnReset.setDisable(true);
+            btnRemove.setDisable(true);
         } else {
             btnReset.setDisable(false);
+            btnRemove.setDisable(false);
         }
     }
 
@@ -349,6 +353,13 @@ public class FXMLDefaultAnimationController extends Simulation {
     private void removeMouseClickHandler(Projectile projectile) {
         if (clickHandler != null) {
             projectile.getCircle().removeEventHandler(MouseEvent.MOUSE_CLICKED, clickHandler);
+        }
+    }
+    private void addAllProjectiles(){
+        for (Projectile projectile : circles) {
+            animationPane.getChildren().addAll(projectile.getCircle(), projectile.getDirectionArrow());
+            // Handle color picking for each ball
+            addMouseClickHandler(projectile);
         }
     }
 }
