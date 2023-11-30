@@ -23,8 +23,7 @@ public class Projectile {
     private double x_velocity;
     private double y_velocity;
     private Circle circle;
-
-    private transient Line directionArrow;
+    private Line directionArrow;
 
     /**
      * Creates default Projectile object, all default objects will have no
@@ -97,8 +96,6 @@ public class Projectile {
     }
 
     public void updateDirectionArrow() {
-        // Move the arrow along with the ball
-        //getCircle().setStroke(Color.RED); // Change the color as needed. Checking bug of arrow not showing on one ball
 
         // Move the arrow along with the ball
         directionArrow.setStartX(getCircle().getCenterX());

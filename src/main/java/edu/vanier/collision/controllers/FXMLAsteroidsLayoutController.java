@@ -50,26 +50,28 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
 
         btnPlay.setOnAction((event) -> {
-            playing = true;
             btnRemove.setDisable(false);
             if (circles.isEmpty()) {
                 btnReset.setDisable(false);
             }
-            for (int i = 0; i < (int) sldBallsCount.getValue(); i++) {
-                // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
-                double random_Mass_Radius = (2 + Math.random()) * 10; // All projectiles will have size between 20 and 30 pixels.
-                double minWidth = 30;
-                double maxWidth = animationPane.getWidth() - 2 * minWidth;
-                double minHeight = minWidth;
-                double maxHeight = animationPane.getHeight() - 2 * minHeight;
-                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, asteroidImage, random_Mass_Radius);
-                circles.add(addedCircle);
-                animationPane.getChildren().add(addedCircle.getCircle());
+            if (!playing) {
+                for (int i = 0; i < (int) sldBallsCount.getValue(); i++) {
+                    // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
+                    double random_Mass_Radius = (2 + Math.random()) * 10; // All projectiles will have size between 20 and 30 pixels.
+                    double minWidth = 30;
+                    double maxWidth = animationPane.getWidth() - 2 * minWidth;
+                    double minHeight = minWidth;
+                    double maxHeight = animationPane.getHeight() - 2 * minHeight;
+                    Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, asteroidImage, random_Mass_Radius);
+                    circles.add(addedCircle);
+                    animationPane.getChildren().add(addedCircle.getCircle());
+                }
             }
 
             disablePlayBtn();
             DefaultAnimation.setComponents(circles, animationPane);
             DefaultAnimation.play();
+            playing = true;
         });
         sldBallsCount.valueProperty().addListener((observable, oldValue, newValue) -> {
             lblBallsCount.setText(newValue.intValue() + " Asteroids");

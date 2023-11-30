@@ -151,33 +151,27 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         // Start the simulation.
         btnPlay.setOnAction((event) -> {
-            playing = true;
             btnRemove.setDisable(false);
-            btnReset.setDisable(false);
-            btnPause.setDisable(false);
-            sldBallsCount.setDisable(true);
-
-            // Reset speed of balls
-            circles.forEach(Projectile::resetSpeed);
-
-            // Add new projectiles if needed
-            int targetBallsCount = (int) sldBallsCount.getValue();
-            while (circles.size() < targetBallsCount) {
-                double random_Mass_Radius = (0.75 + Math.random()) * 10;
-                double minWidth = 17.5;
-                double maxWidth = animationPane.getWidth() - 2 * minWidth;
-                double minHeight = minWidth;
-                double maxHeight = animationPane.getHeight() - 2 * minHeight;
-                Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
-
-                circles.add(addedCircle);
-                animationPane.getChildren().addAll(addedCircle.getCircle(), addedCircle.getDirectionArrow());
-                addMouseClickHandler(addedCircle);
+            if (circles.isEmpty()) {
+                btnReset.setDisable(false);
             }
-
+            if (!playing) {
+                for (int i = 0; i < (int) sldBallsCount.getValue(); i++) {
+                    // Projectiles will have the same value for mass and radius in order to ensure they're proportional.
+                    double random_Mass_Radius = (0.75 + Math.random()) * 10; // All projectiles will have size between 7.5 and 17.5 pixels.
+                    double minWidth = 17.5;
+                    double maxWidth = animationPane.getWidth() - 2 * minWidth;
+                    double minHeight = minWidth;
+                    double maxHeight = animationPane.getHeight() - 2 * minHeight;
+                    Projectile addedCircle = new Projectile(random_Mass_Radius, Math.random() * 10, Math.random() * 10, maxWidth * Math.random() + minWidth, maxHeight * Math.random() + minHeight, Color.color(Math.random(), Math.random(), Math.random()), random_Mass_Radius);
+                    circles.add(addedCircle);
+                    animationPane.getChildren().addAll(addedCircle.getCircle(), addedCircle.getDirectionArrow());
+                }
+            }
             disablePlayBtn();
             DefaultAnimation.setComponents(circles, animationPane);
             DefaultAnimation.play();
+            playing = true;
         });
 
         btnPause.setOnAction((event) -> {

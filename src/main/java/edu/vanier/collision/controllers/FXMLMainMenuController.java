@@ -59,11 +59,13 @@ public class FXMLMainMenuController {
                     loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
                     FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
                     controller.circles = simulationToLoad.getProjectiles();
+                    controller.playing = true;
                     loader.setController(controller);
                 } else if (simulationToLoad.isAsteroid()) {
                     loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
                     FXMLDefaultAnimationController controller = new FXMLAsteroidsLayoutController();
                     controller.circles = simulationToLoad.getProjectiles();
+                    controller.playing = true;
                     loader.setController(controller);
                 } else {
 
