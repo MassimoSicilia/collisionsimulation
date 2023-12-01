@@ -7,6 +7,7 @@ package edu.vanier.collision.model;
 import java.io.Serializable;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Shape;
@@ -45,22 +46,13 @@ public class Projectile {
      * @param x_position
      * @param y_position
      */
-    public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, Color color, double radius) {
-        this(); // Call the default constructor to initialize the direction arrow
-        this.mass = mass;
-        this.x_velocity = x_velocity;
-        this.y_velocity = y_velocity;
-        circle = new Circle(x_position, y_position, radius, color);
-        circle.setStroke(Color.BLACK);
-    }
-
-    public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, ImagePattern asteroidImage, double radius) {
+    public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, double radius) {
         this(); // Call the default constructor to initialize the direction arrow
         this.mass = mass;
         this.x_velocity = x_velocity;
         this.y_velocity = y_velocity;
         circle = new Circle(x_position, y_position, radius);
-        circle.setFill(asteroidImage);
+        circle.setStroke(Color.BLACK);
     }
 
     public double getMass() {
@@ -93,6 +85,10 @@ public class Projectile {
 
     public Line getDirectionArrow() {
         return directionArrow;
+    }
+
+    public void setPaint(Paint paint) {
+        circle.setFill(paint);
     }
 
     public void updateDirectionArrow() {

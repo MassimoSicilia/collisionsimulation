@@ -20,7 +20,6 @@ public class Simulation{
     private List<Projectile> projectiles;
     private boolean elasticity;
     private boolean isDefault;
-    private boolean isAsteroid;
 
     /**
      * Creates an empty simulation.
@@ -34,17 +33,15 @@ public class Simulation{
      * @param projectiles
      * @param elasticity
      */
-    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault, boolean isAsteroid) {
+    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
         this.isDefault = isDefault;
-        this.isAsteroid = isAsteroid;
     }
-    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault, boolean isAsteroid, Image background, Image ballImage) {
+    public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault, Image background, Image ballImage) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
         this.isDefault = isDefault;
-        this.isAsteroid = isAsteroid;
     }
 
     public List<Projectile> getProjectiles() {
@@ -77,10 +74,6 @@ public class Simulation{
 
     public boolean isDefault() {
         return isDefault;
-    }
-
-    public boolean isAsteroid() {
-        return isAsteroid;
     }
     
 }

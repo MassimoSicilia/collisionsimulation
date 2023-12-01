@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<SplitPane fx:id="root" dividerPositions="0.8119" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<SplitPane fx:id="root" dividerPositions="0.8119" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
   <items>
     <AnchorPane fx:id="animationPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: grey;" />
     <AnchorPane fx:id="controlsPane" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -26,18 +26,18 @@
                   <Label fx:id="lblElasticity" layoutX="74.0" layoutY="313.0" prefHeight="17.0" prefWidth="52.0" text="Elasticity" />
                   <Button fx:id="btnHide" layoutX="71.0" layoutY="413.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Hide" />
                   <Button fx:id="btnMute" layoutX="67.0" layoutY="680.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Mute" />
-                  <Slider fx:id="volumeSlider" layoutX="43.0" layoutY="655.0" prefHeight="14.0" prefWidth="107.0" />
+                  <Slider fx:id="volumeSlider" layoutX="43.0" layoutY="655.0" max="1.0" prefHeight="14.0" prefWidth="107.0" value="1.0" />
                   <Label fx:id="lblVolume" layoutX="70.0" layoutY="637.0" prefHeight="17.0" prefWidth="43.0" text="Volume" />
                   <Button fx:id="btnSave" layoutX="121.0" layoutY="13.0" maxWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="63.0" text="Save" />
                   <Button fx:id="btnReturn" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="63.0" text="Return" />
                   <Label fx:id="lblObjectCount" layoutX="43.0" layoutY="83.0" prefHeight="17.0" prefWidth="107.0" text="Number of Objects" />
-                  <Label fx:id="lblBallsCount" layoutX="75.0" layoutY="137.0" prefHeight="20.0" prefWidth="70.0" text="10 Balls">
+                  <Label fx:id="lblBallsCount" layoutX="75.0" layoutY="137.0" prefHeight="20.0" prefWidth="70.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <Slider fx:id="sldBallsCount" blockIncrement="1.0" layoutX="27.0" layoutY="100.0" min="10.0" showTickLabels="true" showTickMarks="true" />
-                  <CheckBox fx:id="checkArrow" layoutX="66.0" layoutY="505.0" mnemonicParsing="false" selected="true" text="Show Arrows" />
+                  <CheckBox fx:id="checkArrow" layoutX="66.0" layoutY="505.0" mnemonicParsing="false" text="Show Arrows" />
                   <ColorPicker fx:id="colorPicker" layoutX="37.0" layoutY="558.0" />
                </children>
             </Pane>

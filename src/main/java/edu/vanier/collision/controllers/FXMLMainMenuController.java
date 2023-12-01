@@ -58,17 +58,15 @@ public class FXMLMainMenuController {
                 if (simulationToLoad.isDefault()) {
                     loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
                     FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
-                    controller.circles = simulationToLoad.getProjectiles();
-                    controller.playing = true;
-                    loader.setController(controller);
-                } else if (simulationToLoad.isAsteroid()) {
-                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
-                    FXMLDefaultAnimationController controller = new FXMLAsteroidsLayoutController();
-                    controller.circles = simulationToLoad.getProjectiles();
-                    controller.playing = true;
+                    controller.projectiles = simulationToLoad.getProjectiles();
+                    controller.setLoadedFromFile(true);
                     loader.setController(controller);
                 } else {
-
+                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
+                    FXMLDefaultAnimationController controller = new FXMLAsteroidsLayoutController();
+                    controller.projectiles = simulationToLoad.getProjectiles();
+                    controller.setLoadedFromFile(true);
+                    loader.setController(controller);
                 }
                 switchScenes(primaryStage, new Scene(loader.load()));
 
@@ -83,7 +81,7 @@ public class FXMLMainMenuController {
         });
     }
 
-    public void switchScenes(Stage stage, Scene scene) {
+    public static void switchScenes(Stage stage, Scene scene) {
         stage.setScene(scene);
     }
 
