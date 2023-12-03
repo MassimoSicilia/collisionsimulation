@@ -21,66 +21,33 @@ import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
  */
 public class DefaultAnimation {
 
-    static AnimationTimer animation;
-    static List<Projectile> circles;
-    static Pane animationPane;
-    public static AudioClip bouncingAudio = new AudioClip(DefaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
-    static boolean elasticity = true;
-    static boolean animationPlaying;
+    AnimationTimer animation;
+    List<Projectile> circles;
+    Pane animationPane;
+    public static AudioClip bouncingAudio;
+    boolean elastic = true;
+    boolean animationPlaying;
 
-    public static void setComponents(List<Projectile> circles, Pane animationPane) {
-        DefaultAnimation.circles = circles;
-        DefaultAnimation.animationPane = animationPane;
+    public DefaultAnimation() {
+    }
+    
+    public DefaultAnimation(List<Projectile> circles, Pane animationPane, boolean animationPlaying, boolean isDefault) {
+        this.circles = circles;
+        this.animationPane = animationPane;
+        this.animationPlaying = animationPlaying;
+        if (isDefault) {
+            bouncingAudio = new AudioClip(DefaultAnimation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+        } else {
+            bouncingAudio = new AudioClip(DefaultAnimation.class.getResource("/audio/rockHit.wav").toExternalForm());
+        }
     }
 
-    /*
-    public static void play() {
+    public void play() {
         animation = new AnimationTimer() {
             @Override
             public void handle(long now) {
                 double elasticityValue;
-                if (elasticity == true) {
-                    elasticityValue = 1;
-                } else {
-                    elasticityValue = 0.995;
-                }
-                // every frame, will see update positions and check for collisions
-                for (ListIterator<Projectile> firstIterator = circles.listIterator(); firstIterator.hasNext();) {
-                    Projectile projectile1 = firstIterator.next();
-                    Circle ball = projectile1.getCircle();
-                    double xVelocity = projectile1.getX_velocity();
-                    double yVelocity = projectile1.getY_velocity();
-
-                    //move the ball
-                    ball.setCenterX(ball.getCenterX() + xVelocity);
-                    ball.setCenterY(ball.getCenterY() + yVelocity);
-
-                    projectile1.setX_velocity(projectile1.getX_velocity() * elasticityValue);
-                    projectile1.setY_velocity(projectile1.getY_velocity() * elasticityValue);
-
-                    //check for collisions
-                    resolveBallWallCollision(projectile1, ball, xVelocity, yVelocity, animationPane);
-
-                    for (ListIterator<Projectile> secondIterator = circles.listIterator(firstIterator.nextIndex()); secondIterator.hasNext();) {
-                        Projectile projectile2 = secondIterator.next();
-                        resolveBallCollision(projectile1, projectile2);
-
-                        // Update direction arrow
-                        projectile1.updateDirectionArrow();
-                    }
-                }
-            }
-        };
-        animation.start();
-        animationPlaying = true;
-    }
-     */
-    public static void play() {
-        animation = new AnimationTimer() {
-            @Override
-            public void handle(long now) {
-                double elasticityValue;
-                if (elasticity == true) {
+                if (elastic == true) {
                     elasticityValue = 1;
                 } else {
                     elasticityValue = 0.995;
@@ -123,7 +90,7 @@ public class DefaultAnimation {
         animationPlaying = true;
     }
 
-    public static void stop() {
+    public void stop() {
         animation.stop();
         animationPlaying = false;
     }
@@ -160,8 +127,6 @@ public class DefaultAnimation {
         if (ball1.getBoundsInParent().intersects(ball2.getBoundsInParent())
                 && deltaX * (xVelocity2 - xVelocity) + deltaY * (yVelocity2 - yVelocity) < 0) {
 
-            bouncingAudio.play();
-
             Vector2D normal = new Vector2D(Math.abs(ball1.getCenterX() - ball2.getCenterX()), Math.abs(ball1.getCenterY() - ball2.getCenterY()));
             normal = normal.normalize();
 
@@ -184,20 +149,21 @@ public class DefaultAnimation {
             projectile1.setY_velocity(velocity1_final.getY());
             projectile2.setX_velocity(velocity2_final.getX());
             projectile2.setY_velocity(velocity2_final.getY());
+            bouncingAudio.play();
 
         }
 
     }
 
-    public static boolean isElasticity() {
-        return elasticity;
+    public boolean isElastic() {
+        return elastic;
     }
 
-    public static void setElasticity(boolean elasticity) {
-        DefaultAnimation.elasticity = elasticity;
+    public void setElastic(boolean elastic) {
+        this.elastic = elastic;
     }
 
-    public static boolean isAnimationPlaying() {
+    public boolean isAnimationPlaying() {
         return animationPlaying;
     }
 }

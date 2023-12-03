@@ -57,16 +57,10 @@ public class FXMLMainMenuController {
                 FXMLLoader loader = new FXMLLoader();
                 if (simulationToLoad.isDefault()) {
                     loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                    FXMLDefaultAnimationController controller = new FXMLDefaultAnimationController();
-                    controller.projectiles = simulationToLoad.getProjectiles();
-                    controller.setLoadedFromFile(true);
-                    loader.setController(controller);
+                    loader.setController(new FXMLDefaultAnimationController(simulationToLoad.getProjectiles()));
                 } else {
                     loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
-                    FXMLDefaultAnimationController controller = new FXMLAsteroidsLayoutController();
-                    controller.projectiles = simulationToLoad.getProjectiles();
-                    controller.setLoadedFromFile(true);
-                    loader.setController(controller);
+                    loader.setController(new FXMLAsteroidsLayoutController(simulationToLoad.getProjectiles()));
                 }
                 switchScenes(primaryStage, new Scene(loader.load()));
 

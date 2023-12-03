@@ -9,6 +9,7 @@ import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
@@ -31,7 +32,15 @@ import javafx.stage.FileChooser;
 public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationController {
 
     static ImagePattern asteroidImagePattern = new ImagePattern(new Image("/images/Asteroid.png"));
-    
+
+    public FXMLAsteroidsLayoutController() {
+        setDefaultAnimation(false);
+    }
+
+    public FXMLAsteroidsLayoutController(List<Projectile> projectiles) {
+        super(projectiles);
+        setDefaultAnimation(false);
+    }
 
     @FXML
     public void initialize() {
@@ -40,6 +49,6 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
         btnPlay.setOnAction(setAnimationProperties(20, 2.5, asteroidImagePattern));
-        btnSave.setOnAction(setBtnSaveEvent(false));
+        btnSave.setOnAction(setBtnSaveEvent());
     }
 }

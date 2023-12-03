@@ -48,13 +48,15 @@ import javafx.stage.FileChooser.ExtensionFilter;
  *
  * @author Hassimo
  */
-public class FXMLDefaultAnimationController extends Simulation {
+public class FXMLDefaultAnimationController{
 
     List<Projectile> projectiles = new ArrayList<>();
-    private boolean playing;
+    private static DefaultAnimation animation;
+    private static boolean playing;
+    private static boolean defaultAnimation;
     private boolean loadedFromFile;
     private EventHandler<MouseEvent> clickHandler;
-    private String objectType = "Balls";
+    private static String objectType = "Balls";
     // UI Controls
     @FXML
     Button btnRemove;
@@ -97,24 +99,19 @@ public class FXMLDefaultAnimationController extends Simulation {
     @FXML
     ColorPicker colorPicker;
 
-    static AudioClip bouncingAudio = DefaultAnimation.bouncingAudio;
+    public FXMLDefaultAnimationController() {
+        defaultAnimation = true;
+    }
+    public FXMLDefaultAnimationController(List<Projectile> projectiles){
+        this.projectiles = projectiles;
+        loadedFromFile = true;
+        defaultAnimation = true;
+    }
 
     @FXML
     public void initialize() {
         Divider divider = root.getDividers().get(0);
-        enablePlayBtn();
-
-        if (loadedFromFile) {
-            disablePlayBtn();
-            enableResume();
-            // Set the position of the slider and the ball count relative to the number of projectiles.
-            initializeSliderPosition();
-            initializeBallCount();
-            // Add all projectiles to the pane.
-            addAllProjectiles();
-            DefaultAnimation.setComponents(projectiles, PaneContainer);
-        }
-
+        layoutInitialize(defaultAnimation);
         // Rearranges positions of projectiles of pane is resized.
         animationPane.widthProperty().addListener(paneResizeListener);
 
@@ -138,12 +135,12 @@ public class FXMLDefaultAnimationController extends Simulation {
 
         btnRemove.setOnAction(btnRemoveEvent);
 
-        btnSave.setOnAction(setBtnSaveEvent(true));
+        btnSave.setOnAction(setBtnSaveEvent());
 
         btnMute.setOnAction(btnMuteEvent);
 
         volumeSlider.valueProperty().addListener((observable) -> {
-            bouncingAudio.setVolume(volumeSlider.getValue());
+            DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
         });
 
         // Updates ball count when slider is adjusted.
@@ -184,9 +181,9 @@ public class FXMLDefaultAnimationController extends Simulation {
         @Override
         public void handle(ActionEvent event) {
             if (comboBoxElasticity.getValue() == "Elastic") {
-                DefaultAnimation.setElasticity(true);
+                animation.setElastic(true);
             } else {
-                DefaultAnimation.setElasticity(false);
+                animation.setElastic(false);
             }
         }
     };
@@ -194,7 +191,8 @@ public class FXMLDefaultAnimationController extends Simulation {
         @Override
         public void handle(ActionEvent event) {
             if (playing) {
-                DefaultAnimation.stop();
+                animation.stop();
+                playing = false;
             }
             try {
                 FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
@@ -239,10 +237,9 @@ public class FXMLDefaultAnimationController extends Simulation {
                     animationPane.getChildren().addAll(addedProjectile.getCircle(), addedProjectile.getDirectionArrow());
                     updateArrowVisibility(checkArrow.isSelected());
                 }
-
                 disablePlayBtn();
-                DefaultAnimation.setComponents(projectiles, animationPane);
-                DefaultAnimation.play();
+                animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
+                animation.play();
                 playing = true;
             }
         };
@@ -253,7 +250,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         @Override
         public void handle(ActionEvent event) {
             if (playing) {
-                DefaultAnimation.stop();
+                animation.stop();
                 enableResume();
 
                 // Add mouse click event handler for color selection when simulation is paused
@@ -261,7 +258,7 @@ public class FXMLDefaultAnimationController extends Simulation {
                     addMouseClickHandler(projectile);
                 }
             } else {
-                DefaultAnimation.play();
+                animation.play();
                 enablePause();
 
                 // Remove mouse click event handler when simulation is resumed
@@ -277,7 +274,7 @@ public class FXMLDefaultAnimationController extends Simulation {
         public void handle(ActionEvent event) {
             // Stop the animation if it's playing.
             if (playing) {
-                DefaultAnimation.stop();
+                animation.stop();
                 playing = false;
             } else {
                 btnPause.setText("Pause");
@@ -308,15 +305,15 @@ public class FXMLDefaultAnimationController extends Simulation {
         }
     };
 
-    EventHandler<ActionEvent> setBtnSaveEvent(boolean isDefault) {
+    EventHandler<ActionEvent> setBtnSaveEvent() {
         EventHandler<ActionEvent> btnSaveEvent = new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                Simulation simulation = new Simulation(projectiles, DefaultAnimation.isElasticity(), isDefault);
+                Simulation simulation = new Simulation(projectiles, animation.isElastic(), defaultAnimation);
                 FileChooser fileSaver = new FileChooser();
                 fileSaver.setTitle("Save Simulation");
                 fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
-                if (isDefault) {
+                if (defaultAnimation) {
                     fileSaver.setInitialFileName("default_simulation");
                 } else {
                     fileSaver.setInitialFileName("asteroid_simulation");
@@ -339,16 +336,29 @@ public class FXMLDefaultAnimationController extends Simulation {
             if (btnMute.getText().equals("Mute")) {
                 btnMute.setText("Unmute");
                 volumeSlider.setDisable(true);
-                bouncingAudio.setVolume(0.0);
+                DefaultAnimation.bouncingAudio.setVolume(0.0);
             } else {
                 btnMute.setText("Mute");
-                bouncingAudio.setVolume(volumeSlider.getValue());
+                DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
                 volumeSlider.setDisable(false);
             }
         }
     };
 
     // Helper Methods.
+    public void layoutInitialize(boolean isDefault){
+        enablePlayBtn();
+        initializeBallCount();
+        if (loadedFromFile) {
+            disablePlayBtn();
+            enableResume();
+            // Set the position of the slider and the ball count relative to the number of projectiles.
+            initializeSliderPosition();
+            // Add all projectiles to the pane.
+            addAllProjectiles();
+            animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
+        }
+    }
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
         btnRemove.setDisable(false);
@@ -446,6 +456,22 @@ public class FXMLDefaultAnimationController extends Simulation {
 
     public void setObjectType(String objectType) {
         this.objectType = objectType;
+    }
+
+    public void setDefaultAnimation(boolean defaultAnimation) {
+        this.defaultAnimation = defaultAnimation;
+    }
+
+    public static DefaultAnimation getAnimation() {
+        return animation;
+    }
+
+    public static void setAnimation(DefaultAnimation animation) {
+        FXMLDefaultAnimationController.animation = animation;
+    }
+
+    public static boolean isPlaying() {
+        return playing;
     }
 
 }
