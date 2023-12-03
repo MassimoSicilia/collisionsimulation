@@ -26,7 +26,7 @@
                   <Label fx:id="lblElasticity" layoutX="74.0" layoutY="250.0" prefHeight="17.0" prefWidth="52.0" text="Elasticity" />
                   <Button fx:id="btnHide" layoutX="71.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Hide" />
                   <Button fx:id="btnMute" layoutX="67.0" layoutY="680.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Mute" />
-                  <Slider fx:id="volumeSlider" layoutX="43.0" layoutY="655.0" max="1.0" prefHeight="14.0" prefWidth="107.0" value="1.0" />
+                  <Slider fx:id="sldVolume" layoutX="43.0" layoutY="655.0" max="1.0" prefHeight="14.0" prefWidth="107.0" value="1.0" />
                   <Label fx:id="lblVolume" layoutX="70.0" layoutY="637.0" prefHeight="17.0" prefWidth="43.0" text="Volume" />
                   <Button fx:id="btnSave" layoutX="121.0" layoutY="13.0" maxWidth="70.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="63.0" text="Save" />
                   <Button fx:id="btnReturn" layoutX="10.0" layoutY="13.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="63.0" text="Return" />

@@ -4,7 +4,8 @@
  */
 package edu.vanier.collision.controllers;
 
-import edu.vanier.collision.animation.DefaultAnimation;
+import edu.vanier.collision.animation.Animation;
+import static edu.vanier.collision.animation.Animation.setBouncingAudio;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
@@ -21,6 +22,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.stage.FileChooser;
@@ -29,17 +31,18 @@ import javafx.stage.FileChooser;
  *
  * @author Hassimo
  */
-public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationController {
+public class FXMLAsteroidsController extends FXMLDefaultController {
 
     static ImagePattern asteroidImagePattern = new ImagePattern(new Image("/images/Asteroid.png"));
 
-    public FXMLAsteroidsLayoutController() {
-        setDefaultAnimation(false);
+    public FXMLAsteroidsController() {
+        setIsDefaultAnimation(false);
+        setBouncingAudio(new AudioClip(Animation.class.getResource("/audio/rockHit.wav").toExternalForm()));
     }
 
-    public FXMLAsteroidsLayoutController(List<Projectile> projectiles) {
+    public FXMLAsteroidsController(List<Projectile> projectiles) {
         super(projectiles);
-        setDefaultAnimation(false);
+        setIsDefaultAnimation(false);
     }
 
     @FXML

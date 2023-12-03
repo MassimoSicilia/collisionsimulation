@@ -12,22 +12,22 @@
          <children>
             <Label fx:id="lblTitle" text="Collision Simulator">
                <font>
-                  <Font name="Dubai Light" size="29.0" />
+                  <Font name="Dubai Light" size="40.0" />
                </font>
             </Label>
-            <Button fx:id="btnChoose" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Choose Scenery">
+            <Button fx:id="btnChoose" mnemonicParsing="false" prefHeight="44.0" prefWidth="140.0" text="Choose Scenery">
                <font>
-                  <Font name="Dubai Light" size="12.0" />
+                  <Font name="Dubai Light" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnLoad" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Load Saved File">
+            <Button fx:id="btnLoad" mnemonicParsing="false" prefHeight="44.0" prefWidth="140.0" text="Load Saved File">
                <font>
-                  <Font name="Dubai Light" size="12.0" />
+                  <Font name="Dubai Light" size="18.0" />
                </font>
             </Button>
-            <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Exit">
+            <Button fx:id="btnExit" mnemonicParsing="false" prefHeight="44.0" prefWidth="140.0" text="Exit">
                <font>
-                  <Font name="Dubai Light" size="12.0" />
+                  <Font name="Dubai Light" size="18.0" />
                </font>
             </Button>
          </children>

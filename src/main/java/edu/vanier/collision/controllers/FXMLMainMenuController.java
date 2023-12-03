@@ -35,7 +35,7 @@ public class FXMLMainMenuController {
         btnChoose.setOnAction(event -> {
             // gets the primary stage from the chooseScenery button
             Stage primaryStage = (Stage) btnChoose.getScene().getWindow();
-            FXMLLoader chooseScenery = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
+            FXMLLoader chooseScenery = new FXMLLoader(getClass().getResource("/fxml/ChooseSceneryPane.fxml"));
             chooseScenery.setController(new FXMLChooseSceneryController());
             try {
                 Scene chooseSceneryScene = new Scene(chooseScenery.load());
@@ -57,10 +57,10 @@ public class FXMLMainMenuController {
                 FXMLLoader loader = new FXMLLoader();
                 if (simulationToLoad.isDefault()) {
                     loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                    loader.setController(new FXMLDefaultAnimationController(simulationToLoad.getProjectiles()));
+                    loader.setController(new FXMLDefaultController(simulationToLoad.getProjectiles()));
                 } else {
-                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
-                    loader.setController(new FXMLAsteroidsLayoutController(simulationToLoad.getProjectiles()));
+                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimationPane.fxml"));
+                    loader.setController(new FXMLAsteroidsController(simulationToLoad.getProjectiles()));
                 }
                 switchScenes(primaryStage, new Scene(loader.load()));
 

@@ -4,7 +4,8 @@
  */
 package edu.vanier.collision.controllers;
 
-import edu.vanier.collision.animation.DefaultAnimation;
+import edu.vanier.collision.animation.Animation;
+import static edu.vanier.collision.animation.Animation.bouncingAudio;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
@@ -53,15 +54,16 @@ import javafx.stage.FileChooser.ExtensionFilter;
  *
  * @author Hassimo
  */
-public class FXMLDefaultAnimationController {
+public class FXMLDefaultController {
 
     List<Projectile> projectiles = new ArrayList<>();
-    private static DefaultAnimation animation;
+    private static Animation animation;
     private static boolean playing;
-    private static boolean defaultAnimation;
+    private static boolean isDefaultAnimation;
     private boolean loadedFromFile;
     private EventHandler<MouseEvent> clickHandler;
     private static String objectType = "Balls";
+    private AudioClip bouncingAudio;
     // UI Controls
     @FXML
     Button btnRemove;
@@ -93,7 +95,7 @@ public class FXMLDefaultAnimationController {
     Pane PaneContainer;
 
     @FXML
-    Slider volumeSlider;
+    Slider sldVolume;
     @FXML
     SplitPane root;
     @FXML
@@ -108,20 +110,21 @@ public class FXMLDefaultAnimationController {
     @FXML
     ColorPicker colorPicker;
 
-    public FXMLDefaultAnimationController() {
-        defaultAnimation = true;
+    public FXMLDefaultController() {
+        isDefaultAnimation = true;
+        bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
 
-    public FXMLDefaultAnimationController(List<Projectile> projectiles) {
+    public FXMLDefaultController(List<Projectile> projectiles) {
         this.projectiles = projectiles;
         loadedFromFile = true;
-        defaultAnimation = true;
+        isDefaultAnimation = true;
     }
 
     @FXML
     public void initialize() {
         Divider divider = root.getDividers().get(0);
-        layoutInitialize(defaultAnimation);
+        layoutInitialize();
         // Rearranges positions of projectiles of pane is resized.
         animationPane.widthProperty().addListener(paneResizeListener);
 
@@ -153,8 +156,8 @@ public class FXMLDefaultAnimationController {
 
         btnChangeBackground.setOnAction(btnChangeBackgroundEvent);
 
-        volumeSlider.valueProperty().addListener((observable) -> {
-            DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
+        sldVolume.valueProperty().addListener((observable) -> {
+            Animation.bouncingAudio.setVolume(sldVolume.getValue());
         });
 
         // Updates ball count when slider is adjusted.
@@ -209,12 +212,12 @@ public class FXMLDefaultAnimationController {
                 playing = false;
             }
             try {
-                FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/choose_scenery.fxml"));
+                FXMLLoader returnLoader = new FXMLLoader(getClass().getResource("/fxml/ChooseSceneryPane.fxml"));
                 returnLoader.setController(new FXMLChooseSceneryController());
                 Parent root = returnLoader.load();
                 btnReturn.getScene().setRoot(root);
             } catch (IOException ex) {
-                Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     };
@@ -252,7 +255,7 @@ public class FXMLDefaultAnimationController {
                     updateArrowVisibility(checkArrow.isSelected());
                 }
                 disablePlayBtn();
-                animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
+                animation = new Animation(projectiles, animationPane, playing);
                 animation.play();
                 playing = true;
             }
@@ -323,11 +326,11 @@ public class FXMLDefaultAnimationController {
         EventHandler<ActionEvent> btnSaveEvent = new EventHandler<>() {
             @Override
             public void handle(ActionEvent event) {
-                Simulation simulation = new Simulation(projectiles, animation.isElastic(), defaultAnimation);
+                Simulation simulation = new Simulation(projectiles, animation.isElastic(), isDefaultAnimation);
                 FileChooser fileSaver = new FileChooser();
                 fileSaver.setTitle("Save Simulation");
                 fileSaver.getExtensionFilters().add(new ExtensionFilter("JSON File", "*.json"));
-                if (defaultAnimation) {
+                if (isDefaultAnimation) {
                     fileSaver.setInitialFileName("default_simulation");
                 } else {
                     fileSaver.setInitialFileName("asteroid_simulation");
@@ -337,7 +340,7 @@ public class FXMLDefaultAnimationController {
                     try {
                         SimulationController.save(simulation, file);
                     } catch (IOException ex) {
-                        Logger.getLogger(FXMLDefaultAnimationController.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 }
             }
@@ -349,12 +352,12 @@ public class FXMLDefaultAnimationController {
         public void handle(ActionEvent event) {
             if (btnMute.getText().equals("Mute")) {
                 btnMute.setText("Unmute");
-                volumeSlider.setDisable(true);
-                DefaultAnimation.bouncingAudio.setVolume(0.0);
+                sldVolume.setDisable(true);
+                Animation.bouncingAudio.setVolume(0.0);
             } else {
                 btnMute.setText("Mute");
-                DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
-                volumeSlider.setDisable(false);
+                Animation.bouncingAudio.setVolume(sldVolume.getValue());
+                sldVolume.setDisable(false);
             }
         }
     };
@@ -391,9 +394,10 @@ public class FXMLDefaultAnimationController {
     };
 
     // Helper Methods.
-    public void layoutInitialize(boolean isDefault) {
+    public void layoutInitialize() {
         enablePlayBtn();
-        animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
+        animation = new Animation(projectiles, animationPane, playing);
+        animation.setBouncingAudio(bouncingAudio);
         initializeBallCount();
         if (loadedFromFile) {
             disablePlayBtn();
@@ -504,20 +508,24 @@ public class FXMLDefaultAnimationController {
         this.objectType = objectType;
     }
 
-    public void setDefaultAnimation(boolean defaultAnimation) {
-        this.defaultAnimation = defaultAnimation;
+    public void setIsDefaultAnimation(boolean isDefaultAnimation) {
+        this.isDefaultAnimation = isDefaultAnimation;
     }
 
-    public static DefaultAnimation getAnimation() {
+    public static Animation getAnimation() {
         return animation;
     }
 
-    public static void setAnimation(DefaultAnimation animation) {
-        FXMLDefaultAnimationController.animation = animation;
+    public static void setAnimation(Animation animation) {
+        FXMLDefaultController.animation = animation;
     }
 
     public static boolean isPlaying() {
         return playing;
+    }
+
+    public void setBouncingAudio(AudioClip bouncingAudio) {
+        this.bouncingAudio = bouncingAudio;
     }
 
 }

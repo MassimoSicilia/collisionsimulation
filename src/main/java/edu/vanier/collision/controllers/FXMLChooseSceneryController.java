@@ -35,7 +35,7 @@ public class FXMLChooseSceneryController {
             try {
                 Stage primaryStage = (Stage) btnDefault.getScene().getWindow();
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                loader.setController(new FXMLDefaultAnimationController());
+                loader.setController(new FXMLDefaultController());
                 SplitPane root = loader.load();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
@@ -46,19 +46,19 @@ public class FXMLChooseSceneryController {
         btnAsteroids.setOnAction((event) -> {
             try {
                 Stage primaryStage = (Stage) btnAsteroids.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsAnimation.fxml"));
-                loader.setController(new FXMLAsteroidsLayoutController());
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsAnimationPane.fxml"));
+                loader.setController(new FXMLAsteroidsController());
                 Parent root = loader.load();
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
             } catch (IOException e) {
-                Logger.getLogger(FXMLAsteroidsLayoutController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(FXMLAsteroidsController.class.getName()).log(Level.SEVERE, null, e);
             }
         });
         btnBack.setOnAction((event) -> {
             try {
                 Stage primaryStage = (Stage) btnBack.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuPane.fxml"));
                 loader.setController(new FXMLMainMenuController());
                 Pane root = loader.load();
                 Scene scene = new Scene(root);

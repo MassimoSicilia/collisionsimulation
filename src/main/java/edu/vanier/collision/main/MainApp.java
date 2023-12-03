@@ -1,8 +1,8 @@
 package edu.vanier.collision.main;
 
-import edu.vanier.collision.animation.DefaultAnimation;
-import edu.vanier.collision.controllers.FXMLAsteroidsLayoutController;
-import edu.vanier.collision.controllers.FXMLDefaultAnimationController;
+import edu.vanier.collision.animation.Animation;
+import edu.vanier.collision.controllers.FXMLAsteroidsController;
+import edu.vanier.collision.controllers.FXMLDefaultController;
 import edu.vanier.collision.controllers.FXMLMainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        FXMLLoader mainMenu = new FXMLLoader(getClass().getResource("/fxml/main_menu.fxml"));
+        FXMLLoader mainMenu = new FXMLLoader(getClass().getResource("/fxml/MainMenuPane.fxml"));
         mainMenu.setController(new FXMLMainMenuController());
         Parent root = mainMenu.load();
         Scene scene = new Scene(root);
@@ -32,9 +32,9 @@ public class MainApp extends Application {
 
     @Override
     public void stop() {
-        if(FXMLDefaultAnimationController.isPlaying())
-            FXMLDefaultAnimationController.getAnimation().stop();
-        if(FXMLAsteroidsLayoutController.isPlaying())
-            FXMLAsteroidsLayoutController.getAnimation().stop();
+        if(FXMLDefaultController.isPlaying())
+            FXMLDefaultController.getAnimation().stop();
+        if(FXMLAsteroidsController.isPlaying())
+            FXMLAsteroidsController.getAnimation().stop();
     }
 }
