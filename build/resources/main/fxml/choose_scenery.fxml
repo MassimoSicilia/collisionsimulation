@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="326.0" layoutY="80.0" prefHeight="571.0" prefWidth="349.0" spacing="70.0">
+      <VBox alignment="TOP_CENTER" layoutX="426.0" layoutY="81.0" prefHeight="571.0" prefWidth="349.0" spacing="70.0">
          <children>
             <Label fx:id="lblTitle" text="Choose Scenery">
                <font>
@@ -25,10 +25,6 @@
                   <Font name="Dubai Light" size="12.0" />
                </font>
             </Button>
-            <Button fx:id="btnPictures" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Pictures">
-               <font>
-                  <Font name="Dubai Light" size="12.0" />
-               </font></Button>
             <Button fx:id="btnBack" mnemonicParsing="false" prefHeight="40.0" prefWidth="100.0" text="Go Back">
                <font>
                   <Font name="Dubai Light" size="12.0" />

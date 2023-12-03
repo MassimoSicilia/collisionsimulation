@@ -22,9 +22,9 @@
                   <Button fx:id="btnPlay" layoutX="27.0" layoutY="750.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="59.0" text="Play" />
                   <Button fx:id="btnPause" layoutX="120.0" layoutY="745.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Pause" />
                   <Button fx:id="btnReset" layoutX="120.0" layoutY="785.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Reset" />
-                  <ComboBox fx:id="comboBoxElasticity" layoutX="46.0" layoutY="330.0" prefHeight="25.0" prefWidth="107.0" visibleRowCount="2" />
-                  <Label fx:id="lblElasticity" layoutX="74.0" layoutY="313.0" prefHeight="17.0" prefWidth="52.0" text="Elasticity" />
-                  <Button fx:id="btnHide" layoutX="71.0" layoutY="413.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Hide" />
+                  <ComboBox fx:id="comboBoxElasticity" layoutX="46.0" layoutY="267.0" prefHeight="25.0" prefWidth="107.0" visibleRowCount="2" />
+                  <Label fx:id="lblElasticity" layoutX="74.0" layoutY="250.0" prefHeight="17.0" prefWidth="52.0" text="Elasticity" />
+                  <Button fx:id="btnHide" layoutX="71.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Hide" />
                   <Button fx:id="btnMute" layoutX="67.0" layoutY="680.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="59.0" text="Mute" />
                   <Slider fx:id="volumeSlider" layoutX="43.0" layoutY="655.0" max="1.0" prefHeight="14.0" prefWidth="107.0" value="1.0" />
                   <Label fx:id="lblVolume" layoutX="70.0" layoutY="637.0" prefHeight="17.0" prefWidth="43.0" text="Volume" />
@@ -39,6 +39,8 @@
                   <Slider fx:id="sldBallsCount" blockIncrement="1.0" layoutX="27.0" layoutY="100.0" min="10.0" showTickLabels="true" showTickMarks="true" />
                   <CheckBox fx:id="checkArrow" layoutX="66.0" layoutY="505.0" mnemonicParsing="false" text="Show Arrows" />
                   <ColorPicker fx:id="colorPicker" layoutX="37.0" layoutY="558.0" />
+                  <Button fx:id="btnChangeBall" layoutX="44.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Change Ball Picture" />
+                  <Button fx:id="btnChangeBackground" layoutX="44.0" layoutY="371.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Change Background" />
                </children>
             </Pane>
          </children></AnchorPane>

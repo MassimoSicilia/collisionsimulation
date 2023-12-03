@@ -6,6 +6,7 @@ package edu.vanier.collision.animation;
 
 import edu.vanier.collision.controllers.FXMLDefaultAnimationController;
 import edu.vanier.collision.model.Projectile;
+import static java.lang.Math.sqrt;
 import java.util.List;
 import java.util.ListIterator;
 import javafx.animation.AnimationTimer;
@@ -30,7 +31,7 @@ public class DefaultAnimation {
 
     public DefaultAnimation() {
     }
-    
+
     public DefaultAnimation(List<Projectile> circles, Pane animationPane, boolean animationPlaying, boolean isDefault) {
         this.circles = circles;
         this.animationPane = animationPane;
@@ -112,8 +113,8 @@ public class DefaultAnimation {
     }
 
     public static void resolveBallCollision(Projectile projectile1, Projectile projectile2) {
-        double xVelocity = projectile1.getX_velocity();
-        double yVelocity = projectile1.getY_velocity();
+        double xVelocity1 = projectile1.getX_velocity();
+        double yVelocity1 = projectile1.getY_velocity();
         double xVelocity2 = projectile2.getX_velocity();
         double yVelocity2 = projectile2.getY_velocity();
         double mass1 = projectile1.getMass();
@@ -125,13 +126,14 @@ public class DefaultAnimation {
 
         //https://www.vobarian.com/collisions/2dcollisions2.pdf
         if (ball1.getBoundsInParent().intersects(ball2.getBoundsInParent())
-                && deltaX * (xVelocity2 - xVelocity) + deltaY * (yVelocity2 - yVelocity) < 0) {
+                && deltaX * (xVelocity2 - xVelocity1) + deltaY * (yVelocity2 - yVelocity1) < 0) {
 
+            
             Vector2D normal = new Vector2D(Math.abs(ball1.getCenterX() - ball2.getCenterX()), Math.abs(ball1.getCenterY() - ball2.getCenterY()));
             normal = normal.normalize();
 
             Vector2D tangent = new Vector2D(-normal.getY(), normal.getX());
-            Vector2D velocity1 = new Vector2D(xVelocity, yVelocity);
+            Vector2D velocity1 = new Vector2D(xVelocity1, yVelocity1);
             Vector2D velocity2 = new Vector2D(xVelocity2, yVelocity2);
 
             double velocity1_normal = normal.dotProduct(velocity1);
@@ -149,6 +151,30 @@ public class DefaultAnimation {
             projectile1.setY_velocity(velocity1_final.getY());
             projectile2.setX_velocity(velocity2_final.getX());
             projectile2.setY_velocity(velocity2_final.getY());
+             /*
+            final double distance = sqrt(deltaX * deltaX + deltaY * deltaY);
+            final double unitContactX = deltaX / distance;
+            final double unitContactY = deltaY / distance;
+
+            final double u1 = xVelocity1 * unitContactX + yVelocity1 * unitContactY; // velocity of ball 1 parallel to contact vector
+            final double u2 = xVelocity2 * unitContactX + yVelocity2 * unitContactY; // same for ball 2
+
+            final double massSum = projectile1.getMass() + projectile2.getMass();
+            final double massDiff = projectile1.getMass() - projectile2.getMass();
+
+            final double v1 = (2 * projectile2.getMass() * u2 + u1 * massDiff) / massSum; // These equations are derived for one-dimensional collision by
+            final double v2 = (2 * projectile1.getMass() * u1 - u2 * massDiff) / massSum; // solving equations for conservation of momentum and conservation of energy
+
+            final double u1PerpX = xVelocity1 - u1 * unitContactX; // Components of ball 1 velocity in direction perpendicular
+            final double u1PerpY = yVelocity1 - u1 * unitContactY; // to contact vector. This doesn't change with collision
+            final double u2PerpX = xVelocity2 - u2 * unitContactX; // Same for ball 2....
+            final double u2PerpY = yVelocity2 - u2 * unitContactY;
+
+            projectile1.setX_velocity(v1 * unitContactX + u1PerpX);
+            projectile1.setY_velocity(v1 * unitContactY + u1PerpY);
+            projectile2.setX_velocity(v2 * unitContactX + u2PerpX);
+            projectile2.setY_velocity(v2 * unitContactY + u2PerpY);
+*/
             bouncingAudio.play();
 
         }

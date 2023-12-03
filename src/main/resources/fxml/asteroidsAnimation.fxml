@@ -37,6 +37,8 @@
                      </font>
                   </Label>
                   <Slider fx:id="sldBallsCount" blockIncrement="1.0" layoutX="27.0" layoutY="100.0" min="10.0" showTickLabels="true" showTickMarks="true" />
+                  <Button fx:id="btnChangeBall" layoutX="38.0" layoutY="522.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="125.0" text="Change Ball Picture" visible="false" />
+                  <Button fx:id="btnChangeBackground" layoutX="40.0" layoutY="556.0" mnemonicParsing="false" text="Change Background" visible="false" />
                </children>
             </Pane>
             <CheckBox fx:id="checkArrow" layoutX="76.0" layoutY="515.0" mnemonicParsing="false" text="Arrow" visible="false" />

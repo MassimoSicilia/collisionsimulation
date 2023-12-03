@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="850.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="185.0" layoutY="123.0" prefHeight="554.0" prefWidth="631.0" spacing="70.0">
+      <VBox alignment="TOP_CENTER" layoutX="285.0" layoutY="131.0" prefHeight="554.0" prefWidth="631.0" spacing="70.0">
          <children>
             <Label fx:id="lblTitle" text="Collision Simulator">
                <font>

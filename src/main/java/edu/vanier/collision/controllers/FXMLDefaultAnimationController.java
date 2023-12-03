@@ -34,6 +34,11 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.Pane;
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
@@ -76,6 +81,10 @@ public class FXMLDefaultAnimationController{
     Button btnSave;
     @FXML
     ComboBox comboBoxElasticity;
+    @FXML
+    Button btnChangeBall;
+    @FXML
+    Button btnChangeBackground;
 
     //layouts
     @FXML
@@ -138,6 +147,10 @@ public class FXMLDefaultAnimationController{
         btnSave.setOnAction(setBtnSaveEvent());
 
         btnMute.setOnAction(btnMuteEvent);
+        
+        btnChangeBall.setOnAction(btnChangeBallEvent);
+        
+        btnChangeBackground.setOnAction(btnChangeBackgroundEvent);
 
         volumeSlider.valueProperty().addListener((observable) -> {
             DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
@@ -342,6 +355,29 @@ public class FXMLDefaultAnimationController{
                 DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
                 volumeSlider.setDisable(false);
             }
+        }
+    };
+    EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
+        @Override
+        public void handle(ActionEvent event) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Ball Picture");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg","*.png","*.gif"));
+            File ballPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
+            for(Projectile projectile:projectiles){
+                projectile.setPaint(new ImagePattern(new Image(ballPicture.getPath())));
+            }
+        }
+    };
+    EventHandler<ActionEvent> btnChangeBackgroundEvent = new EventHandler<>() {
+        @Override
+        public void handle(ActionEvent event) {
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Background Picture");
+            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg","*.png","*.gif"));
+            File backgroundPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
+            animationPane.setBackground(new Background(new BackgroundImage(new Image(backgroundPicture.getPath()),
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0,1.0, true, true, false, false))));
         }
     };
 

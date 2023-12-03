@@ -47,7 +47,7 @@ public class FXMLAsteroidsLayoutController extends FXMLDefaultAnimationControlle
         setObjectType("Asteroids");
         super.initialize();
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"),
-                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT)));
+                BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true))));
         btnPlay.setOnAction(setAnimationProperties(20, 2.5, asteroidImagePattern));
         btnSave.setOnAction(setBtnSaveEvent());
     }
