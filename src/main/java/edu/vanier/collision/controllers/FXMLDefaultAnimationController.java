@@ -53,7 +53,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  *
  * @author Hassimo
  */
-public class FXMLDefaultAnimationController{
+public class FXMLDefaultAnimationController {
 
     List<Projectile> projectiles = new ArrayList<>();
     private static DefaultAnimation animation;
@@ -111,7 +111,8 @@ public class FXMLDefaultAnimationController{
     public FXMLDefaultAnimationController() {
         defaultAnimation = true;
     }
-    public FXMLDefaultAnimationController(List<Projectile> projectiles){
+
+    public FXMLDefaultAnimationController(List<Projectile> projectiles) {
         this.projectiles = projectiles;
         loadedFromFile = true;
         defaultAnimation = true;
@@ -147,9 +148,9 @@ public class FXMLDefaultAnimationController{
         btnSave.setOnAction(setBtnSaveEvent());
 
         btnMute.setOnAction(btnMuteEvent);
-        
+
         btnChangeBall.setOnAction(btnChangeBallEvent);
-        
+
         btnChangeBackground.setOnAction(btnChangeBackgroundEvent);
 
         volumeSlider.valueProperty().addListener((observable) -> {
@@ -360,30 +361,39 @@ public class FXMLDefaultAnimationController{
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Ball Picture");
-            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg","*.png","*.gif"));
-            File ballPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
-            for(Projectile projectile:projectiles){
-                projectile.setPaint(new ImagePattern(new Image(ballPicture.getPath())));
+            try {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Ball Picture");
+                fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg", "*.png", "*.gif"));
+                File ballPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
+                for (Projectile projectile : projectiles) {
+                    projectile.setPaint(new ImagePattern(new Image(ballPicture.getPath())));
+                }
+            }catch(Exception e){
+                
             }
         }
     };
     EventHandler<ActionEvent> btnChangeBackgroundEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Background Picture");
-            fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg","*.png","*.gif"));
-            File backgroundPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
-            animationPane.setBackground(new Background(new BackgroundImage(new Image(backgroundPicture.getPath()),
-                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0,1.0, true, true, false, false))));
+            try {
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Background Picture");
+                fileChooser.getExtensionFilters().add(new ExtensionFilter("Image files", "*.png", "*.jpeg", "*.png", "*.gif"));
+                File backgroundPicture = fileChooser.showOpenDialog(btnChangeBall.getScene().getWindow());
+                animationPane.setBackground(new Background(new BackgroundImage(new Image(backgroundPicture.getPath()),
+                        BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, new BackgroundSize(1.0, 1.0, true, true, false, false))));
+            } catch (Exception e) {
+
+            }
         }
     };
 
     // Helper Methods.
-    public void layoutInitialize(boolean isDefault){
+    public void layoutInitialize(boolean isDefault) {
         enablePlayBtn();
+        animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
         initializeBallCount();
         if (loadedFromFile) {
             disablePlayBtn();
@@ -392,9 +402,9 @@ public class FXMLDefaultAnimationController{
             initializeSliderPosition();
             // Add all projectiles to the pane.
             addAllProjectiles();
-            animation = new DefaultAnimation(projectiles, animationPane, playing, defaultAnimation);
         }
     }
+
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
         btnRemove.setDisable(false);

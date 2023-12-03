@@ -46,13 +46,13 @@ public class FXMLMainMenuController {
         });
 
         btnLoad.setOnAction(event -> {
+            try {
             Stage primaryStage = (Stage) btnLoad.getScene().getWindow();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open Saved Scenery");
             // will only accept json files
             fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON File", "*.json"));
             File sceneryToLoad = fileChooser.showOpenDialog((Stage) btnLoad.getScene().getWindow());
-            try {
                 Simulation simulationToLoad = SimulationController.load(sceneryToLoad);
                 FXMLLoader loader = new FXMLLoader();
                 if (simulationToLoad.isDefault()) {
@@ -65,8 +65,8 @@ public class FXMLMainMenuController {
                 switchScenes(primaryStage, new Scene(loader.load()));
 
                 // to finish implementation after designing all scenes
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (Exception ex) {
+                
             }
         });
 

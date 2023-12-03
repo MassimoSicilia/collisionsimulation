@@ -38,7 +38,8 @@ public class SimulationController extends Simulation{
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Circle.class, new CircleTypeAdapter())
                 .registerTypeAdapter(Line.class, new LineTypeAdapter())
-                .setPrettyPrinting().create();
+                .setPrettyPrinting().
+                create();
         
         Simulation loadedSimulation = gson.fromJson(new FileReader(file),Simulation.class);
         return loadedSimulation;
