@@ -53,9 +53,10 @@ import javafx.stage.FileChooser.ExtensionFilter;
 public class FXMLDefaultController {
 
     List<Projectile> projectiles = new ArrayList<>();
-    private static Animation animation;
+    private static Animation animation = new Animation();
     private static boolean playing;
     private static boolean isDefaultAnimation;
+    private boolean isElastic;
     private boolean loadedFromFile;
     private EventHandler<MouseEvent> clickHandler;
     private static String objectType;
@@ -113,7 +114,6 @@ public class FXMLDefaultController {
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
-    
 
     public FXMLDefaultController(List<Projectile> projectiles) {
         this.checkArrowEvent = new EventHandler<>() {
@@ -122,8 +122,24 @@ public class FXMLDefaultController {
                 updateArrowVisibility(checkArrow.isSelected());
             }
         };
+        objectType = "Balls";
         this.projectiles = projectiles;
         loadedFromFile = true;
+        isDefaultAnimation = true;
+        bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+    }
+
+    public FXMLDefaultController(List<Projectile> projectiles, boolean elastic) {
+        this.checkArrowEvent = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                updateArrowVisibility(checkArrow.isSelected());
+            }
+        };
+        objectType = "Balls";
+        this.projectiles = projectiles;
+        loadedFromFile = true;
+        isElastic = elastic;
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
@@ -137,8 +153,6 @@ public class FXMLDefaultController {
 
         checkArrow.setOnAction(checkArrowEvent);
         // Elasticity of the simulation.
-        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
-        comboBoxElasticity.getSelectionModel().select("Elastic");
         comboBoxElasticity.setOnAction(comboBoxElasticityEvent);
 
         btnReturn.setOnAction(btnReturnEvent);
@@ -198,11 +212,7 @@ public class FXMLDefaultController {
     EventHandler<ActionEvent> comboBoxElasticityEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
-            if (comboBoxElasticity.getValue() == "Elastic") {
-                animation.setElastic(true);
-            } else {
-                animation.setElastic(false);
-            }
+            animation.setElastic(comboBoxElasticSelection());
         }
     };
     EventHandler<ActionEvent> btnReturnEvent = new EventHandler<>() {
@@ -258,6 +268,7 @@ public class FXMLDefaultController {
                 }
                 disablePlayBtn();
                 animation = new Animation(projectiles, animationPane, playing);
+                animation.setElastic(comboBoxElasticSelection());
                 animation.play();
                 playing = true;
             }
@@ -308,7 +319,7 @@ public class FXMLDefaultController {
 
             // Clear the list of projectiles.
             projectiles.clear();
-            
+
             // Set the volume slider to the current volume
             if (sldVolume != null) {
                 sldVolume.setValue(Animation.bouncingAudio.getVolume());
@@ -371,8 +382,9 @@ public class FXMLDefaultController {
                 btnMute.setText("Mute");
                 Animation.bouncingAudio.setVolume(sldVolume.getValue());
                 sldVolume.setDisable(false);
+            }
         }
-    }};
+    };
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -384,8 +396,8 @@ public class FXMLDefaultController {
                 for (Projectile projectile : projectiles) {
                     projectile.setPaint(new ImagePattern(new Image(ballPicture.getPath())));
                 }
-            }catch(Exception e){
-                
+            } catch (Exception e) {
+
             }
         }
     };
@@ -410,6 +422,8 @@ public class FXMLDefaultController {
         enablePlayBtn();
         animation = new Animation(projectiles, animationPane, playing);
         animation.setBouncingAudio(bouncingAudio);
+        comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
+        comboBoxElasticity.getSelectionModel().select("Elastic");
         initializeBallCount();
         if (loadedFromFile) {
             disablePlayBtn();
@@ -418,12 +432,16 @@ public class FXMLDefaultController {
             initializeSliderPosition();
             // Add all projectiles to the pane.
             addAllProjectiles();
+            if (isElastic()) {
+                comboBoxElasticity.getSelectionModel().select("Elastic");
+            }else{
+                comboBoxElasticity.getSelectionModel().select("Non-Elastic");
+            }
         }
     }
 
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
-        comboBoxElasticity.setDisable(false);
         btnRemove.setDisable(false);
         btnPause.setDisable(false);
         btnReset.setDisable(false);
@@ -432,7 +450,6 @@ public class FXMLDefaultController {
 
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
-        comboBoxElasticity.setDisable(true);
         colorPicker.setDisable(true);
         btnPause.setDisable(true);
         sldBallsCount.setDisable(false);
@@ -541,11 +558,23 @@ public class FXMLDefaultController {
     public void setBouncingAudio(AudioClip bouncingAudio) {
         this.bouncingAudio = bouncingAudio;
     }
-    
-    private void updateBallsCount(){
+
+    private void updateBallsCount() {
         int currentBalls = projectiles.size();
         lblBallsCount.setText(currentBalls + " " + objectType);
     }
 
-}
+    public boolean isElastic() {
+        return isElastic;
+    }
 
+    public void setElastic(boolean isElastic) {
+        this.isElastic = isElastic;
+    }
+    public boolean comboBoxElasticSelection(){
+        boolean selection = comboBoxElasticity.getValue().equals("Elastic");
+        setElastic(selection);
+        return selection;
+    }
+
+}
