@@ -423,6 +423,7 @@ public class FXMLDefaultController {
 
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
+        comboBoxElasticity.setDisable(false);
         btnRemove.setDisable(false);
         btnPause.setDisable(false);
         btnReset.setDisable(false);
@@ -431,6 +432,7 @@ public class FXMLDefaultController {
 
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
+        comboBoxElasticity.setDisable(true);
         colorPicker.setDisable(true);
         btnPause.setDisable(true);
         sldBallsCount.setDisable(false);
