@@ -309,29 +309,9 @@ public class FXMLDefaultController {
             // Clear the list of projectiles.
             projectiles.clear();
             
-            // Set the vo7lume slider to the current volume
+            // Set the volume slider to the current volume
             if (sldVolume != null) {
                 sldVolume.setValue(Animation.bouncingAudio.getVolume());
-            }
-
-            // Restore the volume state after resetting
-            if (sldVolume != null) {
-                sldVolume.setValue(storedVolume);
-            }
-
-            // Restore the mute state after resetting
-            if (wasMuted) {
-                btnMute.setText("Mute");
-                Animation.bouncingAudio.setVolume(0.0);
-                if (sldVolume != null) {
-                    sldVolume.setDisable(true);
-                }
-            } else {
-                btnMute.setText("Mute");
-                Animation.bouncingAudio.setVolume(storedVolume);
-                if (sldVolume != null) {
-                    sldVolume.setDisable(false);
-                }
             }
 
             enablePlayBtn();
