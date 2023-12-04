@@ -125,6 +125,7 @@ public class FXMLDefaultController {
         this.projectiles = projectiles;
         loadedFromFile = true;
         isDefaultAnimation = true;
+        bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
 
     @FXML
