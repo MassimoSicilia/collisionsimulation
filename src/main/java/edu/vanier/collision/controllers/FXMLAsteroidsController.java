@@ -34,6 +34,7 @@ public class FXMLAsteroidsController extends FXMLDefaultController {
 
     public FXMLAsteroidsController(List<Projectile> projectiles) {
         super(projectiles);
+        setBouncingAudio(new AudioClip(Animation.class.getResource("/audio/rockHit.wav").toExternalForm()));
         setIsDefaultAnimation(false);
     }
 
