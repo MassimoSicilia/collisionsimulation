@@ -40,7 +40,7 @@ public class FXMLChooseSceneryController {
                 Scene scene = new Scene(root);
                 primaryStage.setScene(scene);
             } catch (IOException ex) {
-                Logger.getLogger(FXMLChooseSceneryController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
             }
         });
         btnAsteroids.setOnAction((event) -> {
