@@ -114,7 +114,6 @@ public class FXMLDefaultController {
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
     
-    private boolean allowMuteToggle = true;
 
     public FXMLDefaultController(List<Projectile> projectiles) {
         this.checkArrowEvent = new EventHandler<>() {
@@ -254,9 +253,7 @@ public class FXMLDefaultController {
                     projectiles.add(addedProjectile);
                     animationPane.getChildren().addAll(addedProjectile.getCircle(), addedProjectile.getDirectionArrow());
                     updateArrowVisibility(checkArrow.isSelected());
-                    
-                    // Reset the flag to allow toggling mute after play
-                    allowMuteToggle = true;
+
                 }
                 disablePlayBtn();
                 animation = new Animation(projectiles, animationPane, playing);
@@ -311,10 +308,7 @@ public class FXMLDefaultController {
             // Clear the list of projectiles.
             projectiles.clear();
             
-            // Set the flag to prevent toggling mute during the reset and play sequence
-            allowMuteToggle = false;
-
-            // Set the volume slider to the current volume
+            // Set the vo7lume slider to the current volume
             if (sldVolume != null) {
                 sldVolume.setValue(Animation.bouncingAudio.getVolume());
             }
@@ -396,7 +390,6 @@ public class FXMLDefaultController {
                 btnMute.setText("Mute");
                 Animation.bouncingAudio.setVolume(sldVolume.getValue());
                 sldVolume.setDisable(false);
-            
         }
     }};
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
