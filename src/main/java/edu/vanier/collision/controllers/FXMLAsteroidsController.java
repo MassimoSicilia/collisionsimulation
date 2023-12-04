@@ -38,6 +38,9 @@ public class FXMLAsteroidsController extends FXMLDefaultController {
         setIsDefaultAnimation(false);
     }
 
+    /**
+     * initialize method for the asteroids
+     */
     @FXML
     public void initialize() {
         setObjectType("Asteroids");

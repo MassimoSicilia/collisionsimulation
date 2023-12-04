@@ -19,6 +19,11 @@ public class MainApp extends Application {
         launch(args);
     }
 
+    /**
+     * starts animation
+     * @param primaryStage
+     * @throws Exception
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader mainMenu = new FXMLLoader(getClass().getResource("/fxml/MainMenuPane.fxml"));
@@ -32,6 +37,9 @@ public class MainApp extends Application {
         primaryStage.show();
     }
 
+    /**
+     * stops animation
+     */
     @Override
     public void stop() {
         if(FXMLDefaultController.isPlaying())

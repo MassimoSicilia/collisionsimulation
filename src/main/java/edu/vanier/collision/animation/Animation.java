@@ -138,18 +138,34 @@ public class Animation {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isElastic() {
         return elastic;
     }
 
+    /**
+     *
+     * @param elastic
+     */
     public void setElastic(boolean elastic) {
         this.elastic = elastic;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAnimationPlaying() {
         return animationPlaying;
     }
 
+    /**
+     *
+     * @param bouncingAudio
+     */
     public static void setBouncingAudio(AudioClip bouncingAudio) {
         Animation.bouncingAudio = bouncingAudio;
     }

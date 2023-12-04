@@ -22,6 +22,7 @@ import javafx.stage.Stage;
  */
 public class FXMLChooseSceneryController {
 
+    // FXML UI'S
     @FXML
     Button btnDefault;
     @FXML

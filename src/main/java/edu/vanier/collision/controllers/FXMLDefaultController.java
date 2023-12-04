@@ -48,7 +48,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  *
- * @author Hassimo
+ * @author Massimo
  */
 public class FXMLDefaultController {
 
@@ -60,6 +60,7 @@ public class FXMLDefaultController {
     private EventHandler<MouseEvent> clickHandler;
     private static String objectType;
     private AudioClip bouncingAudio;
+    
     // UI Controls
     @FXML
     Button btnRemove;
@@ -83,24 +84,23 @@ public class FXMLDefaultController {
     Button btnChangeBall;
     @FXML
     Button btnChangeBackground;
-
-    //layouts
-    @FXML
-    AnchorPane animationPane;
-
     @FXML
     Slider sldVolume;
-    @FXML
-    SplitPane root;
     @FXML
     Slider sldBallsCount;
     @FXML
     Label lblBallsCount;
-
     @FXML
     CheckBox checkArrow;
     @FXML
     ColorPicker colorPicker;
+
+    //layouts
+    @FXML
+    AnchorPane animationPane;
+    @FXML
+    SplitPane root;
+
 
     public FXMLDefaultController() {
         this.checkArrowEvent = new EventHandler<>() {
@@ -406,6 +406,10 @@ public class FXMLDefaultController {
     };
 
     // Helper Methods.
+
+    /**
+     *returns base layout
+     */
     public void layoutInitialize() {
         enablePlayBtn();
         animation = new Animation(projectiles, animationPane, playing);
@@ -421,6 +425,10 @@ public class FXMLDefaultController {
         }
     }
 
+    /**
+     *disables the play button and enables features that can change
+     * if the animation is running
+     */
     public void disablePlayBtn() {
         btnPlay.setDisable(true);
         comboBoxElasticity.setDisable(false);
@@ -430,6 +438,10 @@ public class FXMLDefaultController {
         sldBallsCount.setDisable(true);
     }
 
+    /**
+     *enables the play button and disables features that shouldn't change
+     * if the animation is running
+     */
     public void enablePlayBtn() {
         btnPlay.setDisable(false);
         comboBoxElasticity.setDisable(true);
@@ -445,6 +457,10 @@ public class FXMLDefaultController {
         }
     }
 
+    /**
+     *enables pause button and sets the text to "Pause"
+     * 
+     */
     public void enablePause() {
         btnPause.setText("Pause");
         playing = true;
@@ -455,6 +471,10 @@ public class FXMLDefaultController {
         }
     }
 
+    /**
+     *while the animation is stopped, the "Pause" becomes "Resume"
+     *
+     */
     public void enableResume() {
         btnPause.setText("Resume");
         playing = false;
@@ -465,10 +485,17 @@ public class FXMLDefaultController {
         }
     }
 
+    /**
+     *allows the list of projectiles to be equal to the value the slider is on
+     */
     public void initializeSliderPosition() {
         sldBallsCount.setValue(projectiles.size());
     }
 
+    /**
+     *sets the label for the number of projectiles equal to 
+     * the number the slider is on
+     */
     public void initializeBallCount() {
         lblBallsCount.setText(((Double) sldBallsCount.getValue()).intValue() + " " + objectType);
     }
@@ -479,7 +506,7 @@ public class FXMLDefaultController {
             projectile.getDirectionArrow().setVisible(showArrows);
         }
     }
-
+//opens color picker
     private void addMouseClickHandler(Projectile projectile) {
         clickHandler = event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
@@ -504,7 +531,7 @@ public class FXMLDefaultController {
             projectile.getCircle().removeEventHandler(MouseEvent.MOUSE_CLICKED, clickHandler);
         }
     }
-
+//adding projectiles to the pane
     private void addAllProjectiles() {
         for (Projectile projectile : projectiles) {
             animationPane.getChildren().addAll(projectile.getCircle(), projectile.getDirectionArrow());
@@ -514,30 +541,58 @@ public class FXMLDefaultController {
         }
     }
 
+    /**
+     *
+     * @param loadedFromFile
+     */
     public void setLoadedFromFile(boolean loadedFromFile) {
         this.loadedFromFile = loadedFromFile;
     }
-
+    
+    /**
+     *
+     * @param objectType
+     */
     public void setObjectType(String objectType) {
         this.objectType = objectType;
     }
 
+    /**
+     *
+     * @param isDefaultAnimation
+     */
     public void setIsDefaultAnimation(boolean isDefaultAnimation) {
         this.isDefaultAnimation = isDefaultAnimation;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Animation getAnimation() {
         return animation;
     }
 
+    /**
+     *
+     * @param animation
+     */
     public static void setAnimation(Animation animation) {
         FXMLDefaultController.animation = animation;
     }
 
+    /**
+     *
+     * @return
+     */
     public static boolean isPlaying() {
         return playing;
     }
 
+    /**
+     *
+     * @param bouncingAudio
+     */
     public void setBouncingAudio(AudioClip bouncingAudio) {
         this.bouncingAudio = bouncingAudio;
     }

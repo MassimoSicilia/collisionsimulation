@@ -24,24 +24,42 @@ public class Simulation{
      */
     public Simulation() {
     }
-
+    
+    // constructors
+    
     /**
      * Creates a simulation with specified list of projectiles and elasticity.
      *
      * @param projectiles
      * @param elasticity
+     * @param isDefault
      */
     public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
         this.isDefault = isDefault;
     }
+
+    /**
+     *
+     * @param projectiles
+     * @param elasticity
+     * @param isDefault
+     * @param background
+     * @param ballImage
+     */
     public Simulation(List<Projectile> projectiles, boolean elasticity, boolean isDefault, Image background, Image ballImage) {
         this.projectiles = projectiles;
         this.elasticity = elasticity;
         this.isDefault = isDefault;
     }
 
+    // getters and setters
+    
+    /**
+     *
+     * @return
+     */
     public List<Projectile> getProjectiles() {
         return projectiles;
     }
@@ -70,6 +88,10 @@ public class Simulation{
         this.elasticity = elasticity;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isDefault() {
         return isDefault;
     }
