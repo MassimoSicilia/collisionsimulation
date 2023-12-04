@@ -17,12 +17,16 @@ import javafx.scene.shape.Line;
  */
 public class Projectile {
 
+    // variables
+    
     private double mass;
     private double x_velocity;
     private double y_velocity;
     private Circle circle;
     private Line directionArrow;
 
+    // constructors
+    
     /**
      * Creates default Projectile object, all default objects will have no
      * velocity or angle.
@@ -42,6 +46,7 @@ public class Projectile {
      * @param y_velocity
      * @param x_position
      * @param y_position
+     * @param radius
      */
     public Projectile(double mass, double x_velocity, double y_velocity, double x_position, double y_position, double radius) {
         this(); // Call the default constructor to initialize the direction arrow
@@ -52,42 +57,83 @@ public class Projectile {
         circle.setStroke(Color.BLACK);
     }
 
+    // getters and setters
+    
+    /**
+     *
+     * @return
+     */
     public double getMass() {
         return mass;
     }
 
+    /**
+     *
+     * @param mass
+     */
     public void setMass(double mass) {
         this.mass = mass;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getX_velocity() {
         return x_velocity;
     }
 
+    /**
+     *
+     * @param x_velocity
+     */
     public void setX_velocity(double x_velocity) {
         this.x_velocity = x_velocity;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getY_velocity() {
         return y_velocity;
     }
 
+    /**
+     *
+     * @param y_velocity
+     */
     public void setY_velocity(double y_velocity) {
         this.y_velocity = y_velocity;
     }
 
+    /**
+     *
+     * @return
+     */
     public Circle getCircle() {
         return circle;
     }
 
+    /**
+     *
+     * @return
+     */
     public Line getDirectionArrow() {
         return directionArrow;
     }
 
+    /**
+     *
+     * @param paint
+     */
     public void setPaint(Paint paint) {
         circle.setFill(paint);
     }
 
+    /**
+     * changes where the arrow points based on the direction the object is moving
+     */
     public void updateDirectionArrow() {
 
         // Move the arrow along with the ball
@@ -106,6 +152,9 @@ public class Projectile {
         }
     }
 
+    /**
+     * Resets speed of the objects
+     */
     public void resetSpeed() {
         setX_velocity(0.0);
         setY_velocity(0.0);
