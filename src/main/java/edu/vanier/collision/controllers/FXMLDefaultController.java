@@ -396,18 +396,7 @@ public class FXMLDefaultController {
                 btnMute.setText("Mute");
                 Animation.bouncingAudio.setVolume(sldVolume.getValue());
                 sldVolume.setDisable(false);
-            if (allowMuteToggle) {
-                if (btnMute.getText().equals("Mute")) {
-                    btnMute.setText("Unmute");
-                    sldVolume.setDisable(true);
-                    Animation.bouncingAudio.setVolume(0.0);
-                } else {
-                    btnMute.setText("Mute");
-                    Animation.bouncingAudio.setVolume(sldVolume.getValue());
-                    sldVolume.setDisable(false);
-                }
-
-            }
+            
         }
     }};
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
