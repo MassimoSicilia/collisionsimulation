@@ -1,13 +1,11 @@
 package edu.vanier.collision.main;
 
-<<<<<<< Updated upstream
+
 import edu.vanier.collision.animation.Animation;
 import edu.vanier.collision.controllers.FXMLAsteroidsController;
 import edu.vanier.collision.controllers.FXMLDefaultController;
-=======
-import edu.vanier.collision.controllers.FXMLAsteroidsLayoutController;
-import edu.vanier.collision.controllers.FXMLDefaultAnimationController;
->>>>>>> Stashed changes
+import edu.vanier.collision.controllers.FXMLAsteroidsController;
+import edu.vanier.collision.controllers.FXMLDefaultController;
 import edu.vanier.collision.controllers.FXMLMainMenuController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

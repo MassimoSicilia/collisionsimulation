@@ -5,7 +5,6 @@
 package edu.vanier.collision.controllers;
 
 import edu.vanier.collision.animation.Animation;
-import static edu.vanier.collision.animation.Animation.bouncingAudio;
 import edu.vanier.collision.model.Projectile;
 import edu.vanier.collision.model.Simulation;
 import java.io.File;
@@ -40,6 +39,7 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
+import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
@@ -101,21 +101,27 @@ public class FXMLDefaultController {
     CheckBox checkArrow;
     @FXML
     ColorPicker colorPicker;
-<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLDefaultController.java
 
     public FXMLDefaultController() {
+        this.checkArrowEvent = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                updateArrowVisibility(checkArrow.isSelected());
+            }
+        };
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
-=======
+    }
     
     private boolean allowMuteToggle = true;
-    
-    public FXMLDefaultAnimationController() {
-        defaultAnimation = true;
->>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLDefaultAnimationController.java
-    }
 
     public FXMLDefaultController(List<Projectile> projectiles) {
+        this.checkArrowEvent = new EventHandler<>() {
+            @Override
+            public void handle(ActionEvent event) {
+                updateArrowVisibility(checkArrow.isSelected());
+            }
+        };
         this.projectiles = projectiles;
         loadedFromFile = true;
         isDefaultAnimation = true;
@@ -186,14 +192,8 @@ public class FXMLDefaultController {
             lblBallsCount.setText(newValue.intValue() + " " + objectType);
         }
     };
-
     // All event handlers.
-    EventHandler<ActionEvent> checkArrowEvent = new EventHandler<>() {
-        @Override
-        public void handle(ActionEvent event) {
-            updateArrowVisibility(checkArrow.isSelected());
-        }
-    };
+    EventHandler<ActionEvent> checkArrowEvent;
     EventHandler<ActionEvent> comboBoxElasticityEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -301,7 +301,7 @@ public class FXMLDefaultController {
             }
 
             // Store the current volume state before resetting
-            double storedVolume = volumeSlider.getValue();
+            double storedVolume = sldVolume.getValue();
             boolean wasMuted = btnMute.getText().equals("Unmute");
 
             // Remove all projectiles and direction arrows from the pane.
@@ -314,27 +314,27 @@ public class FXMLDefaultController {
             allowMuteToggle = false;
 
             // Set the volume slider to the current volume
-            if (volumeSlider != null) {
-                volumeSlider.setValue(DefaultAnimation.bouncingAudio.getVolume());
+            if (sldVolume != null) {
+                sldVolume.setValue(Animation.bouncingAudio.getVolume());
             }
 
             // Restore the volume state after resetting
-            if (volumeSlider != null) {
-                volumeSlider.setValue(storedVolume);
+            if (sldVolume != null) {
+                sldVolume.setValue(storedVolume);
             }
 
             // Restore the mute state after resetting
             if (wasMuted) {
                 btnMute.setText("Mute");
-                DefaultAnimation.bouncingAudio.setVolume(0.0);
-                if (volumeSlider != null) {
-                    volumeSlider.setDisable(true);
+                Animation.bouncingAudio.setVolume(0.0);
+                if (sldVolume != null) {
+                    sldVolume.setDisable(true);
                 }
             } else {
                 btnMute.setText("Mute");
-                DefaultAnimation.bouncingAudio.setVolume(storedVolume);
-                if (volumeSlider != null) {
-                    volumeSlider.setDisable(false);
+                Animation.bouncingAudio.setVolume(storedVolume);
+                if (sldVolume != null) {
+                    sldVolume.setDisable(false);
                 }
             }
 
@@ -387,7 +387,6 @@ public class FXMLDefaultController {
     EventHandler<ActionEvent> btnMuteEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
-<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLDefaultController.java
             if (btnMute.getText().equals("Mute")) {
                 btnMute.setText("Unmute");
                 sldVolume.setDisable(true);
@@ -396,21 +395,20 @@ public class FXMLDefaultController {
                 btnMute.setText("Mute");
                 Animation.bouncingAudio.setVolume(sldVolume.getValue());
                 sldVolume.setDisable(false);
-=======
             if (allowMuteToggle) {
                 if (btnMute.getText().equals("Mute")) {
                     btnMute.setText("Unmute");
-                    volumeSlider.setDisable(true);
-                    DefaultAnimation.bouncingAudio.setVolume(0.0);
+                    sldVolume.setDisable(true);
+                    Animation.bouncingAudio.setVolume(0.0);
                 } else {
                     btnMute.setText("Mute");
-                    DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
-                    volumeSlider.setDisable(false);
+                    Animation.bouncingAudio.setVolume(sldVolume.getValue());
+                    sldVolume.setDisable(false);
                 }
->>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLDefaultAnimationController.java
+
             }
         }
-    };
+    }};
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -584,3 +582,4 @@ public class FXMLDefaultController {
     }
 
 }
+

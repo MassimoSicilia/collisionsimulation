@@ -4,11 +4,8 @@
  */
 package edu.vanier.collision.controllers;
 
-<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLAsteroidsController.java
 import edu.vanier.collision.animation.Animation;
 import static edu.vanier.collision.animation.Animation.setBouncingAudio;
-=======
->>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLAsteroidsLayoutController.java
 import edu.vanier.collision.model.Projectile;
 import java.util.List;
 import javafx.fxml.FXML;
@@ -18,11 +15,8 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLAsteroidsController.java
 import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
-=======
->>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLAsteroidsLayoutController.java
 import javafx.scene.paint.ImagePattern;
 
 /**
