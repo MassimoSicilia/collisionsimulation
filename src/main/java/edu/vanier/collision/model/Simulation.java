@@ -4,10 +4,8 @@
  */
 package edu.vanier.collision.model;
 
-import java.io.Serializable;
 import java.util.List;
 import javafx.scene.image.Image;
-import javafx.scene.shape.Line;
 
 /**
  * Simulation class holds all information specific to a single simulation,

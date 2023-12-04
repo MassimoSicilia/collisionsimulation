@@ -40,13 +40,9 @@ import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
-import javafx.scene.layout.Pane;
-import javafx.scene.media.AudioClip;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.Line;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 
@@ -91,15 +87,11 @@ public class FXMLDefaultController {
     //layouts
     @FXML
     AnchorPane animationPane;
-    @FXML
-    Pane PaneContainer;
 
     @FXML
     Slider sldVolume;
     @FXML
     SplitPane root;
-    @FXML
-    AnchorPane controlsPane;
     @FXML
     Slider sldBallsCount;
     @FXML
@@ -109,10 +101,18 @@ public class FXMLDefaultController {
     CheckBox checkArrow;
     @FXML
     ColorPicker colorPicker;
+<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLDefaultController.java
 
     public FXMLDefaultController() {
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
+=======
+    
+    private boolean allowMuteToggle = true;
+    
+    public FXMLDefaultAnimationController() {
+        defaultAnimation = true;
+>>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLDefaultAnimationController.java
     }
 
     public FXMLDefaultController(List<Projectile> projectiles) {
@@ -253,6 +253,9 @@ public class FXMLDefaultController {
                     projectiles.add(addedProjectile);
                     animationPane.getChildren().addAll(addedProjectile.getCircle(), addedProjectile.getDirectionArrow());
                     updateArrowVisibility(checkArrow.isSelected());
+                    
+                    // Reset the flag to allow toggling mute after play
+                    allowMuteToggle = true;
                 }
                 disablePlayBtn();
                 animation = new Animation(projectiles, animationPane, playing);
@@ -297,11 +300,44 @@ public class FXMLDefaultController {
                 btnPause.setText("Pause");
             }
 
+            // Store the current volume state before resetting
+            double storedVolume = volumeSlider.getValue();
+            boolean wasMuted = btnMute.getText().equals("Unmute");
+
             // Remove all projectiles and direction arrows from the pane.
             animationPane.getChildren().removeAll(projectiles.stream().flatMap(projectile -> Stream.of(projectile.getCircle(), projectile.getDirectionArrow())).toArray(Node[]::new));
 
             // Clear the list of projectiles.
             projectiles.clear();
+            
+            // Set the flag to prevent toggling mute during the reset and play sequence
+            allowMuteToggle = false;
+
+            // Set the volume slider to the current volume
+            if (volumeSlider != null) {
+                volumeSlider.setValue(DefaultAnimation.bouncingAudio.getVolume());
+            }
+
+            // Restore the volume state after resetting
+            if (volumeSlider != null) {
+                volumeSlider.setValue(storedVolume);
+            }
+
+            // Restore the mute state after resetting
+            if (wasMuted) {
+                btnMute.setText("Mute");
+                DefaultAnimation.bouncingAudio.setVolume(0.0);
+                if (volumeSlider != null) {
+                    volumeSlider.setDisable(true);
+                }
+            } else {
+                btnMute.setText("Mute");
+                DefaultAnimation.bouncingAudio.setVolume(storedVolume);
+                if (volumeSlider != null) {
+                    volumeSlider.setDisable(false);
+                }
+            }
+
             enablePlayBtn();
         }
     };
@@ -351,6 +387,7 @@ public class FXMLDefaultController {
     EventHandler<ActionEvent> btnMuteEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
+<<<<<<< Updated upstream:src/main/java/edu/vanier/collision/controllers/FXMLDefaultController.java
             if (btnMute.getText().equals("Mute")) {
                 btnMute.setText("Unmute");
                 sldVolume.setDisable(true);
@@ -359,6 +396,18 @@ public class FXMLDefaultController {
                 btnMute.setText("Mute");
                 Animation.bouncingAudio.setVolume(sldVolume.getValue());
                 sldVolume.setDisable(false);
+=======
+            if (allowMuteToggle) {
+                if (btnMute.getText().equals("Mute")) {
+                    btnMute.setText("Unmute");
+                    volumeSlider.setDisable(true);
+                    DefaultAnimation.bouncingAudio.setVolume(0.0);
+                } else {
+                    btnMute.setText("Mute");
+                    DefaultAnimation.bouncingAudio.setVolume(volumeSlider.getValue());
+                    volumeSlider.setDisable(false);
+                }
+>>>>>>> Stashed changes:src/main/java/edu/vanier/collision/controllers/FXMLDefaultAnimationController.java
             }
         }
     };

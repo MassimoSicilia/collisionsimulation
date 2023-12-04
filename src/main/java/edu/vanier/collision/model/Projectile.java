@@ -4,13 +4,10 @@
  */
 package edu.vanier.collision.model;
 
-import java.io.Serializable;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.Shape;
 
 /**
  * Projectile class displays information that every shape object should have,
