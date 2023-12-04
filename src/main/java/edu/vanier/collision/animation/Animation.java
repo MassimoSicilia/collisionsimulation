@@ -22,19 +22,29 @@ public class Animation {
     AnimationTimer animation;
     List<Projectile> circles;
     Pane animationPane;
+
     static public AudioClip bouncingAudio;
     boolean elastic = true;
-    boolean animationPlaying;
 
+    /**
+     * Default constructor to create Animation object.
+     */
     public Animation() {
     }
 
-    public Animation(List<Projectile> circles, Pane animationPane, boolean animationPlaying) {
+    /**
+     * Creates Animation object with a list of circles and the Pane where the animation will occur.
+     * @param circles
+     * @param animationPane
+     */
+    public Animation(List<Projectile> circles, Pane animationPane) {
         this.circles = circles;
         this.animationPane = animationPane;
-        this.animationPlaying = animationPlaying;
     }
 
+    /**
+     * Plays the animation.
+     */
     public void play() {
         animation = new AnimationTimer() {
             @Override
@@ -43,6 +53,7 @@ public class Animation {
                 if (elastic == true) {
                     elasticityValue = 1;
                 } else {
+                    // elasticityValue will slowly reduce the velocities of the projectiles until it reaches 0.
                     elasticityValue = 0.995;
                 }
                 // every frame, will see update positions and check for collisions
@@ -55,7 +66,7 @@ public class Animation {
                     // move the ball
                     ball.setCenterX(ball.getCenterX() + xVelocity);
                     ball.setCenterY(ball.getCenterY() + yVelocity);
-
+                    
                     projectile1.setX_velocity(projectile1.getX_velocity() * elasticityValue);
                     projectile1.setY_velocity(projectile1.getY_velocity() * elasticityValue);
 
@@ -80,14 +91,23 @@ public class Animation {
             }
         };
         animation.start();
-        animationPlaying = true;
     }
 
+    /**
+     * Stops the animation.
+     */
     public void stop() {
         animation.stop();
-        animationPlaying = false;
     }
 
+    /**
+     * Checks for collisions between all the projectiles and the border of the animationPane.
+     * @param projectile
+     * @param ball
+     * @param xVelocity
+     * @param yVelocity
+     * @param animationPane
+     */
     public void resolveBallWallCollision(Projectile projectile, Circle ball, double xVelocity, double yVelocity, Pane animationPane) {
         //If the ball reaches the left or right border make the step negative
         if ((ball.getCenterX() <= ball.getRadius() && xVelocity < 0)
@@ -104,13 +124,16 @@ public class Animation {
         }
     }
 
+    /**
+     * Checks for collisions between the projectiles and updates their velocities if there is a collision.
+     * @param projectile1
+     * @param projectile2
+     */
     public void resolveBallCollision(Projectile projectile1, Projectile projectile2) {
         double mass1 = projectile1.getMass();
         double mass2 = projectile2.getMass();
-        Circle ball1 = projectile1.getCircle();
-        Circle ball2 = projectile2.getCircle();
 
-        //https://www.vobarian.com/collisions/2dcollisions2.pdf
+        // All steps followed from https://www.vobarian.com/collisions/2dcollisions2.pdf
         Vector2D velocity1 = new Vector2D(projectile1.getX_velocity(), projectile1.getY_velocity());
         Vector2D velocity2 = new Vector2D(projectile2.getX_velocity(), projectile2.getY_velocity());
         Vector2D relativePosition = new Vector2D(projectile2.getCircle().getCenterX() - projectile1.getCircle().getCenterX(),
@@ -139,7 +162,7 @@ public class Animation {
     }
 
     /**
-     *
+     * Returns the elasticity of the animation.
      * @return
      */
     public boolean isElastic() {
@@ -147,7 +170,7 @@ public class Animation {
     }
 
     /**
-     *
+     * Set the elasticity of the animation.
      * @param elastic
      */
     public void setElastic(boolean elastic) {
@@ -155,15 +178,7 @@ public class Animation {
     }
 
     /**
-     *
-     * @return
-     */
-    public boolean isAnimationPlaying() {
-        return animationPlaying;
-    }
-
-    /**
-     *
+     * Sets the audio to play when there is a collision.
      * @param bouncingAudio
      */
     public static void setBouncingAudio(AudioClip bouncingAudio) {

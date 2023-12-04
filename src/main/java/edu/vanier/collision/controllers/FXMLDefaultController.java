@@ -267,7 +267,7 @@ public class FXMLDefaultController {
 
                 }
                 disablePlayBtn();
-                animation = new Animation(projectiles, animationPane, playing);
+                animation = new Animation(projectiles, animationPane);
                 animation.setElastic(comboBoxElasticSelection());
                 animation.play();
                 playing = true;
@@ -424,7 +424,7 @@ public class FXMLDefaultController {
      */
     public void layoutInitialize() {
         enablePlayBtn();
-        animation = new Animation(projectiles, animationPane, playing);
+        animation = new Animation(projectiles, animationPane);
         animation.setBouncingAudio(bouncingAudio);
         comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
         comboBoxElasticity.getSelectionModel().select("Elastic");
@@ -514,7 +514,7 @@ public class FXMLDefaultController {
      * the number the slider is on
      */
     public void initializeBallCount() {
-        lblBallsCount.setText(((Double) sldBallsCount.getValue()).intValue() + " " + objectType);
+        lblBallsCount.setText(projectiles.size() + " " + objectType);
     }
 
     // Update the visibility of arrows based on the checkbox state
