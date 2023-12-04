@@ -313,7 +313,7 @@ public class FXMLDefaultController {
             if (sldVolume != null) {
                 sldVolume.setValue(Animation.bouncingAudio.getVolume());
             }
-
+            initializeBallCount();
             enablePlayBtn();
         }
     };
