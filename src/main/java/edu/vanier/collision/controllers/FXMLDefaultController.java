@@ -319,6 +319,7 @@ public class FXMLDefaultController {
                 // Highlight the reset button
                 btnReset.requestFocus();
             }
+            updateBallsCount();
         }
     };
 
@@ -526,6 +527,11 @@ public class FXMLDefaultController {
 
     public void setBouncingAudio(AudioClip bouncingAudio) {
         this.bouncingAudio = bouncingAudio;
+    }
+    
+    private void updateBallsCount(){
+        int currentBalls = projectiles.size();
+        lblBallsCount.setText(currentBalls + " " + objectType);
     }
 
 }
