@@ -58,7 +58,7 @@ public class FXMLDefaultController {
     private static boolean isDefaultAnimation;
     private boolean loadedFromFile;
     private EventHandler<MouseEvent> clickHandler;
-    private static String objectType = "Balls";
+    private static String objectType;
     private AudioClip bouncingAudio;
     // UI Controls
     @FXML
@@ -109,6 +109,7 @@ public class FXMLDefaultController {
                 updateArrowVisibility(checkArrow.isSelected());
             }
         };
+        objectType = "Balls";
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
