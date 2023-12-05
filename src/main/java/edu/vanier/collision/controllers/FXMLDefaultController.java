@@ -559,7 +559,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * returns boolean value
      * @param loadedFromFile
      */
     public void setLoadedFromFile(boolean loadedFromFile) {
@@ -567,7 +567,7 @@ public class FXMLDefaultController {
     }
     
     /**
-     *
+     * sets the object type as a String
      * @param objectType
      */
     public void setObjectType(String objectType) {
@@ -575,7 +575,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * returns boolean value
      * @param isDefaultAnimation
      */
     public void setIsDefaultAnimation(boolean isDefaultAnimation) {
@@ -583,7 +583,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * returns animation
      * @return
      */
     public static Animation getAnimation() {
@@ -591,7 +591,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * sets the animation to a new Animation variable
      * @param animation
      */
     public static void setAnimation(Animation animation) {
@@ -599,7 +599,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * return boolean value
      * @return
      */
     public static boolean isPlaying() {
@@ -607,7 +607,7 @@ public class FXMLDefaultController {
     }
 
     /**
-     *
+     * sets the bouncing audio variable to an AudioClip
      * @param bouncingAudio
      */
     public void setBouncingAudio(AudioClip bouncingAudio) {
@@ -619,13 +619,28 @@ public class FXMLDefaultController {
         lblBallsCount.setText(currentBalls + " " + objectType);
     }
 
+    /**
+     * returns the elasticity property as a boolean
+     * @return
+     */
     public boolean isElastic() {
         return isElastic;
     }
 
+    /**
+     * sets elasticity property
+     * refers to if an object should be elastic or inelastic
+     * @param isElastic
+     */
     public void setElastic(boolean isElastic) {
         this.isElastic = isElastic;
     }
+
+    /**
+     * sets the elasticity based on combo box selection 
+     * sets the elasticity property based on what is selected
+     * @return
+     */
     public boolean comboBoxElasticSelection(){
         boolean selection = comboBoxElasticity.getValue().equals("Elastic");
         setElastic(selection);
