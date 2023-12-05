@@ -21,6 +21,13 @@ import javafx.scene.shape.Line;
  */
 public class LineTypeAdapter implements JsonSerializer<Line>, JsonDeserializer<Line>{
 
+    /**
+     * Serializes Line properties needed.
+     * @param t
+     * @param type
+     * @param jsc
+     * @return
+     */
     @Override
     public JsonElement serialize(Line t, Type type, JsonSerializationContext jsc) {
         JsonObject line = new JsonObject();
@@ -31,6 +38,14 @@ public class LineTypeAdapter implements JsonSerializer<Line>, JsonDeserializer<L
         return jsc.serialize(line);
     }
 
+    /**
+     * Deserializes the JSON into a Line.
+     * @param je
+     * @param type
+     * @param jdc
+     * @return
+     * @throws JsonParseException
+     */
     @Override
     public Line deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
         JsonObject deserializedLine = je.getAsJsonObject();

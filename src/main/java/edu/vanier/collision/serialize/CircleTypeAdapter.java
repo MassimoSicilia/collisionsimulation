@@ -23,6 +23,13 @@ import javafx.scene.shape.Circle;
  */
 public class CircleTypeAdapter implements JsonSerializer<Circle>, JsonDeserializer<Circle> {
 
+    /**
+     * Serializes the Circle properties needed.
+     * @param t
+     * @param type
+     * @param jsc
+     * @return
+     */
     @Override
     public JsonElement serialize(Circle t, Type type, JsonSerializationContext jsc) {
         JsonObject circle = new JsonObject();
@@ -40,6 +47,14 @@ public class CircleTypeAdapter implements JsonSerializer<Circle>, JsonDeserializ
         return jsc.serialize(circle);
     }
 
+    /**
+     * Deserializes the JSON into a Circle.
+     * @param je
+     * @param type
+     * @param jdc
+     * @return
+     * @throws JsonParseException
+     */
     @Override
     public Circle deserialize(JsonElement je, Type type, JsonDeserializationContext jdc) throws JsonParseException {
         JsonObject deserializedCircle = je.getAsJsonObject();

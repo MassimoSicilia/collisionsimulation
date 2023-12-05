@@ -21,9 +21,17 @@ import javafx.scene.shape.Line;
  *
  * @author andyhou
  */
-public class SimulationController extends Simulation{
+public class SimulationController extends Simulation {
 
-    public static void save(Simulation simulation, File file) throws IOException{
+    /**
+     * Writes the simulation properties as JSON file using Gson library from the
+     * file chosen from the File Chooser.
+     *
+     * @param simulation
+     * @param file
+     * @throws IOException
+     */
+    public static void save(Simulation simulation, File file) throws IOException {
         Writer writer = new FileWriter(file);
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(Circle.class, new CircleTypeAdapter())
@@ -34,14 +42,27 @@ public class SimulationController extends Simulation{
         writer.close();
     }
 
+    /**
+     * Returns a simulation object from a JSON file, if the JSON file cannot
+     * create the simulation object, it will return null.
+     *
+     * @param file
+     * @return
+     * @throws FileNotFoundException
+     * @throws IOException
+     */
     public static Simulation load(File file) throws FileNotFoundException, IOException {
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Circle.class, new CircleTypeAdapter())
-                .registerTypeAdapter(Line.class, new LineTypeAdapter())
-                .setPrettyPrinting().
-                create();
-        
-        Simulation loadedSimulation = gson.fromJson(new FileReader(file),Simulation.class);
-        return loadedSimulation;
+        try {
+            Gson gson = new GsonBuilder()
+                    .registerTypeAdapter(Circle.class, new CircleTypeAdapter())
+                    .registerTypeAdapter(Line.class, new LineTypeAdapter())
+                    .setPrettyPrinting().
+                    create();
+
+            Simulation loadedSimulation = gson.fromJson(new FileReader(file), Simulation.class);
+            return loadedSimulation;
+        } catch (Exception e) {
+            return null;
+        }
     }
 }

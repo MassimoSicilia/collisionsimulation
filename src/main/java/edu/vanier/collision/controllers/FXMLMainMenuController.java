@@ -11,7 +11,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -30,43 +33,35 @@ public class FXMLMainMenuController {
     @FXML
     Button btnExit;
 
+    /**
+     * Initializes the FXMLMainMenuController and the event handlers.
+     */
     @FXML
     public void initialize() {
         btnChoose.setOnAction(event -> {
-            // gets the primary stage from the chooseScenery button
-            Stage primaryStage = (Stage) btnChoose.getScene().getWindow();
-            FXMLLoader chooseScenery = new FXMLLoader(getClass().getResource("/fxml/ChooseSceneryPane.fxml"));
-            chooseScenery.setController(new FXMLChooseSceneryController());
-            try {
-                Scene chooseSceneryScene = new Scene(chooseScenery.load());
-                switchScenes(primaryStage, chooseSceneryScene);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            switchScene(new FXMLChooseSceneryController(), "/fxml/ChooseSceneryPane.fxml");
         });
 
         btnLoad.setOnAction(event -> {
             try {
-            Stage primaryStage = (Stage) btnLoad.getScene().getWindow();
-            FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Open Saved Scenery");
-            // will only accept json files
-            fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON File", "*.json"));
-            File sceneryToLoad = fileChooser.showOpenDialog((Stage) btnLoad.getScene().getWindow());
+                Stage primaryStage = (Stage) btnLoad.getScene().getWindow();
+                FileChooser fileChooser = new FileChooser();
+                fileChooser.setTitle("Open Saved Scenery");
+                // will only accept json files
+                fileChooser.getExtensionFilters().addAll(new ExtensionFilter("JSON File", "*.json"));
+                File sceneryToLoad = fileChooser.showOpenDialog((Stage) btnLoad.getScene().getWindow());
                 Simulation simulationToLoad = SimulationController.load(sceneryToLoad);
-                FXMLLoader loader = new FXMLLoader();
-                if (simulationToLoad.isDefault()) {
-                    loader.setLocation(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                    loader.setController(new FXMLDefaultController(simulationToLoad.getProjectiles(), simulationToLoad.getElasticity()));
-                } else {
-                    loader.setLocation(getClass().getResource("/fxml/asteroidsAnimationPane.fxml"));
-                    loader.setController(new FXMLAsteroidsController(simulationToLoad.getProjectiles()));
+                if (simulationToLoad == null) {
+                    Alert error = new Alert(AlertType.ERROR, "The JSON file is invalid.");
+                    error.showAndWait();
                 }
-                switchScenes(primaryStage, new Scene(loader.load()));
-
-                // to finish implementation after designing all scenes
+                if (simulationToLoad.isDefault()) {
+                    switchScene(new FXMLDefaultController(simulationToLoad.getProjectiles(), simulationToLoad.getElasticity()), "/fxml/defaultAnimationPane.fxml");
+                } else {
+                    switchScene(new FXMLAsteroidsController(simulationToLoad.getProjectiles()), "/fxml/asteroidsAnimationPane.fxml");
+                }
             } catch (Exception ex) {
-                
+
             }
         });
 
@@ -75,8 +70,24 @@ public class FXMLMainMenuController {
         });
     }
 
-    public static void switchScenes(Stage stage, Scene scene) {
-        stage.setScene(scene);
+    ;
+
+    /**
+     * Switches scenes depending on the FXMLController object passed through.
+     * @param controller The FXMLController object.
+     * @param resourcePath The resource path of the FXML document.
+     */
+    public void switchScene(Object controller, String resourcePath) {
+        try {
+            Stage primaryStage = (Stage) btnChoose.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourcePath));
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

@@ -30,44 +30,38 @@ public class FXMLChooseSceneryController {
     @FXML
     Button btnBack;
 
+    /**
+     * Initialize method for the Choose Scenery scene, can either choose default
+     * animation, asteroid animation, or go back to the main menu.
+     */
     @FXML
     void initialize() {
         btnDefault.setOnAction((event) -> {
-            try {
-                Stage primaryStage = (Stage) btnDefault.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/defaultAnimationPane.fxml"));
-                loader.setController(new FXMLDefaultController());
-                SplitPane root = loader.load();
-                Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-            } catch (IOException ex) {
-                Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            switchScene(new FXMLDefaultController(), "/fxml/defaultAnimationPane.fxml");
         });
         btnAsteroids.setOnAction((event) -> {
-            try {
-                Stage primaryStage = (Stage) btnAsteroids.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/asteroidsAnimationPane.fxml"));
-                loader.setController(new FXMLAsteroidsController());
-                Parent root = loader.load();
-                Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-            } catch (IOException e) {
-                Logger.getLogger(FXMLAsteroidsController.class.getName()).log(Level.SEVERE, null, e);
-            }
+            switchScene(new FXMLAsteroidsController(), "/fxml/asteroidsAnimationPane.fxml");
         });
         btnBack.setOnAction((event) -> {
-            try {
-                Stage primaryStage = (Stage) btnBack.getScene().getWindow();
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainMenuPane.fxml"));
-                loader.setController(new FXMLMainMenuController());
-                Pane root = loader.load();
-                Scene scene = new Scene(root);
-                primaryStage.setScene(scene);
-            } catch (IOException e) {
-                Logger.getLogger(FXMLMainMenuController.class.getName()).log(Level.SEVERE, null, e);
-            }
+            switchScene(new FXMLMainMenuController(), "/fxml/MainMenuPane.fxml");
         });
+    }
 
+    /**
+     * Switches scenes depending on the FXMLController object passed through.
+     * @param controller The FXMLController object.
+     * @param resourcePath The resource path of the FXML document.
+     */
+    public void switchScene(Object controller, String resourcePath) {
+        try {
+            Stage primaryStage = (Stage) btnDefault.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(resourcePath));
+            loader.setController(controller);
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            primaryStage.setScene(scene);
+        } catch (IOException ex) {
+            Logger.getLogger(FXMLDefaultController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }

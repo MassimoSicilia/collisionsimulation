@@ -52,7 +52,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
  */
 public class FXMLDefaultController {
 
-    List<Projectile> projectiles = new ArrayList<>();
+    private List<Projectile> projectiles = new ArrayList<>();
     private static Animation animation = new Animation();
     private static boolean playing;
     private static boolean isDefaultAnimation;
@@ -61,7 +61,7 @@ public class FXMLDefaultController {
     private EventHandler<MouseEvent> clickHandler;
     private static String objectType;
     private AudioClip bouncingAudio;
-    
+
     // UI Controls
     @FXML
     Button btnRemove;
@@ -96,56 +96,50 @@ public class FXMLDefaultController {
     @FXML
     ColorPicker colorPicker;
 
-    //layouts
+    // UI Layouts
     @FXML
     AnchorPane animationPane;
     @FXML
     SplitPane root;
 
-
+    /**
+     * Creates FXMLDefaultController object, with corresponding properties, also
+     * initializes the audio for the bouncing audio.
+     */
     public FXMLDefaultController() {
-        this.checkArrowEvent = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateArrowVisibility(checkArrow.isSelected());
-            }
-        };
         objectType = "Balls";
         isDefaultAnimation = true;
         bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
 
+    /**
+     * Creates FXMLDefaultController object, with specified list of projectiles.
+     *
+     * @param projectiles
+     */
     public FXMLDefaultController(List<Projectile> projectiles) {
-        this.checkArrowEvent = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateArrowVisibility(checkArrow.isSelected());
-            }
-        };
-        objectType = "Balls";
+        this();
         this.projectiles = projectiles;
         loadedFromFile = true;
-        isDefaultAnimation = true;
-        bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
 
+    /**
+     * Creates FXMLDefaultController object, with specified list of projectiles
+     * and elasticity, this is called when loading in a JSON file.
+     *
+     * @param projectiles
+     * @param elastic
+     */
     public FXMLDefaultController(List<Projectile> projectiles, boolean elastic) {
-        this.checkArrowEvent = new EventHandler<>() {
-            @Override
-            public void handle(ActionEvent event) {
-                updateArrowVisibility(checkArrow.isSelected());
-            }
-        };
-        objectType = "Balls";
-        this.projectiles = projectiles;
-        loadedFromFile = true;
+        this(projectiles);
         isElastic = elastic;
-        isDefaultAnimation = true;
-        bouncingAudio = new AudioClip(Animation.class.getResource("/audio/ballBounce.wav").toExternalForm());
     }
 
+    /**
+     *
+     */
     @FXML
-    public void initialize() {
+    void initialize() {
         Divider divider = root.getDividers().get(0);
         layoutInitialize();
         // Rearranges positions of projectiles of pane is resized.
@@ -186,6 +180,7 @@ public class FXMLDefaultController {
 
     }
 
+    // When pane is resized, update projectile layouts as well.
     ChangeListener<? super Number> paneResizeListener = new ChangeListener<>() {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
@@ -201,20 +196,32 @@ public class FXMLDefaultController {
         }
     };
 
+    // Updates ball count when slider value is changed.
     ChangeListener<? super Number> ballsCountListener = new ChangeListener<>() {
         @Override
         public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
             lblBallsCount.setText(newValue.intValue() + " " + objectType);
         }
     };
-    // All event handlers.
-    EventHandler<ActionEvent> checkArrowEvent;
+
+    // All event handlers:
+    // Updates the visibility of arrows upon click.
+    EventHandler<ActionEvent> checkArrowEvent = new EventHandler<>() {
+        @Override
+        public void handle(ActionEvent event) {
+            updateArrowVisibility(checkArrow.isSelected());
+        }
+    };
+
+    // Sets the elasticity of the animation.
     EventHandler<ActionEvent> comboBoxElasticityEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
             animation.setElastic(comboBoxElasticSelection());
         }
     };
+
+    // Goes back to Choose Scenery scene.
     EventHandler<ActionEvent> btnReturnEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -233,6 +240,15 @@ public class FXMLDefaultController {
         }
     };
 
+    /**
+     * Sets the minimum size of the projectiles, their max speed and the
+     * ImagePattern to display on it, the maximum size and minimum speed are
+     * calculated based off of these values.
+     *
+     * @param minSize Minimum size of a projectile.
+     * @param maxSpeed Maximum speed of a projectile.
+     * @param ballPattern ImagePattern to display on the projectile.
+     */
     EventHandler<ActionEvent> setAnimationProperties(double minSize, double maxSpeed, ImagePattern ballPattern) {
         EventHandler<ActionEvent> btnPlayEvent = new EventHandler<>() {
             @Override
@@ -276,6 +292,7 @@ public class FXMLDefaultController {
         return btnPlayEvent;
     }
 
+    // Pauses and resumes the animation.
     EventHandler<ActionEvent> btnPauseEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -299,6 +316,7 @@ public class FXMLDefaultController {
         }
     };
 
+    // Resets the animation.
     EventHandler<ActionEvent> btnResetEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -309,10 +327,6 @@ public class FXMLDefaultController {
             } else {
                 btnPause.setText("Pause");
             }
-
-            // Store the current volume state before resetting
-            double storedVolume = sldVolume.getValue();
-            boolean wasMuted = btnMute.getText().equals("Unmute");
 
             // Remove all projectiles and direction arrows from the pane.
             animationPane.getChildren().removeAll(projectiles.stream().flatMap(projectile -> Stream.of(projectile.getCircle(), projectile.getDirectionArrow())).toArray(Node[]::new));
@@ -328,6 +342,8 @@ public class FXMLDefaultController {
             enablePlayBtn();
         }
     };
+
+    // Removes a single projectile from the animation.
     EventHandler<ActionEvent> btnRemoveEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -346,6 +362,7 @@ public class FXMLDefaultController {
         }
     };
 
+    // Saves the animation to a JSON file.
     EventHandler<ActionEvent> setBtnSaveEvent() {
         EventHandler<ActionEvent> btnSaveEvent = new EventHandler<>() {
             @Override
@@ -371,6 +388,8 @@ public class FXMLDefaultController {
         };
         return btnSaveEvent;
     }
+
+    // Mutes the animation.
     EventHandler<ActionEvent> btnMuteEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -385,6 +404,8 @@ public class FXMLDefaultController {
             }
         }
     };
+
+    // Opens a file chooser to choose a picture to be displayed on the projectiles.
     EventHandler<ActionEvent> btnChangeBallEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -401,6 +422,8 @@ public class FXMLDefaultController {
             }
         }
     };
+
+    // Opens a file chooser to choose a picture to be displayed as the background.
     EventHandler<ActionEvent> btnChangeBackgroundEvent = new EventHandler<>() {
         @Override
         public void handle(ActionEvent event) {
@@ -418,11 +441,10 @@ public class FXMLDefaultController {
     };
 
     // Helper Methods.
-
     /**
-     *returns base layout
+     * Initializes the base layout components.
      */
-    public void layoutInitialize() {
+    private void layoutInitialize() {
         enablePlayBtn();
         animation = new Animation(projectiles, animationPane);
         animation.setBouncingAudio(bouncingAudio);
@@ -438,17 +460,17 @@ public class FXMLDefaultController {
             addAllProjectiles();
             if (isElastic()) {
                 comboBoxElasticity.getSelectionModel().select("Elastic");
-            }else{
+            } else {
                 comboBoxElasticity.getSelectionModel().select("Non-Elastic");
             }
         }
     }
 
     /**
-     *disables the play button and enables features that can change
-     * if the animation is running
+     * Disables the play button and enables features that can change if the
+     * animation is running.
      */
-    public void disablePlayBtn() {
+    private void disablePlayBtn() {
         btnPlay.setDisable(true);
         btnRemove.setDisable(false);
         btnPause.setDisable(false);
@@ -457,10 +479,10 @@ public class FXMLDefaultController {
     }
 
     /**
-     *enables the play button and disables features that shouldn't change
-     * if the animation is running
+     * Enables the play button and disables features that shouldn't change if
+     * the animation is running.
      */
-    public void enablePlayBtn() {
+    private void enablePlayBtn() {
         btnPlay.setDisable(false);
         colorPicker.setDisable(true);
         btnPause.setDisable(true);
@@ -475,10 +497,10 @@ public class FXMLDefaultController {
     }
 
     /**
-     *enables pause button and sets the text to "Pause"
-     * 
+     * Enables pause button and sets the text to "Pause"
+     *
      */
-    public void enablePause() {
+    private void enablePause() {
         btnPause.setText("Pause");
         playing = true;
 
@@ -489,10 +511,10 @@ public class FXMLDefaultController {
     }
 
     /**
-     *while the animation is stopped, the "Pause" becomes "Resume"
+     * While the animation is stopped, the "Pause" becomes "Resume".
      *
      */
-    public void enableResume() {
+    private void enableResume() {
         btnPause.setText("Resume");
         playing = false;
 
@@ -503,18 +525,26 @@ public class FXMLDefaultController {
     }
 
     /**
-     *allows the list of projectiles to be equal to the value the slider is on
+     * Allows the list of projectiles to be equal to the value the slider is on.
      */
-    public void initializeSliderPosition() {
+    private void initializeSliderPosition() {
         sldBallsCount.setValue(projectiles.size());
     }
 
     /**
-     *sets the label for the number of projectiles equal to 
-     * the number the slider is on
+     * Sets the label for the number of projectiles equal to the number the
+     * slider is on.
      */
-    public void initializeBallCount() {
-        lblBallsCount.setText(projectiles.size() + " " + objectType);
+    private void initializeBallCount() {
+        lblBallsCount.setText((int) sldBallsCount.getValue() + " " + objectType);
+    }
+
+    /**
+     * Updates the ball count based on the size of projectiles.
+     */
+    private void updateBallsCount() {
+        int currentBalls = projectiles.size();
+        lblBallsCount.setText(currentBalls + " " + objectType);
     }
 
     // Update the visibility of arrows based on the checkbox state
@@ -523,7 +553,8 @@ public class FXMLDefaultController {
             projectile.getDirectionArrow().setVisible(showArrows);
         }
     }
-//opens color picker
+
+    //opens color picker
     private void addMouseClickHandler(Projectile projectile) {
         clickHandler = event -> {
             if (event.getButton() == MouseButton.PRIMARY) {
@@ -548,7 +579,8 @@ public class FXMLDefaultController {
             projectile.getCircle().removeEventHandler(MouseEvent.MOUSE_CLICKED, clickHandler);
         }
     }
-//adding projectiles to the pane
+
+    // adding projectiles to the pane
     private void addAllProjectiles() {
         for (Projectile projectile : projectiles) {
             animationPane.getChildren().addAll(projectile.getCircle(), projectile.getDirectionArrow());
@@ -565,7 +597,7 @@ public class FXMLDefaultController {
     public void setLoadedFromFile(boolean loadedFromFile) {
         this.loadedFromFile = loadedFromFile;
     }
-    
+
     /**
      *
      * @param objectType
@@ -614,19 +646,27 @@ public class FXMLDefaultController {
         this.bouncingAudio = bouncingAudio;
     }
 
-    private void updateBallsCount() {
-        int currentBalls = projectiles.size();
-        lblBallsCount.setText(currentBalls + " " + objectType);
-    }
-
+    /**
+     *
+     * @return
+     */
     public boolean isElastic() {
         return isElastic;
     }
 
+    /**
+     *
+     * @param isElastic
+     */
     public void setElastic(boolean isElastic) {
         this.isElastic = isElastic;
     }
-    public boolean comboBoxElasticSelection(){
+
+    /**
+     *
+     * @return
+     */
+    public boolean comboBoxElasticSelection() {
         boolean selection = comboBoxElasticity.getValue().equals("Elastic");
         setElastic(selection);
         return selection;

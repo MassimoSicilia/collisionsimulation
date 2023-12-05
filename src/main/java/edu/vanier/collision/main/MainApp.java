@@ -1,9 +1,6 @@
 package edu.vanier.collision.main;
 
 
-import edu.vanier.collision.animation.Animation;
-import edu.vanier.collision.controllers.FXMLAsteroidsController;
-import edu.vanier.collision.controllers.FXMLDefaultController;
 import edu.vanier.collision.controllers.FXMLAsteroidsController;
 import edu.vanier.collision.controllers.FXMLDefaultController;
 import edu.vanier.collision.controllers.FXMLMainMenuController;
@@ -32,7 +29,6 @@ public class MainApp extends Application {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
-        primaryStage.setAlwaysOnTop(true);
 
         primaryStage.show();
     }
