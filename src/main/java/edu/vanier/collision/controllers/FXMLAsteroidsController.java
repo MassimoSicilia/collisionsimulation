@@ -56,6 +56,7 @@ public class FXMLAsteroidsController extends FXMLDefaultController {
     public void initialize() {
         setObjectType("Asteroids");
         super.initialize();
+        comboBoxElasticity.getSelectionModel().select("Elastic");
         animationPane.setBackground(new Background(new BackgroundImage(new Image("/images/starfield_alpha.png"),
                 BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT, new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true))));
         btnPlay.setOnAction(setAnimationProperties(20, 2.5, asteroidImagePattern));

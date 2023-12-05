@@ -450,7 +450,6 @@ public class FXMLDefaultController {
         animation.setBouncingAudio(bouncingAudio);
         comboBoxElasticity.getItems().addAll("Elastic", "Non-Elastic");
         comboBoxElasticity.getSelectionModel().select("Elastic");
-        initializeBallCount();
         if (loadedFromFile) {
             disablePlayBtn();
             enableResume();
@@ -464,6 +463,7 @@ public class FXMLDefaultController {
                 comboBoxElasticity.getSelectionModel().select("Non-Elastic");
             }
         }
+        initializeBallCount();
     }
 
     /**
@@ -591,6 +591,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * returns boolean value
      *
      * @param loadedFromFile
      */
@@ -599,6 +600,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * sets the object type as a String
      *
      * @param objectType
      */
@@ -607,6 +609,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * returns if the animation is a default animation.
      *
      * @param isDefaultAnimation
      */
@@ -615,6 +618,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * returns animation
      *
      * @return
      */
@@ -623,6 +627,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * sets the animation to a new Animation variable
      *
      * @param animation
      */
@@ -631,6 +636,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * return boolean value
      *
      * @return
      */
@@ -639,6 +645,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * sets the bouncing audio variable to an AudioClip
      *
      * @param bouncingAudio
      */
@@ -647,6 +654,7 @@ public class FXMLDefaultController {
     }
 
     /**
+     * returns the elasticity property as a boolean.
      *
      * @return
      */
@@ -656,6 +664,9 @@ public class FXMLDefaultController {
 
     /**
      *
+     * sets elasticity property refers to if an object should be elastic or
+     * inelastic
+     *
      * @param isElastic
      */
     public void setElastic(boolean isElastic) {
@@ -663,6 +674,8 @@ public class FXMLDefaultController {
     }
 
     /**
+     * sets the elasticity based on comboBox selection sets the elasticity
+     * property based on what is selected
      *
      * @return
      */
